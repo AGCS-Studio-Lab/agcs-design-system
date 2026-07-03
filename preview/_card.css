@@ -1,0 +1,54 @@
+/* Shared card chrome for Design System preview cards.
+   Cards render at ~700px wide. Keep content tight, no titles. */
+@import url("../colors_and_type.css");
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  font-family: var(--font-mono);
+  color: var(--carbon);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  padding: 24px;
+  box-sizing: border-box;
+  width: 700px;
+}
+
+.row { display: flex; gap: 16px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+
+.swatch {
+  flex: 1;
+  min-height: 96px;
+  border: 1px solid var(--mist);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 12px;
+  box-sizing: border-box;
+}
+.swatch .name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.swatch .hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+.mono-12 { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+.mono-13 { font-family: var(--font-mono); font-size: 13px; }
+.mono-14 { font-family: var(--font-mono); font-size: 14px; }
+.helv    { font-family: var(--font-display); }
+
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--mist);
+  margin: 12px 0;
+}

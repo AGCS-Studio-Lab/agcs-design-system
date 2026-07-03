@@ -1,0 +1,158 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "slides/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:N27|IBM Plex Mono|Crimson Pro))/i]",
+        "message": "Font not provided by the design system. Available: N27, IBM Plex Mono, Crimson Pro."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--accent",
+      "--band-content",
+      "--band-section",
+      "--bg-dark",
+      "--bg-light",
+      "--canvas-h",
+      "--canvas-w",
+      "--carbon",
+      "--fg-muted-dark",
+      "--fg-muted-light",
+      "--fg-on-dark",
+      "--fg-on-light",
+      "--font-display",
+      "--font-heading",
+      "--font-mono",
+      "--font-quote",
+      "--gap-md",
+      "--gap-sm",
+      "--grid-line",
+      "--lh-body",
+      "--lh-display",
+      "--lh-heading",
+      "--lh-insight",
+      "--lh-mono",
+      "--lh-quote",
+      "--lime",
+      "--mist",
+      "--obsidian",
+      "--pad-band",
+      "--pad-slide",
+      "--paper",
+      "--rule",
+      "--rule-hair",
+      "--rule-thick",
+      "--t-body",
+      "--t-cover",
+      "--t-h1",
+      "--t-h2",
+      "--t-insight",
+      "--t-label",
+      "--t-quote",
+      "--t-section",
+      "--track-display",
+      "--track-label-caps",
+      "--weight-bold",
+      "--weight-medium",
+      "--weight-regular"
+    ],
+    "tokenKinds": {
+      "--obsidian": "color",
+      "--paper": "color",
+      "--lime": "color",
+      "--carbon": "color",
+      "--mist": "color",
+      "--bg-dark": "color",
+      "--bg-light": "color",
+      "--fg-on-light": "color",
+      "--fg-on-dark": "color",
+      "--fg-muted-light": "color",
+      "--fg-muted-dark": "color",
+      "--rule": "color",
+      "--grid-line": "color",
+      "--accent": "color",
+      "--font-display": "font",
+      "--font-heading": "font",
+      "--font-mono": "font",
+      "--font-quote": "font",
+      "--weight-bold": "font",
+      "--weight-medium": "font",
+      "--weight-regular": "font",
+      "--t-cover": "spacing",
+      "--t-insight": "spacing",
+      "--t-section": "spacing",
+      "--t-h1": "spacing",
+      "--t-h2": "spacing",
+      "--t-quote": "spacing",
+      "--t-body": "spacing",
+      "--t-label": "spacing",
+      "--lh-insight": "other",
+      "--lh-display": "other",
+      "--lh-heading": "other",
+      "--lh-body": "other",
+      "--lh-mono": "other",
+      "--lh-quote": "other",
+      "--track-label-caps": "spacing",
+      "--track-display": "spacing",
+      "--canvas-w": "spacing",
+      "--canvas-h": "spacing",
+      "--pad-slide": "spacing",
+      "--pad-band": "spacing",
+      "--gap-md": "spacing",
+      "--gap-sm": "spacing",
+      "--band-section": "spacing",
+      "--band-content": "spacing",
+      "--rule-hair": "spacing",
+      "--rule-thick": "spacing"
+    },
+    "fontFamilies": [
+      "Crimson Pro",
+      "IBM Plex Mono",
+      "N27"
+    ]
+  }
+}

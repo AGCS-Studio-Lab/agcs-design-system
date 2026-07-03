@@ -1,0 +1,79 @@
+<!doctype html>
+<!-- @dsCard group="Slides" name="Slide 07 — System (Lab)" subtitle="Construction grid · >> LAB stamp · mono labels" viewport="1280x720" -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>AGCS · System (Lab)</title>
+<link rel="stylesheet" href="_slide.css">
+</head>
+<body>
+<div class="agcs-canvas" style="background:#FFFFFF;" data-screen-label="07 System Lab">
+
+  <div class="top-row" style="color:#1A1A1A;">
+    <div>SYSTEM · ARGUS</div>
+    <div><span class="chev">&gt;&gt;</span>&nbsp; LAB · V03</div>
+  </div>
+
+  <!-- Slim header -->
+  <div style="position:absolute; left:160px; right:160px; top:260px;
+              font-family:'N27',system-ui,sans-serif; font-weight:500;
+              font-size:72px; line-height:1.1; color:#000;">
+    Workflow architecture &mdash; assessment to synthesis.
+  </div>
+
+  <!-- Construction grid + diagram -->
+  <div style="position:absolute; left:160px; right:160px; top:520px; bottom:280px;
+              background-image:
+                linear-gradient(to right,  #E5E5E5 1px, transparent 1px),
+                linear-gradient(to bottom, #E5E5E5 1px, transparent 1px);
+              background-size: 80px 80px;">
+
+    <!-- Nodes -->
+    <svg viewBox="0 0 3520 1280" preserveAspectRatio="xMinYMid meet"
+         style="width:100%; height:100%; display:block;">
+      <!-- 4 nodes in a horizontal flow -->
+      <g font-family="'IBM Plex Mono', monospace" font-size="36"
+         text-anchor="middle" fill="#1A1A1A">
+
+        <!-- Node 1 -->
+        <rect x="80"   y="500" width="640" height="280" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+        <text x="400" y="620" font-size="32" letter-spacing="3" font-weight="500">01 · INTAKE</text>
+        <text x="400" y="700" font-size="28" fill="#1A1A1A">Executive responses</text>
+
+        <!-- Node 2 -->
+        <rect x="1000" y="500" width="640" height="280" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+        <text x="1320" y="620" font-size="32" letter-spacing="3" font-weight="500">02 · PATTERN</text>
+        <text x="1320" y="700" font-size="28" fill="#1A1A1A">Signal extraction</text>
+
+        <!-- Node 3 -->
+        <rect x="1920" y="500" width="640" height="280" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+        <text x="2240" y="620" font-size="32" letter-spacing="3" font-weight="500">03 · TENSIONS</text>
+        <text x="2240" y="700" font-size="28" fill="#1A1A1A">Trade-offs surfaced</text>
+
+        <!-- Node 4 (LIME -- the one accent) -->
+        <rect x="2840" y="500" width="640" height="280" fill="#BEFF3A" stroke="#000" stroke-width="2"/>
+        <text x="3160" y="620" font-size="32" letter-spacing="3" font-weight="500" fill="#000">04 · SYNTHESIS</text>
+        <text x="3160" y="700" font-size="28" fill="#000">Conclusion-first deck</text>
+
+        <!-- Connectors -->
+        <line x1="720"  y1="640" x2="1000" y2="640" stroke="#1A1A1A" stroke-width="2"/>
+        <line x1="1640" y1="640" x2="1920" y2="640" stroke="#1A1A1A" stroke-width="2"/>
+        <line x1="2560" y1="640" x2="2840" y2="640" stroke="#1A1A1A" stroke-width="2"/>
+
+        <!-- Chevron marks under each connector -->
+        <text x="860"  y="610" font-size="40" letter-spacing="-4">&gt;&gt;</text>
+        <text x="1780" y="610" font-size="40" letter-spacing="-4">&gt;&gt;</text>
+        <text x="2700" y="610" font-size="40" letter-spacing="-4">&gt;&gt;</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="bottom-row" style="color:#1A1A1A;">
+    <div>AGCS&nbsp;|&nbsp;Studio&nbsp;+&nbsp;Lab&nbsp;|</div>
+    <div>SYS · 03</div>
+  </div>
+
+</div>
+<script src="_fit.js"></script>
+</body>
+</html>

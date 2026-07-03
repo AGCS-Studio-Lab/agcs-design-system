@@ -1,0 +1,50 @@
+/* ============================================================
+   AGCS slide chrome -- 4K canvas (3840 x 2160).
+   Each slide HTML uses transform: scale() so it fits any viewport
+   while keeping absolute 4K coordinates internally.
+   ============================================================ */
+@import url("../colors_and_type.css");
+
+html, body {
+  margin: 0; padding: 0;
+  background: #1a1a1a;        /* letterbox color around the canvas */
+  overflow: hidden;
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.agcs-canvas {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 3840px;
+  height: 2160px;
+  transform-origin: top left;
+  overflow: hidden;
+}
+
+/* Body sets a CSS var --scale via JS in slide HTML. */
+.agcs-canvas {
+  transform: translate(-50%, -50%) scale(var(--scale, 1));
+}
+
+/* === Shared chrome rows === */
+.slide-edge {
+  position: absolute;
+  inset: 0;
+  padding: 100px 160px;
+  box-sizing: border-box;
+}
+.top-row, .bottom-row {
+  position: absolute;
+  left: 160px; right: 160px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 36px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.top-row    { top: 100px; }
+.bottom-row { bottom: 100px; }
+
+.chev { letter-spacing: -0.04em; }
