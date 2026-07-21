@@ -1,16 +1,21 @@
 /* ============================================================
-   AGCS | Studio + Lab -- Design Tokens   v2 (N27 integration)
+   AGCS | Studio + Lab -- Design Tokens   v3 (functional palette + Plex Sans)
    ============================================================
-   COLOR is RESTRICTED. Do not introduce blues, purples, ambers,
-   reds, or any color outside this file. Especially no blues --
-   blues place AGCS in the McKinsey / BCG / Deloitte cluster,
-   which the brand deliberately rejects.
+   COLOR is RESTRICTED. Do not introduce any color outside this
+   file. v3 (2026-07-20 brand ruling) updates Lime to #C8FF29 and
+   adds a FUNCTIONAL palette: Data blue #00A1F1, Signal yellow
+   #FFFF00, Signal red #ED1C24 (plus black, obviously). Functional
+   colors are role-bound (data / warning / risk) -- EXACT values
+   only, never decorative. Any OTHER blue, green, amber, red or
+   purple stays off-brand, as do gradients: decorative blues still
+   place AGCS in the McKinsey / BCG / Deloitte cluster the brand
+   deliberately rejects.
 
-   TYPE -- v2:
-     - N27 (Regular 400, Medium 500, Bold 700) -- display + headings.
-       Loaded LOCALLY from /fonts via @font-face. Replaces Archivo
-       and Helvetica everywhere in the system.
-     - IBM Plex Mono Regular -- body, data, labels, footers, stamps.
+   TYPE -- v3:
+     - Titulo     > N27 (Regular 400, Medium 500, Bold 700) --
+       display + titles. Loaded LOCALLY from /fonts via @font-face.
+     - Sub titulo > IBM Plex Sans -- subtitles / subheads.
+     - Texto      > IBM Plex Mono -- body, data, labels, footers, stamps.
      - Crimson Pro Italic -- quotes only.
 
    If the N27 files in /fonts are missing (license still pending),
@@ -78,6 +83,48 @@
 }
 
 
+/* ---------- Local @font-face -- IBM Plex Sans (subtitles, v3) ------------- */
+/* v3 update: the brand ruling of 2026-07-20 gives subtitles their own face.
+   Titulo > N27 · Sub titulo > IBM Plex Sans · Texto > IBM Plex Mono.
+   Four weights load; the rest of the family stays on disk unused. */
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local("IBM Plex Sans"),
+       local("IBMPlexSans-Regular"),
+       url("fonts/IBMPlexSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: local("IBM Plex Sans Medium"),
+       local("IBMPlexSans-Medium"),
+       url("fonts/IBMPlexSans-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: local("IBM Plex Sans SemiBold"),
+       local("IBMPlexSans-SemiBold"),
+       url("fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local("IBM Plex Sans Bold"),
+       local("IBMPlexSans-Bold"),
+       url("fonts/IBMPlexSans-Bold.ttf") format("truetype");
+}
+
+
 /* ---------- Local @font-face -- Crimson Pro (quote layout only) ----------- */
 /* v2 final: Crimson Pro Italic is now local too. The system has zero CDN
    dependencies as of this commit -- fully air-gapped delivery. The italic
@@ -101,14 +148,19 @@
 
 
 /* ============================================================
-   COLOR TOKENS -- five colors, no more.
+   COLOR TOKENS -- core five + v3 functional palette.
    ============================================================ */
 :root {
   --obsidian: #000000;   /* primary dark -- covers, dividers, quotes        */
   --paper:    #FFFFFF;   /* primary light -- content slide backgrounds      */
-  --lime:     #BEFF3A;   /* SINGLE accent -- icon, one chart bar, callout   */
+  --lime:     #C8FF29;   /* SINGLE accent -- v3 value (legacy v2: #BEFF3A)  */
   --carbon:   #1A1A1A;   /* long-form body on paper (softer than obsidian) */
   --mist:     #E5E5E5;   /* dividers, construction grid (1px)              */
+
+  /* ---- v3 functional palette (2026-07-20) -- role-bound, exact values --- */
+  --data: #00A1F1;       /* data viz, system indicators, information layers */
+  --warn: #FFFF00;       /* warnings, pending actions, attention-required   */
+  --risk: #ED1C24;       /* risks, blockers, critical alerts, delays        */
 
   /* ---- Semantic aliases (always resolve to the five above) -------------- */
   --bg-dark:        var(--obsidian);
@@ -133,9 +185,12 @@
    sans (San Francisco / Segoe / Roboto) -- never to a serif.
    ============================================================ */
 :root {
-  /* Display & headings -- N27. Three weights: Regular, Medium, Bold. */
+  /* Titulo -- N27. Three weights: Regular, Medium, Bold. */
   --font-display: "N27", system-ui, sans-serif;
   --font-heading: "N27", system-ui, sans-serif;
+
+  /* Sub titulo -- IBM Plex Sans (v3). */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
 
   /* Body, data, labels, footers, stamps -- IBM Plex Mono Regular.
      This is the technical signature of the brand. */
@@ -235,7 +290,8 @@
 }
 
 .agcs-h2 {
-  font-family: var(--font-heading);
+  /* v3: subtitles move from N27 to IBM Plex Sans (Sub titulo > IBM Plex Sans) */
+  font-family: var(--font-sans);
   font-weight: var(--weight-medium);
   font-size:   var(--t-h2);
   line-height: var(--lh-heading);

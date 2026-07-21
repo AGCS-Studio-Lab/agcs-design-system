@@ -101,25 +101,33 @@ No emoji. No unicode dingbats. No decorative rules. The chevron `>>` is the only
 
 ### Color
 
-Five colors, total. Anything else is off-brand.
+Core five + the v3 functional palette. Anything else is off-brand.
 
 | Token | Hex | Use |
 |---|---|---|
 | Obsidian | `#000000` | Covers, section dividers, quote slides. Body text on paper. |
 | Paper | `#FFFFFF` | Content slide backgrounds. Body text on obsidian. |
-| **Lime** | `#BEFF3A` | The single accent. **One element per slide**: the icon, OR one chart bar, OR one data callout. Never background. Never body text. |
+| **Lime** | `#C8FF29` | The single accent (v3 value; legacy v2 `#BEFF3A`). **One element per slide**: the icon, OR one chart bar, OR one data callout. Never background. Never body text. |
 | Carbon | `#1A1A1A` | Long-form body on paper (softer than Obsidian, lower fatigue). |
 | Mist | `#E5E5E5` | Hairline dividers, construction grid in Lab register. |
 
-**No blues, greens, ambers, reds, purples, or gradients of any kind.** Especially no blues -- blues place AGCS in the McKinsey / BCG / Deloitte cluster the brand deliberately rejects.
+**v3 functional palette (brand ruling 2026-07-20)** -- role-bound, exact values, never decorative:
 
-### Typography  &mdash;  v2 (N27)
+| Token | Hex | Role |
+|---|---|---|
+| Data | `#00A1F1` | Data visualization, system indicators, information layers |
+| Warn | `#FFFF00` | Warnings, pending actions, attention-required states |
+| Risk | `#ED1C24` | Risks, blockers, critical alerts, delays |
+
+**Any other blue, green, amber, red, purple, or gradient of any kind remains off-brand.** Decorative blues still place AGCS in the McKinsey / BCG / Deloitte cluster the brand deliberately rejects -- the Data blue exists only as a bound functional value, never as a brand or decoration color.
+
+### Typography  &mdash;  v3 (Titulo > N27 · Sub titulo > IBM Plex Sans · Texto > IBM Plex Mono)
 
 | Role | Family | Weight | Where |
 |---|---|---|---|
-| Display | **N27** | Bold (700) | Slide titles, insight headlines, cover, section dividers |
-| Heading | **N27** | Medium (500) | Subtitles |
-| Body / data / labels / footers / stamps | **IBM Plex Mono** | Regular (400) | Everywhere else -- this is the *technical signature* of the brand |
+| Titulo / display | **N27** | Bold (700), Medium (500) | Slide titles, insight headlines, cover, section dividers |
+| Sub titulo | **IBM Plex Sans** | Regular (400) &ndash; Bold (700) | Subtitles / subheads (v3 -- replaces N27 Medium in this role) |
+| Texto / data / labels / footers / stamps | **IBM Plex Mono** | Regular (400) | Everywhere else -- this is the *technical signature* of the brand |
 | Quotes only | **Crimson Pro** | Italic | Centered on obsidian background |
 
 **N27** is the canonical AGCS display face as of v2. It replaces Archivo and Helvetica Neue everywhere they previously appeared. It loads **locally** via `@font-face` from `fonts/` -- as does IBM Plex Mono (v2 update). The only remaining CDN dependency is Crimson Pro Italic, which touches one slide layout (quotes); see *Fonts* below for the full picture.
