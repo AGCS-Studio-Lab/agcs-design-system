@@ -2,8 +2,11 @@
    AGCS | Studio + Lab -- Design Tokens   v3 (functional palette + Plex Sans)
    ============================================================
    COLOR is RESTRICTED. Do not introduce any color outside this
-   file. v3 (2026-07-20 brand ruling) updates Lime to #C8FF29 and
-   adds a FUNCTIONAL palette: Data blue #00A1F1, Signal yellow
+   file. Lime is #BEFF3A -- the 2026-07-20 ruling moved it to
+   #C8FF29, but that was reverted: the icon library ships as baked
+   PNGs at exactly #BEFF3A and icons sit beside lime fills on the
+   same slide, so the token has to follow the library. v3's
+   FUNCTIONAL palette stands: Data blue #00A1F1, Signal yellow
    #FFFF00, Signal red #ED1C24 (plus black, obviously). Functional
    colors are role-bound (data / warning / risk) -- EXACT values
    only, never decorative. Any OTHER blue, green, amber, red or
@@ -153,7 +156,7 @@
 :root {
   --obsidian: #000000;   /* primary dark -- covers, dividers, quotes        */
   --paper:    #FFFFFF;   /* primary light -- content slide backgrounds      */
-  --lime:     #C8FF29;   /* SINGLE accent -- v3 value (legacy v2: #BEFF3A)  */
+  --lime:     #BEFF3A;   /* SINGLE accent -- MUST equal the icon library    */
   --carbon:   #1A1A1A;   /* long-form body on paper (softer than obsidian) */
   --mist:     #E5E5E5;   /* dividers, construction grid (1px)              */
 
@@ -359,14 +362,29 @@
   /* Rule thicknesses */
   --rule-hair: 1px;            /* construction grid, dividers              */
   --rule-thick: 8px;           /* lime callout underline / chart bar emph. */
+
+  /* ---- Construction grid -- single source of truth --------------------- */
+  /* The Lab register paints this full-bleed behind the canvas. Defined once
+     here so `.agcs-construction-grid` and the `.reg-lab` register in
+     slides/_slide.css cannot drift apart. */
+  --grid-step: 80px;           /* @ 4K -- divides both canvas dimensions   */
+  /* NOT --rule-hair. Slides are always displayed scaled (3840 -> viewport),
+     so a 1px line at 4K renders at 0.2-0.5px and disappears -- which is why
+     the grid read as "missing" even though it was there. 4px survives the
+     scale down to 1920 (2px) and stays legible in preview cards. Mist is
+     light enough that it never competes with content. */
+  --grid-line-w: 4px;
+  --grid-image:
+    linear-gradient(to right,  var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w)),
+    linear-gradient(to bottom, var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w));
 }
 
-/* Construction grid -- only visible in Lab register (System slides) */
+/* Construction grid -- the signature of the Lab register.
+   Slides get it via the `reg-lab` class (see slides/_slide.css), which paints
+   it full-bleed. Use this class directly only for a grid on a sub-region. */
 .agcs-construction-grid {
-  background-image:
-    linear-gradient(to right,  var(--grid-line) var(--rule-hair), transparent var(--rule-hair)),
-    linear-gradient(to bottom, var(--grid-line) var(--rule-hair), transparent var(--rule-hair));
-  background-size: 80px 80px;  /* @ 4K -- divisible by canvas dims          */
+  background-image: var(--grid-image);
+  background-size:  var(--grid-step) var(--grid-step);
 }
 
 
