@@ -158,7 +158,7 @@
   --paper:    #FFFFFF;   /* primary light -- content slide backgrounds      */
   --lime:     #BEFF3A;   /* SINGLE accent -- MUST equal the icon library    */
   --carbon:   #1A1A1A;   /* long-form body on paper (softer than obsidian) */
-  --mist:     #E5E5E5;   /* dividers, construction grid (1px)              */
+  --mist:     #E5E5E5;   /* dividers and hairlines -- NOT the grid          */
 
   /* ---- v3 functional palette (2026-07-20) -- role-bound, exact values --- */
   --data: #00A1F1;       /* data viz, system indicators, information layers */
@@ -173,7 +173,10 @@
   --fg-muted-light: #6B6B6B;          /* derived from mist family -- labels */
   --fg-muted-dark:  #9A9A9A;
   --rule:           var(--mist);
-  --grid-line:      var(--mist);
+  /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
+     band borders, journey-map cell borders); the grid needs to sit lighter
+     than those without dragging them along, so it gets its own value. */
+  --grid-line:      #F2F2F2;
   --accent:         var(--lime);
 }
 
