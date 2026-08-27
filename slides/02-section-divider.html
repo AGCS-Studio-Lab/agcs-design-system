@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="30% Obsidian header band · section title on Paper" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="Register switch · Studio band / Lab grid · section title on Paper" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -7,19 +7,21 @@
 <link rel="stylesheet" href="_slide.css">
 </head>
 <body>
-<div class="agcs-canvas" style="background:#FFFFFF;" data-screen-label="02 Section Divider">
+<!-- REGISTER: swap `reg-studio` for `reg-lab` to move this slide to the Lab
+     register (hairline instead of the Obsidian band, construction grid
+     full-bleed, LAB stamp). Nothing else in this file changes. -->
+<div class="agcs-canvas reg-studio" data-screen-label="02 Section Divider">
 
-  <!-- Obsidian header band (~30%) -->
-  <div style="position:absolute; left:0; top:0; right:0; height:30%; background:#000; color:#fff;">
-    <div class="top-row" style="color:#fff;">
+  <!-- Header band. Fill and text color belong to the register, not here. -->
+  <div class="band band-section">
+    <div class="top-row">
       <div><span class="chev">&gt;&gt;</span>&nbsp; CULTURE BY DESIGN</div>
-      <div>02 / 19</div>
+      <div>
+        <span class="only-studio">02 / 19</span>
+        <span class="only-lab"><span class="chev">&gt;&gt;</span>&nbsp;LAB · V03</span>
+      </div>
     </div>
-    <div style="position:absolute; left:160px; bottom:140px;
-                font-family:'IBM Plex Mono',monospace; font-size:36px;
-                letter-spacing:0.08em; text-transform:uppercase; color:#fff;">
-      SECTION 02
-    </div>
+    <div class="band-label">SECTION 02</div>
   </div>
 
   <!-- Paper body with section title -->
@@ -34,8 +36,14 @@
     </div>
   </div>
 
+  <!-- TOPIC ICON -- system owns the slot, the deck owns the choice.
+       Slide 02 has no other lime element, so verde1 is allowed here and
+       becomes this slide's single lime element. Swap the number for the
+       icon that matches this section. -->
+  <img class="topic-icon" src="../assets/icons/alxgdo/verde1/12.png" alt="">
+
   <!-- Bottom attribution -->
-  <div class="bottom-row" style="color:#1A1A1A;">
+  <div class="bottom-row">
     <div>AGCS&nbsp;|&nbsp;Studio&nbsp;+&nbsp;Lab&nbsp;|</div>
     <div>02</div>
   </div>

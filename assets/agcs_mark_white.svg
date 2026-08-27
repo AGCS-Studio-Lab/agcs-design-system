@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 620" role="img" aria-label="AGCS | Studio + Lab">
+  <!-- AGCS mark. Geometry measured from the Customer Journey deck: two columns
+       with a uniform 20/600 gutter, the right column split by the same gutter.
+       RECONSTRUCTION - replace with the master vector when available. -->
+  <rect x="0"   y="0"   width="290" height="620" fill="#FFFFFF"/>
+  <rect x="310" y="0"   width="290" height="450" fill="#FFFFFF"/>
+  <rect x="310" y="470" width="290" height="150" fill="#FFFFFF"/>
+</svg>

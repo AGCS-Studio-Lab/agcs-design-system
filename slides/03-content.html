@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="22% header band · 1 lime bar · mono body" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="Register switch · 22% band or Lab grid · 1 lime bar · mono body" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -7,24 +7,31 @@
 <link rel="stylesheet" href="_slide.css">
 </head>
 <body>
-<div class="agcs-canvas" style="background:#FFFFFF;" data-screen-label="03 Content">
+<!-- REGISTER: swap `reg-studio` for `reg-lab`. The title lives inside the
+     band, so in the Lab register it drops to Carbon on Paper over the
+     construction grid. Geometry is identical either way. -->
+<div class="agcs-canvas reg-studio" data-screen-label="03 Content">
 
-  <!-- Obsidian header band (~22%) -->
-  <div style="position:absolute; left:0; top:0; right:0; height:22%; background:#000; color:#fff;">
-    <div class="top-row" style="color:#fff;">
+  <!-- Header band. Fill and text color belong to the register, not here. -->
+  <div class="band band-content">
+    <div class="top-row">
       <div>Q2</div>
-      <div>04 / 19</div>
+      <div>
+        <span class="only-studio">04 / 19</span>
+        <span class="only-lab"><span class="chev">&gt;&gt;</span>&nbsp;LAB · V03</span>
+      </div>
     </div>
-    <div style="position:absolute; left:160px; right:160px; bottom:120px;
+    <div class="band-title"
+         style="position:absolute; left:160px; right:160px; bottom:120px;
                 font-family:'N27',system-ui,sans-serif; font-weight:700;
-                font-size:96px; line-height:1.08; color:#fff; max-width:2800px;">
+                font-size:96px; line-height:1.08; max-width:2800px;">
       El mayor error: no asumir costos<br>reales de poder, riesgo o trade-offs.
     </div>
   </div>
 
   <!-- Paper body with chart and body copy -->
-  <div style="position:absolute; left:160px; right:160px; top:680px; bottom:280px;
-              display:flex; gap:160px; align-items:flex-start; color:#1A1A1A;">
+  <div style="position:absolute; left:160px; right:960px; top:680px; bottom:280px;
+              display:flex; gap:120px; align-items:flex-start; color:#1A1A1A;">
 
     <!-- Left: chart -->
     <div style="flex: 1.1; min-width:0;">
@@ -37,7 +44,7 @@
         <div style="flex:1; height:36%;  background:#1A1A1A;"></div>
         <div style="flex:1; height:10%;  background:#1A1A1A;"></div>
         <div style="flex:1; height:30%;  background:#1A1A1A;"></div>
-        <div style="flex:1; height:100%; background:#BEFF3A;"></div>
+        <div style="flex:1; height:100%; background:var(--lime);"></div>
       </div>
       <div style="display:flex; gap:48px; padding:32px 8px 0;
                   font-family:'IBM Plex Mono',monospace; font-size:36px;
@@ -69,8 +76,13 @@
 
   </div>
 
+  <!-- TOPIC ICON -- the lime is already spent on the chart bar, so this
+       icon MUST be negro, not verde1. One lime element per slide. -->
+  <img class="topic-icon" src="../assets/icons/alxgdo/negro/07.png" alt=""
+       style="--icon-size:520px;">
+
   <!-- Bottom attribution -->
-  <div class="bottom-row" style="color:#1A1A1A;">
+  <div class="bottom-row">
     <div>AGCS&nbsp;|&nbsp;Studio&nbsp;+&nbsp;Lab&nbsp;|</div>
     <div>04</div>
   </div>
