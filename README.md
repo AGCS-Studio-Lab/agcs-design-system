@@ -108,7 +108,8 @@ Core five + the v3 functional palette. Anything else is off-brand.
 | Paper | `#FFFFFF` | Content slide backgrounds. Body text on obsidian. |
 | **Lime** | `#BEFF3A` | The accent. Must equal the icon library: those are baked PNGs at `#BEFF3A` and they sit beside lime fills on the same slide, so the token follows the library. **One point of focus per slide**: the topic icon, OR one chart bar, OR one table cell, OR one callout. The `.chip-lime` eyebrow is exempt -- it tags the slide rather than competing for the eye, so chip + one focus element is correct. Never background, never body text. |
 | Carbon | `#1A1A1A` | Long-form body on paper (softer than Obsidian, lower fatigue). |
-| Mist | `#E5E5E5` | Hairline dividers, construction grid in Lab register. |
+| Mist | `#E5E5E5` | Hairline dividers, band borders, journey-map cell borders. **Not** the construction grid. |
+| Grid line | `#F2F2F2` | The construction grid only. Sits lighter than Mist on purpose: at 4px it must read as texture, not as a second layer of rules competing with the content. |
 
 **v3 functional palette (brand ruling 2026-07-20)** -- role-bound, exact values, never decorative:
 
