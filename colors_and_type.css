@@ -2,10 +2,11 @@
    AGCS | Studio + Lab -- Design Tokens   v3 (functional palette + Plex Sans)
    ============================================================
    COLOR is RESTRICTED. Do not introduce any color outside this
-   file. Lime is #BEFF3A -- the 2026-07-20 ruling moved it to
-   #C8FF29, but that was reverted: the icon library ships as baked
-   PNGs at exactly #BEFF3A and icons sit beside lime fills on the
-   same slide, so the token has to follow the library. v3's
+   file. Lime is #C8FF29 -- the v3 value, ruled on 2026-07-20 and
+   applied everywhere on 2026-08-27. The icon library was
+   regenerated to match: all 142 lime PNGs under assets/icons were
+   recolored from the legacy v2 #BEFF3A, so icons and lime fills on
+   the same slide are the same color again. v3's
    FUNCTIONAL palette stands: Data blue #00A1F1, Signal yellow
    #FFFF00, Signal red #ED1C24 (plus black, obviously). Functional
    colors are role-bound (data / warning / risk) -- EXACT values
@@ -156,7 +157,7 @@
 :root {
   --obsidian: #000000;   /* primary dark -- covers, dividers, quotes        */
   --paper:    #FFFFFF;   /* primary light -- content slide backgrounds      */
-  --lime:     #BEFF3A;   /* SINGLE accent -- MUST equal the icon library    */
+  --lime:     #C8FF29;   /* SINGLE accent -- MUST equal the icon library    */
   --carbon:   #1A1A1A;   /* long-form body on paper (softer than obsidian) */
   --mist:     #E5E5E5;   /* dividers and hairlines -- NOT the grid          */
 

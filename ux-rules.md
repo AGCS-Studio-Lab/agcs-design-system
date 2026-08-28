@@ -17,7 +17,7 @@ role-bound y con label.
 ## 1. Accesibilidad — no-negociable
 
 - **Contraste WCAG AA**: ≥ **4.5:1** texto normal, ≥ **3:1** texto grande y componentes/bordes.
-  - ⚠️ **Lime (`#BEFF3A`) sobre fondo claro ≈ 1.4:1 — prohibido para texto o datos finos.** Lime solo como **relleno** con texto oscuro (Obsidian/ink) encima, o como marca de 1 dato.
+  - ⚠️ **Lime (`#C8FF29`) sobre fondo claro ≈ 1.4:1 — prohibido para texto o datos finos.** Lime solo como **relleno** con texto oscuro (Obsidian/ink) encima, o como marca de 1 dato.
   - ⚠️ Lo mismo aplica a **warn `#FFFF00`**: nunca texto amarillo sobre claro; solo relleno con texto oscuro.
   - Muted (#6B6B6B sobre claro ≈ 5.7:1) ok para secundario; no para texto crítico chico sobre superficies grises.
 - **Nunca solo el color** comunica estado → estados **label-driven** siempre (el label carga el significado; el color funcional lo refuerza).
