@@ -2,7 +2,7 @@
   <!-- AGCS mark. Geometry measured from the Customer Journey deck: two columns
        with a uniform 20/600 gutter, the right column split by the same gutter.
        RECONSTRUCTION - replace with the master vector when available. -->
-  <rect x="0"   y="0"   width="290" height="620" fill="#BEFF3A"/>
-  <rect x="310" y="0"   width="290" height="450" fill="#BEFF3A"/>
-  <rect x="310" y="470" width="290" height="150" fill="#BEFF3A"/>
+  <rect x="0"   y="0"   width="290" height="620" fill="#C8FF29"/>
+  <rect x="310" y="0"   width="290" height="450" fill="#C8FF29"/>
+  <rect x="310" y="470" width="290" height="150" fill="#C8FF29"/>
 </svg>

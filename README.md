@@ -106,7 +106,7 @@ Core five + the v3 functional palette. Anything else is off-brand.
 |---|---|---|
 | Obsidian | `#000000` | Covers, section dividers, quote slides. Body text on paper. |
 | Paper | `#FFFFFF` | Content slide backgrounds. Body text on obsidian. |
-| **Lime** | `#BEFF3A` | The accent. Must equal the icon library: those are baked PNGs at `#BEFF3A` and they sit beside lime fills on the same slide, so the token follows the library. **One point of focus per slide**: the topic icon, OR one chart bar, OR one table cell, OR one callout. The `.chip-lime` eyebrow is exempt -- it tags the slide rather than competing for the eye, so chip + one focus element is correct. Never background, never body text. |
+| **Lime** | `#C8FF29` | The accent (v3, applied 2026-08-27; legacy v2 was `#BEFF3A`). Must equal the icon library: those are baked PNGs, regenerated to this value on 2026-08-27 so icons and lime fills match on the same slide. If this token ever changes again, the PNGs under `assets/icons` must be regenerated with it. **One point of focus per slide**: the topic icon, OR one chart bar, OR one table cell, OR one callout. The `.chip-lime` eyebrow is exempt -- it tags the slide rather than competing for the eye, so chip + one focus element is correct. Never background, never body text. |
 | Carbon | `#1A1A1A` | Long-form body on paper (softer than Obsidian, lower fatigue). |
 | Mist | `#E5E5E5` | Hairline dividers, band borders, journey-map cell borders. **Not** the construction grid. |
 | Grid line | `#F2F2F2` | The construction grid only. Sits lighter than Mist on purpose: at 4px it must read as texture, not as a second layer of rules competing with the content. |
@@ -215,7 +215,7 @@ The brand now ships its **own proprietary icon library**: hand-drawn line icons 
 
 | Path | Contents |
 |---|---|
-| `assets/icons/alxgdo/` | **The main set -- 34 line icons** (flask, eye, gear, binoculars, telescope, lightbulb, charts, checkboxes, arrows...). Colorway folders: `negro/`, `blanco/`, `verde1/` (**= Lime #BEFF3A**), `verde2/` (#C0E234, legacy), `verde3/` (#88B04B, legacy). Files `01.png`-`34.png`, plus `animation.gif`. |
+| `assets/icons/alxgdo/` | **The main set -- 34 line icons** (flask, eye, gear, binoculars, telescope, lightbulb, charts, checkboxes, arrows...). Colorway folders: `negro/`, `blanco/`, `verde1/` (**= Lime #C8FF29**, recolored from #BEFF3A on 2026-08-27), `verde2/` (#C0E234, legacy), `verde3/` (#88B04B, legacy). Files `01.png`-`34.png`, plus `animation.gif`. |
 | `assets/icons/icons-grid/` | 16-icon subset drawn over the visible construction grid. `color-01/` + `color-02/` (lime variants), `color-03/` (white), `color-04/` (black). |
 | `assets/icons/new-icons/` | 11 newer icons (brain, gauge, growth, kite/diamond, fast-forward, tools). Same 4 colorway folders. |
 | `assets/icons/grid-templates/` | The 14 icon-construction grids + `principal.png`, in `black/` and `white/`. Reference material for drawing new icons -- not for use on slides. |
