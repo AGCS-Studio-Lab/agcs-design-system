@@ -1,5 +1,5 @@
 /* ============================================================
-   AGCS | Studio + Lab -- Design Tokens   v3 (functional palette + Plex Sans)
+   AGCS | Studio + Lab -- Design Tokens   v5 (Crimson subtitle · no band · grid-native)
    ============================================================
    COLOR is RESTRICTED. Do not introduce any color outside this
    file. Lime is #C8FF29 -- the v3 value, ruled on 2026-07-20 and
@@ -15,12 +15,14 @@
    place AGCS in the McKinsey / BCG / Deloitte cluster the brand
    deliberately rejects.
 
-   TYPE -- v3:
+   TYPE -- v5 (ruling 2026-09-02):
      - Titulo     > N27 (Regular 400, Medium 500, Bold 700) --
        display + titles. Loaded LOCALLY from /fonts via @font-face.
-     - Sub titulo > IBM Plex Sans -- subtitles / subheads.
+     - Sub titulo > Crimson Pro BOLD ITALIC (700) -- the subtitle under a
+       title, the cover deck line, the divider's one-line conclusion.
+       This replaces IBM Plex Sans (v3), which is no longer a role.
      - Texto      > IBM Plex Mono -- body, data, labels, footers, stamps.
-     - Crimson Pro Italic -- quotes only.
+     - Crimson Pro Italic 400 -- the pull quote only (quote layout).
 
    If the N27 files in /fonts are missing (license still pending),
    the browser silently falls back to system-ui. (v2 status: installed.)
@@ -87,53 +89,33 @@
 }
 
 
-/* ---------- Local @font-face -- IBM Plex Sans (subtitles, v3) ------------- */
-/* v3 update: the brand ruling of 2026-07-20 gives subtitles their own face.
-   Titulo > N27 · Sub titulo > IBM Plex Sans · Texto > IBM Plex Mono.
-   Four weights load; the rest of the family stays on disk unused. */
+/* ---------- IBM Plex Sans -- RETIRED as a role (v5) ------------------------ */
+/* v3 gave subtitles to IBM Plex Sans. v5 (2026-09-02) moves the subtitle to
+   Crimson Pro Bold Italic, so Plex Sans has no role left in the system and
+   is NOT loaded. The files stay in /fonts for archival fidelity only. Do not
+   re-introduce a sans subtitle without Max ruling on it. */
+
+
+/* ---------- Local @font-face -- Crimson Pro (subtitle + quote) ------------ */
+/* Two italics and nothing else:
+     700 italic -> the SUBTITLE (v5). Every subtitle, deck line and divider
+                   conclusion in the system is Crimson Pro Bold Italic.
+     400 italic -> the pull QUOTE (quote layout only).
+   Zero CDN: both load from /fonts. The upright Crimson Pro weights are
+   parked in /fonts/_reserve/ and are not part of the system. */
 @font-face {
-  font-family: "IBM Plex Sans";
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: local("IBM Plex Sans"),
-       local("IBMPlexSans-Regular"),
-       url("fonts/IBMPlexSans-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-  src: local("IBM Plex Sans Medium"),
-       local("IBMPlexSans-Medium"),
-       url("fonts/IBMPlexSans-Medium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-  src: local("IBM Plex Sans SemiBold"),
-       local("IBMPlexSans-SemiBold"),
-       url("fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
-}
-@font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "Crimson Pro";
   font-weight: 700;
-  font-style: normal;
+  font-style: italic;
   font-display: swap;
-  src: local("IBM Plex Sans Bold"),
-       local("IBMPlexSans-Bold"),
-       url("fonts/IBMPlexSans-Bold.ttf") format("truetype");
+  /* The canonical file is CrimsonPro-BoldItalic.ttf. Until it lands in
+     /fonts, the chain falls through to SemiBold Italic (600) -- the closest
+     weight on disk -- so the subtitle never silently drops to Regular. */
+  src: local("Crimson Pro Bold Italic"),
+       local("CrimsonPro-BoldItalic"),
+       url("fonts/CrimsonPro-BoldItalic.ttf") format("truetype"),
+       url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
 }
-
-
-/* ---------- Local @font-face -- Crimson Pro (quote layout only) ----------- */
-/* v2 final: Crimson Pro Italic is now local too. The system has zero CDN
-   dependencies as of this commit -- fully air-gapped delivery. The italic
-   400 is the only weight the system uses; the other Crimson Pro weights
-   shipped by Google Fonts are parked in /fonts/_reserve/. */
 @font-face {
   font-family: "Crimson Pro";
   font-weight: 400;
@@ -196,14 +178,15 @@
   --font-display: "N27", system-ui, sans-serif;
   --font-heading: "N27", system-ui, sans-serif;
 
-  /* Sub titulo -- IBM Plex Sans (v3). */
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  /* Sub titulo -- Crimson Pro Bold Italic (v5). Always paired with
+     font-style: italic and weight 700; see .agcs-h2 / .agcs-subtitle. */
+  --font-subtitle: "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Body, data, labels, footers, stamps -- IBM Plex Mono Regular.
      This is the technical signature of the brand. */
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* Quotes ONLY -- Crimson Pro Italic. */
+  /* Quotes ONLY -- Crimson Pro Italic 400 (the subtitle is the 700). */
   --font-quote: "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Weights -- N27 ships Regular, Medium, Bold. Light / Black exist in
@@ -227,7 +210,7 @@
                             (descenders intentionally touch caps below)
      --t-section   200px  -- section divider title
      --t-h1        120px  -- content slide title
-     --t-h2         72px  -- subhead
+     --t-h2         72px  -- subtitle (Crimson Pro Bold Italic)
      --t-body       40px  -- mono body
      --t-label      28px  -- mono label / stamp / footer
    ============================================================ */
@@ -296,10 +279,14 @@
   color: inherit;
 }
 
-.agcs-h2 {
-  /* v3: subtitles move from N27 to IBM Plex Sans (Sub titulo > IBM Plex Sans) */
-  font-family: var(--font-sans);
-  font-weight: var(--weight-medium);
+.agcs-h2,
+.agcs-subtitle {
+  /* v5: the subtitle is Crimson Pro BOLD ITALIC. Not Plex Sans (v3), not
+     N27 Medium (v2). The title names the piece in N27; the subtitle states
+     the conclusion in a bold serif italic -- that contrast is the system. */
+  font-family: var(--font-subtitle);
+  font-style:  italic;
+  font-weight: var(--weight-bold);
   font-size:   var(--t-h2);
   line-height: var(--lh-heading);
   color: inherit;
@@ -355,22 +342,29 @@
 
   /* Margin system -- 4K (scale 1:2 for 1920 mocks, 1:4 for 960 thumbs). */
   --pad-slide: 160px;          /* edge padding */
-  --pad-band:  120px;          /* inside header band */
+  --pad-band:  120px;          /* inside the header region */
   --gap-md:    80px;
   --gap-sm:    40px;
 
-  /* Header band heights (% of canvas height) */
-  --band-section: 30%;
-  --band-content: 22%;
+  /* Header region heights, snapped to the 80px construction grid so the
+     hairline lands ON a grid line (640 = 8 steps, 480 = 6 steps). v5: the
+     region is pure geometry -- where the title sits above a hairline. It is
+     NEVER a filled block. The Obsidian header band of v2-v4 does not exist
+     in any real AGCS deck and was removed on 2026-09-02. */
+  --band-section: 640px;       /* ~30% of 2160 */
+  --band-content: 480px;       /* ~22% of 2160 */
 
   /* Rule thicknesses */
   --rule-hair: 1px;            /* construction grid, dividers              */
   --rule-thick: 8px;           /* lime callout underline / chart bar emph. */
 
   /* ---- Construction grid -- single source of truth --------------------- */
-  /* The Lab register paints this full-bleed behind the canvas. Defined once
-     here so `.agcs-construction-grid` and the `.reg-lab` register in
-     slides/_slide.css cannot drift apart. */
+  /* v5: the grid is the brand's signature and everything on a grid slide
+     SNAPS to it -- header hairlines, chart baselines and bar heights, table
+     panels. It appears on every layout except the four "silence" slides
+     (Insight, Quote, End, Logo), which are flat by rule. See
+     slides/_slide.css for the class contract. Defined once here so
+     `.agcs-construction-grid` and slides/_slide.css cannot drift apart. */
   --grid-step: 80px;           /* @ 4K -- divides both canvas dimensions   */
   /* NOT --rule-hair. Slides are always displayed scaled (3840 -> viewport),
      so a 1px line at 4K renders at 0.2-0.5px and disappears -- which is why
@@ -381,14 +375,24 @@
   --grid-image:
     linear-gradient(to right,  var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w)),
     linear-gradient(to bottom, var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w));
+  /* On Obsidian the same grid is drawn in a near-black so it reads as
+     texture from the back of the room without competing with white type. */
+  --grid-line-dark: #1F1F1F;
+  --grid-image-dark:
+    linear-gradient(to right,  var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w)),
+    linear-gradient(to bottom, var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w));
 }
 
-/* Construction grid -- the signature of the Lab register.
-   Slides get it via the `reg-lab` class (see slides/_slide.css), which paints
-   it full-bleed. Use this class directly only for a grid on a sub-region. */
+/* Construction grid -- the ground of the construction layouts (v5).
+   Slides get it from `.agcs-canvas.has-grid` / `.reg-lab` (see
+   slides/_slide.css), full-bleed on Paper and on Obsidian. Use this class for
+   a grid on any other surface -- a handbook page, a card, a product panel. */
 .agcs-construction-grid {
   background-image: var(--grid-image);
   background-size:  var(--grid-step) var(--grid-step);
+}
+.agcs-on-dark.agcs-construction-grid {
+  background-image: var(--grid-image-dark);
 }
 
 

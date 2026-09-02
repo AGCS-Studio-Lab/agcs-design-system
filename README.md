@@ -8,7 +8,9 @@ The brand has **two functional arms** under **one visual identity**:
 - **Studio** -- strategic frameworks, executive assessments, recommendations.
 - **Lab** -- AI-native workflows, system architectures, prototypes.
 
-The Lab is a *register*, not a sub-brand. It does not have its own color, type, or logo. It is signaled only by a small mono stamp at top-right (`>> LAB · v[version]`), visible construction grid lines behind diagrams, and slightly heavier use of monospace in headings.
+The Lab is a *register*, not a sub-brand. It does not have its own color, type, or logo. It is signaled by a small mono stamp at top-right (`>> LAB · v[version]`), slightly heavier use of monospace in headings, and the construction grid on every one of its slides, silence slides included. Studio decks carry the grid on everything except Cover, Insight, Quote, End and Logo.
+
+> **v5 rulings (2026-09-02), from a delivered-deck review:** the subtitle is **Crimson Pro Bold Italic**; there is **no header band** (content and divider slides are Paper with a hairline); the **construction grid is on every layout but the five silence slides** (Cover, Insight, Quote, End, Logo) and everything on it snaps to the 80px step; **slides with a chart, table or diagram carry no topic icon**; and the **cover icon is chosen per deck** from `assets/icons/INDEX.md`, never the same one twice.
 
 ---
 
@@ -36,6 +38,7 @@ These were provided by the client and underpin every decision in this system. Or
 | `colors_and_type.css` | Single source of truth for color + type tokens. Import this anywhere. |
 | `assets/` | Logos, icons, brand marks. Always copy from here -- never re-link to `uploads/`. |
 | `assets/icons/` | The proprietary AGCS icon library -- four sets + construction grids. See *Iconography*. |
+| `assets/icons/INDEX.md` | The icon catalogue: every icon by number, what it depicts, what it can argue. Pick cover and slide icons from here. |
 | `fonts/` | Local font files for **N27** (display, three weights + reserved variants in `_reserve/`) and **IBM Plex Mono** (body, Regular + Medium). See *Fonts* below. |
 | `preview/` | Small HTML cards that populate the Design System tab. One concept per card. |
 | `slides/` | The seven canonical slide layouts as 4K HTML files. |
@@ -121,14 +124,16 @@ Core five + the v3 functional palette. Anything else is off-brand.
 
 **Any other blue, green, amber, red, purple, or gradient of any kind remains off-brand.** Decorative blues still place AGCS in the McKinsey / BCG / Deloitte cluster the brand deliberately rejects -- the Data blue exists only as a bound functional value, never as a brand or decoration color.
 
-### Typography  &mdash;  v3 (Titulo > N27 · Sub titulo > IBM Plex Sans · Texto > IBM Plex Mono)
+### Typography  &mdash;  v5 (Titulo > N27 · Sub titulo > Crimson Pro Bold Italic · Texto > IBM Plex Mono)
 
 | Role | Family | Weight | Where |
 |---|---|---|---|
 | Titulo / display | **N27** | Bold (700), Medium (500) | Slide titles, insight headlines, cover, section dividers |
-| Sub titulo | **IBM Plex Sans** | Regular (400) &ndash; Bold (700) | Subtitles / subheads (v3 -- replaces N27 Medium in this role) |
+| **Sub titulo** | **Crimson Pro** | **Bold Italic (700)** | Every subtitle: the deck line under a cover or sign-off title (`.deck-line`), the one-line conclusion under a divider or content title (`.subtitle`, `.agcs-h2`). v5 -- replaces IBM Plex Sans (v3), which is retired. |
 | Texto / data / labels / footers / stamps | **IBM Plex Mono** | Regular (400) | Everywhere else -- this is the *technical signature* of the brand |
-| Reflective line | **Crimson Pro** | Italic | The pull quote, and the one-line promise under a cover or sign-off title (`.deck-line`). One per slide. |
+| Pull quote | **Crimson Pro** | Italic (400) | The quote layout only. The only place the Regular italic appears. |
+
+The title names the piece in N27. The subtitle states the conclusion in a bold serif italic. That contrast -- geometric sans against bold italic serif -- is the system's signature pairing; a sans or mono subtitle flattens it, which is why Plex Sans was retired.
 
 **N27** is the canonical AGCS display face as of v2. It replaces Archivo and Helvetica Neue everywhere they previously appeared. It loads **locally** via `@font-face` from `fonts/` -- as does IBM Plex Mono (v2 update). There is no CDN dependency: Crimson Pro Italic is local too; see *Fonts* below for the full picture.
 
@@ -145,14 +150,14 @@ The deck is **monospace-dominant**. Mono is the default; sans is the exception u
 
 - No images. No textures. No gradients. No patterns. No grain.
 - Backgrounds are flat fields of Obsidian or Paper.
-- The construction grid (Mist lines, 80px step @ 4K) **defines the Lab register** and runs full-bleed on every `reg-lab` slide. It is absent from `reg-studio`. Line weight is `--grid-line-w: 4px`, **not** a 1px hairline: slides are always displayed scaled down from 3840, so a 1px line renders at 0.2-0.5px and vanishes.
+- **The construction grid is the signature, and the system is grid-native** (v5): 80px step @ 4K, full-bleed, `#F2F2F2` lines on Paper and `#1F1F1F` on Obsidian. **With grid** (`has-grid`): Divider, Content with or without a chart, System, Build, Journey map, Next steps; and every Lab slide (`reg-lab`). **Flat, by rule:** Cover, Insight, Quote, End, Logo, the five silence slides where one voice sits on whitespace. What makes the grid honest instead of decorative is that things land on its lines: header hairlines at 640px / 480px (grid lines), chart baselines on a grid line with bar heights rounded to whole steps, dense tables on a solid Paper panel whose top edge is on a grid line, boxes with a solid ground fill. Line weight is `--grid-line-w: 4px`, **not** a 1px hairline: slides are always displayed scaled down from 3840, so a 1px line renders at 0.2-0.5px and vanishes. Never set an inline `background:` on the canvas.
 
 ### Layout
 
 - Canvas is 4K 16:9 -- **3840 x 2160**.
-- Edge padding: **160px** (4K). Header band internal padding: **120px**.
-- Section divider band: ~30% canvas height. Content slide header band: ~22%.
-- The cover icon (lime SVG) sits in the **right half** of the cover, optical-centered vertically. Always.
+- Edge padding: **160px** (4K). Header region internal padding: **120px**.
+- Header region (title above a 1px Mist hairline): 640px on dividers, 480px on content slides, both grid lines (~30% / ~22% of the canvas). **It is never filled.** The Obsidian header band documented in v2-v4 does not appear in any delivered AGCS deck and was removed in v5.
+- The cover icon (a `verde1` library icon, chosen for the deck) sits in the **right half** of the cover, optical-centered vertically. Always.
 - The chevron `>>` is the only repeating motif.
 
 ### Animation, hover, press
@@ -184,8 +189,9 @@ This is a print/slide-first identity. Default to **no animation**. When motion i
 
 ### Fixed elements (every content slide)
 
+- Ground: Paper with the construction grid. No band.
 - Top-left: section name in mono label caps (e.g. `INTRO`, `SYNTHESIS`, `Q3`).
-- Top-right (Lab only): `>> LAB · V[version]` stamp.
+- Top-right: page number (Studio) or `>> LAB · V[version]` stamp (Lab).
 - Bottom-left: `AGCS | Studio + Lab |` mono attribution.
 - Bottom-right (optional): slide number in mono -- never with "of N".
 
@@ -200,8 +206,9 @@ The AGCS mark is a three-rectangle construction: a full-height column on the lef
 ```
 assets/agcs_mark_white.svg   -- on Obsidian
 assets/agcs_mark_black.svg   -- on Paper
-assets/agcs_mark_lime.svg    -- when the mark is the slide's one lime element
 ```
+
+**The mark is only ever white or black.** White on Obsidian, black on Paper. Never lime, never on a lime ground, never on any other color (Max, 2026-09-02). The lime version that shipped in earlier versions was removed.
 
 It appears **at size on the logo slide and nowhere else**. Covers do not carry the mark; they carry a topic icon (see *Iconography*).
 
@@ -223,10 +230,14 @@ The brand now ships its **own proprietary icon library**: hand-drawn line icons 
 
 **Usage rules:**
 
+- **Pick from the catalogue.** `assets/icons/INDEX.md` lists all 61 icons by number with their subject and the arguments they can stand for. Every icon on a slide is chosen there, by meaning.
+- **The cover icon is chosen per deck and never repeats.** It is the deck's subject. Journey → eye-with-arrow (`alxgdo/19`); culture → spiral (`22`); foresight → telescope (`18`); lab program → flask (`01`); decision → fork (`17`); growth → curve (`07`) or sprout (`new-icons/04`). There is **no house cover icon** -- neither `alxgdo/12` nor the document-and-arrow glyph. Two consecutive decks with the same cover icon is a defect.
+- **No repeats inside a deck.** Cover, dividers and content slides each carry a different icon; rotate through the three sets.
 - **Colorway follows ground:** `negro` on Paper, `blanco` on Obsidian. That is the default and covers ~all uses.
 - **`verde1` is Lime.** A `verde1` icon **counts as the slide's single Lime element** -- it competes with the brand icon, the lime chart bar, and the lime callout. One of the four, never two.
 - **`verde2` and `verde3` are legacy colorways** from the original delivery. They are *not* in the five-color palette -- keep them for archival fidelity, do **not** use them in new work.
 - **Icons are evidence, not decoration.** The deck remains typographic-first. An icon earns its place the way a number does -- as signage for a concept. Never a row of icons as visual filler, never bullets-with-icons.
+- **No icon next to data.** A slide with a chart, table or diagram carries no topic icon: the data is the visual. The icon slot belongs to cover, dividers, text-only content, insight and next steps.
 - **Format:** high-resolution PNG (2251px, transparent background). Render small (≤160px @ 4K canvas); never stretch beyond source size.
 - Preview cards for all four sets live in the Design System tab under the **Icons** group.
 
@@ -242,7 +253,8 @@ The brand now ships its **own proprietary icon library**: hand-drawn line icons 
 |---|---|---|---|---|
 | Display + heading | **N27** | Bold 700, Medium 500, (Regular 400 reserve) | **Local** -- `fonts/N27-*.otf` | Canonical AGCS display face. Replaces Archivo and Helvetica from v1. |
 | Body, data, labels, stamps | **IBM Plex Mono** | Regular 400, Medium 500 | **Local** -- `fonts/IBMPlexMono-*.ttf` | The technical signature of the brand. Mono is the default, sans is the exception. v2: localized so the workhorse face has zero CDN dependency. |
-| Reflective line | **Crimson Pro** | Italic 400 | **Local** -- `fonts/CrimsonPro-Italic.ttf` | Transitional serif with a refined italic. The quote layout plus the cover/sign-off deck line. |
+| Subtitle | **Crimson Pro** | Bold Italic 700 | **Local** -- `fonts/CrimsonPro-BoldItalic.ttf` (falls through to `CrimsonPro-SemiBoldItalic.ttf` until the Bold file lands) | The subtitle under every title, the deck line, the divider conclusion. v5. |
+| Pull quote | **Crimson Pro** | Italic 400 | **Local** -- `fonts/CrimsonPro-Italic.ttf` | Transitional serif with a refined italic. The quote layout only. |
 
 All three families load through `@font-face` declarations at the top of `colors_and_type.css`. Each block uses `local()` lookups first (machines with the family installed system-wide skip the file lookup entirely), then falls back to the bundled file. **Zero CDN dependencies** -- the system runs fully air-gapped.
 
@@ -269,13 +281,15 @@ fonts/IBMPlexMono-Medium.ttf    (weight 500 -- emphasis runs, used sparingly)
 
 v1 served Plex Mono from Google Fonts. v2 bundles it locally for the same reason as N27: the workhorse face cannot depend on a network host that bank-side firewalls routinely block. The family is SIL OFL-licensed -- bundling and redistributing is explicitly permitted.
 
-### Crimson Pro (v2: localized)
+### Crimson Pro (v2: localized · v5: Bold Italic promoted)
 
 ```
-fonts/CrimsonPro-Italic.ttf    (weight 400 italic -- quote slide layout only)
+fonts/CrimsonPro-BoldItalic.ttf      (weight 700 italic -- THE SUBTITLE, v5)   <- pending: see below
+fonts/CrimsonPro-SemiBoldItalic.ttf  (weight 600 italic -- interim fallback in the 700 slot)
+fonts/CrimsonPro-Italic.ttf          (weight 400 italic -- pull quote only)
 ```
 
-v1 served Crimson Pro from Google Fonts. v2 bundles it locally so the system has zero external dependencies. The family is SIL OFL-licensed -- bundling and redistribution is explicitly permitted. The other six Crimson Pro weights (Regular, Light, ExtraLight, Medium, SemiBold, Bold) ship in the Google Fonts download but aren't used by the system; they're parked in `fonts/_reserve/`.
+v1 served Crimson Pro from Google Fonts. v2 bundles it locally so the system has zero external dependencies. v5 promotes the **Bold Italic** to the subtitle role. The `@font-face` for 700 italic points at `CrimsonPro-BoldItalic.ttf` first and falls through to the SemiBold Italic that is on disk, so the subtitle never degrades to Regular. To close the gap, drop the static Bold Italic from the Google Fonts Crimson Pro package into `fonts/` under that exact name. The family is SIL OFL-licensed -- bundling and redistribution is explicitly permitted. The upright weights (Regular, Light, ExtraLight, Medium, SemiBold, Bold) aren't used by the system; they're parked in `fonts/_reserve/`. **IBM Plex Sans** is no longer loaded: its subtitle role ended with v5, the files stay in `fonts/` for archival fidelity only.
 
 ### Fallback behavior
 
@@ -287,17 +301,19 @@ When `fonts/N27-*` files are missing, the `@font-face` `src` chain silently fail
 
 Sample HTML for each lives in `slides/`. Index at `slides/index.html`.
 
-Every slide picks a **register** (`reg-studio` / `reg-lab`) and carries a **topic icon** on the right. See *Hard constraints* in `SKILL.md`.
+Every slide picks a **register** (`reg-studio` / `reg-lab`). Slides without a data visual carry a **topic icon** on the right; slides with a chart, table or diagram do not. See *Hard constraints* in `SKILL.md`.
 
-1. **Cover** -- Obsidian. Lime chip eyebrow, N27 display title, Crimson italic deck line, mono metadata, oversized lime topic icon right.
-2. **Section divider** -- Studio: Obsidian band (~30%). Lab: Paper, hairline, construction grid. Single mono section name.
-3. **Content** -- Studio: Obsidian band (~22%). Lab: Paper, hairline, grid. Title + body + optional chart.
-4. **Insight** -- Paper, oversized N27 Bold headline (descenders touch cap-height), short mono paragraph below.
-5. **Quote** -- Obsidian, centered Crimson Pro italic quote, em-dash + name in mono below.
-6. **End** -- Obsidian, block wordmark centered.
-7. **System (Lab)** -- Paper, slim header, construction grid **full-bleed**, diagram nodes on solid Paper, `>> LAB · v[N]` stamp top-right.
-8. **Journey map** -- Paper, no band. Title over a hairline, framing pair, then a 5-stage x 4-row table. Exactly one lime cell marks the moment that needs action.
-9. **Next steps** -- Obsidian. Lime chip, N27 title, a row of outlined step cards separated by chevrons, Crimson italic line, oversized `>> Stay Forward` sign-off bottom right.
+Every layout carries the construction grid except the five silence slides (Cover, Insight, Quote, End, Logo); Lab keeps it on those too. The topic icon goes only on slides without a chart, table or diagram.
+
+1. **Cover** -- Obsidian, flat. Lime chip eyebrow, N27 display title, **Crimson Pro Bold Italic** deck line, mono metadata, oversized lime topic icon right **chosen for this deck**.
+2. **Section divider** -- Paper + grid. Hairline on a grid line under the header region (no band, either register). N27 section title, Crimson Bold Italic one-line conclusion.
+3. **Content** -- Paper + grid. Hairline on a grid line (no band). Title + body + optional chart **snapped to the grid**: baseline on a grid line, bar heights in whole 80px steps. With a chart there is **no topic icon**; text-only Content keeps it.
+4. **Insight** -- Paper, flat. Oversized N27 Bold headline (descenders touch cap-height), short mono paragraph below.
+5. **Quote** -- Obsidian, flat. Centered Crimson Pro Italic 400 quote, em-dash + name in mono below.
+6. **End** -- Obsidian, flat. Block wordmark centered.
+7. **System** -- Paper + grid, slim header, diagram nodes on solid Paper. In Lab with the `>> LAB · v[N]` stamp; in Studio the same with a page number.
+8. **Journey map** -- Paper + grid. Title over a hairline, framing pair, then a 5-stage x 4-row table **on a solid Paper panel** whose top edge sits on a grid line. Exactly one lime cell marks the moment that needs action.
+9. **Next steps** -- Obsidian + grid. Lime chip, N27 title, a row of solid-fill outlined step cards separated by chevrons, Crimson Bold Italic line, oversized `>> Stay Forward` sign-off bottom right.
 10. **Logo** -- Obsidian, the mark centered at size, `>> Stay Forward` below, centered lockup at the foot. The one centered layout in an otherwise left-aligned system.
 
 ---
@@ -319,8 +335,11 @@ Every slide picks a **register** (`reg-studio` / `reg-lab`) and carries a **topi
 <!-- The brand chevron, inline -->
 <span class="agcs-chevron">&gt;&gt;</span> Stay Forward
 
-<!-- The lime icon -->
-<img src="assets/agcs_lab_icon_lime.svg" alt="">
+<!-- A subtitle -->
+<p class="agcs-subtitle">Growth can no longer come from store openings</p>
+
+<!-- The cover icon: a verde1 library icon chosen for the deck (see assets/icons/INDEX.md) -->
+<img class="topic-icon is-hero" src="assets/icons/alxgdo/verde1/18.png" alt="">
 
 <!-- A library icon: colorway follows ground -->
 <img src="assets/icons/alxgdo/negro/17.png" alt="" style="height:64px">

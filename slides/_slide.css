@@ -24,8 +24,34 @@ html, body {
      corner and the canvas lands entirely off-screen. Do not change. */
   transform-origin: center center;
   overflow: hidden;
-  background: var(--paper);
+  background-color: var(--paper);
 }
+
+/* ---- Construction grid: the signature, and everything snaps to it (v5) ---
+   The grid is on every layout except the five SILENCE slides:
+
+     has-grid  >  Divider · Content (with or without chart) · System ·
+                  Build · Journey map · Next steps
+     reg-lab   >  every slide in the Lab register, no exceptions
+     flat      >  Cover · Insight · Quote · End · Logo -- one voice on the
+                  page, the whitespace is the argument
+
+   The grid is only honest if things land on its lines, so on a grid slide:
+     - header hairlines sit on a grid line (--band-* are 640 / 480px)
+     - chart baselines sit on a grid line and bar heights are WHOLE steps
+       of 80px (see slides/03-content.html)
+     - dense tables sit on a SOLID Paper panel; the grid runs around them,
+       not under them (see .jm below)
+     - boxes (diagram nodes, step cards) carry a SOLID ground fill
+   A grid nothing aligns to is decoration. A grid everything aligns to is
+   the system. */
+.agcs-canvas.has-grid,
+.agcs-canvas.reg-lab {
+  background-image: var(--grid-image);
+  background-size:  var(--grid-step) var(--grid-step);
+}
+/* Escape hatch for a Lab slide that must be flat. Needs a reason. */
+.agcs-canvas.no-grid { background-image: none; }
 
 /* Body sets a CSS var --scale via JS in slide HTML. */
 .agcs-canvas {
@@ -36,9 +62,12 @@ html, body {
    selectors, so without this the Paper default silently wins on dark slides
    and white text lands on a white canvas. */
 .agcs-canvas.agcs-on-dark {
-  background: var(--obsidian);
+  background-color: var(--obsidian);
   color: var(--fg-on-dark);
 }
+.agcs-canvas.agcs-on-dark.has-grid,
+.agcs-canvas.agcs-on-dark.reg-lab { background-image: var(--grid-image-dark); }
+.agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
    Obsidian. The ground owns their color too. */
 .agcs-canvas.agcs-on-dark .top-row,
@@ -71,24 +100,34 @@ html, body {
    ============================================================
    A slide picks its register with ONE class on .agcs-canvas:
    `reg-studio` (default) or `reg-lab`. Everything else in the
-   layout is shared -- same geometry, same type, same lime rule.
+   layout is shared -- same geometry, same type, same lime rule,
+   same Paper ground.
 
-     Studio  > Obsidian header band. Weight and authority.
-     Lab     > Paper, hairline rule, construction grid full-bleed,
-               `>> LAB - v[N]` stamp. The scaffolding shows.
+     Studio  > page number top-right. The client-facing deck.
+               Grid on every layout but the five silence slides.
+     Lab     > `>> LAB - v[N]` stamp top-right, heavier mono in
+               headings, construction grid on EVERY slide.
 
-   Do not hard-code band fills or band text colors in slide HTML;
-   the register owns them, otherwise the switch stops working.
+   v5 (2026-09-02): the Obsidian header band that v2-v4 gave the
+   Studio register is GONE. It never appeared in a delivered AGCS
+   deck -- content and divider slides are Paper with a hairline
+   under the header region, in both registers. Do not bring the
+   band back, and do not hard-code a fill on `.band`.
    ============================================================ */
 
+/* The header region: geometry only. The title sits inside it, above a
+   1px Mist hairline. No fill, in either register. */
 .band {
   position: absolute;
   left: 0; top: 0; right: 0;
+  background: transparent;
+  border-bottom: var(--rule-hair) solid var(--rule);
+  color: var(--fg-on-light);
 }
 .band-section { height: var(--band-section); }  /* 30% -- section dividers */
 .band-content { height: var(--band-content); }  /* 22% -- content slides   */
 
-/* Label sitting at the foot of the band (e.g. "SECTION 02"). */
+/* Label sitting at the foot of the region (e.g. "SECTION 02"). */
 .band-label {
   position: absolute;
   left: 160px; bottom: 140px;
@@ -96,37 +135,15 @@ html, body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+.band .top-row,
+.band .band-label,
+.band .band-title { color: var(--fg-on-light); }
 
-/* ---- Studio ------------------------------------------------------------ */
-.reg-studio .band { background: var(--obsidian); }
-.reg-studio .band,
-.reg-studio .band .top-row,
-.reg-studio .band .band-label,
-.reg-studio .band .band-title { color: var(--fg-on-dark); }
+/* ---- Studio / Lab ------------------------------------------------------ */
+/* No band to paint. The register is carried by the top-right slot
+   (`.only-studio` page number vs `.only-lab` stamp, see the bottom of this
+   file) and, for Lab, by the grid on the silence slides too (rule above). */
 
-/* ---- Lab --------------------------------------------------------------- */
-/* Paper ground, the band reduced to a hairline, and the construction grid
-   running edge to edge. The grid is the Lab's signature -- it is what makes
-   the register legible from the back of the room. */
-.reg-lab .band {
-  background: transparent;
-  border-bottom: var(--rule-hair) solid var(--rule);
-}
-.reg-lab .band,
-.reg-lab .band .top-row,
-.reg-lab .band .band-label,
-.reg-lab .band .band-title { color: var(--fg-on-light); }
-
-.reg-lab::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: var(--grid-image);
-  background-size:  var(--grid-step) var(--grid-step);
-}
-/* On an Obsidian ground the grid still reads, just quieter. */
-.reg-lab.agcs-on-dark::before { opacity: 0.35; }
 
 /* Slides with no band (cover, quote, end, system) put .top-row straight on
    the canvas; the ground still decides its color. */
@@ -162,14 +179,21 @@ html, body {
   color: var(--fg-muted-dark);
 }
 
-/* Cover deck line -- Crimson Pro Italic. The italic is NOT quote-only:
-   it carries the one-line promise under a cover or sign-off title. */
-.deck-line {
-  font-family: var(--font-quote);
+/* SUBTITLE -- Crimson Pro BOLD ITALIC (v5). One class, three homes:
+     .deck-line  under a cover or sign-off title
+     .subtitle   under a divider or content title
+   Same face, same weight. The title names in N27; the subtitle states the
+   conclusion in a bold serif italic. Never Plex Sans, never mono, never
+   Regular weight -- Regular italic is reserved for the pull quote. */
+.deck-line,
+.subtitle {
+  font-family: var(--font-subtitle);
   font-style: italic;
+  font-weight: 700;
   font-size: 52px;
   line-height: 1.3;
 }
+.subtitle { font-size: 72px; line-height: 1.2; }
 
 
 /* ============================================================
@@ -189,7 +213,12 @@ html, body {
   border: 2px solid currentColor;
   padding: 40px 44px 48px;
   min-width: 0;
+  /* Solid ground fill: Next steps is a grid slide, and an outline-only card
+     over the grid turns into four more grid lines. Same reason the System
+     nodes carry a Paper fill. */
+  background: var(--paper);
 }
+.agcs-on-dark .step-card { background: var(--obsidian); }
 .step-card .step-kicker {
   font-family: var(--font-mono);
   font-size: 26px;
@@ -240,6 +269,10 @@ html, body {
   grid-template-columns: 340px repeat(5, 1fr);
   border-top: var(--rule-hair) solid var(--rule);
   font-family: var(--font-mono);
+  /* Solid Paper panel: the table is already a grid, so it sits ON the
+     construction grid as one block instead of fighting it line by line.
+     Place its top edge on a grid line (a multiple of 80px). */
+  background: var(--paper);
 }
 .jm-head {
   font-size: 28px;
@@ -273,10 +306,14 @@ html, body {
 
 
 /* ============================================================
-   TOPIC ICON -- the mandatory right-hand slot
+   TOPIC ICON -- the right-hand slot
    ============================================================
-   Every slide carries one icon on the right, chosen to match what
-   the slide actually argues. The split matters:
+   A slide WITHOUT a data visual carries one icon on the right,
+   chosen to match what the slide argues: cover, divider, text-only
+   content, insight, next steps. A slide WITH a chart, table or
+   diagram carries NO icon -- the data is the visual, and an icon
+   next to a chart is a second subject (Max, 2026-09-02). The split
+   matters:
 
      THE SYSTEM owns the slot -- position, size, which library it
      may come from, and which colorway the ground allows.
@@ -288,6 +325,13 @@ html, body {
      negro/  on Paper      blanco/ on Obsidian
      verde1/ ONLY when nothing else on the slide is lime -- a lime
      icon IS the slide's single lime element (SKILL.md rule 2).
+
+   WHICH icon (v5, 2026-09-02): pick from assets/icons/INDEX.md by
+   what the slide argues. The cover icon is the deck's subject and
+   is chosen fresh for every deck -- there is no default cover icon,
+   and `12` (flask) / the document-and-arrow glyph are NOT it unless
+   the deck is literally about experiments or deliverables. Inside
+   one deck no icon repeats across cover, dividers and content.
    ============================================================ */
 .topic-icon {
   position: absolute;
