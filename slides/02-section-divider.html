@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="Register switch · Studio band / Lab grid · section title on Paper" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="Paper + grid · hairline on a grid line · N27 title · Crimson Bold Italic subtitle" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -8,11 +8,12 @@
 </head>
 <body>
 <!-- REGISTER: swap `reg-studio` for `reg-lab` to move this slide to the Lab
-     register (hairline instead of the Obsidian band, construction grid
-     full-bleed, LAB stamp). Nothing else in this file changes. -->
-<div class="agcs-canvas reg-studio" data-screen-label="02 Section Divider">
+     register (LAB stamp instead of the page number). Both registers: Paper,
+     construction grid, hairline under the header region at 640px (a grid
+     line). There is NO filled header band in this system. -->
+<div class="agcs-canvas reg-studio has-grid" data-screen-label="02 Section Divider">
 
-  <!-- Header band. Fill and text color belong to the register, not here. -->
+  <!-- Header region: geometry + hairline only. Never a fill. -->
   <div class="band band-section">
     <div class="top-row">
       <div><span class="chev">&gt;&gt;</span>&nbsp; CULTURE BY DESIGN</div>
@@ -30,17 +31,19 @@
                 font-size:200px; line-height:1.02; letter-spacing:-0.01em; color:#000;">
       Synthesis
     </div>
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:40px;
-                color:#1A1A1A; margin-top:80px; line-height:1.45; max-width:2200px;">
+    <!-- The subtitle: Crimson Pro BOLD ITALIC. States the section's
+         conclusion. Not mono, not Plex Sans. -->
+    <div class="subtitle" style="color:#1A1A1A; margin-top:64px; max-width:2400px;">
       Tres patrones operativos. Uno requiere acción este trimestre.
     </div>
   </div>
 
   <!-- TOPIC ICON -- system owns the slot, the deck owns the choice.
        Slide 02 has no other lime element, so verde1 is allowed here and
-       becomes this slide's single lime element. Swap the number for the
-       icon that matches this section. -->
-  <img class="topic-icon" src="../assets/icons/alxgdo/verde1/12.png" alt="">
+       becomes this slide's single lime element. `06` (converging arrows)
+       because the section is Synthesis. Pick from assets/icons/INDEX.md;
+       never the same icon as the cover. -->
+  <img class="topic-icon" src="../assets/icons/alxgdo/verde1/06.png" alt="">
 
   <!-- Bottom attribution -->
   <div class="bottom-row">

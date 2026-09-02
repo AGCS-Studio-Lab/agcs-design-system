@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="Register switch · 22% band or Lab grid · 1 lime bar · mono body" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="Paper + grid · chart snapped to the 80px step · 1 lime bar · no icon · mono body" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -7,12 +7,18 @@
 <link rel="stylesheet" href="_slide.css">
 </head>
 <body>
-<!-- REGISTER: swap `reg-studio` for `reg-lab`. The title lives inside the
-     band, so in the Lab register it drops to Carbon on Paper over the
-     construction grid. Geometry is identical either way. -->
-<div class="agcs-canvas reg-studio" data-screen-label="03 Content">
+<!-- REGISTER: swap `reg-studio` for `reg-lab` (page number -> LAB stamp).
+     Ground is the same either way: Paper with the construction grid. The
+     title sits in the header region above a hairline at 480px -- a grid
+     line. No filled band.
 
-  <!-- Header band. Fill and text color belong to the register, not here. -->
+     THE CHART SNAPS TO THE GRID. A grid behind bars is only honest when the
+     bars land on its lines, so: baseline on y=1600 (20 steps), plot height
+     880 (11 steps), bar heights rounded to WHOLE steps -- 4 · 1 · 3 · 11 --
+     bars 240 wide on an 80 gap. Do this for every chart on a grid slide. -->
+<div class="agcs-canvas reg-studio has-grid" data-screen-label="03 Content">
+
+  <!-- Header region: geometry + hairline only. Never a fill. -->
   <div class="band band-content">
     <div class="top-row">
       <div>Q2</div>
@@ -29,57 +35,51 @@
     </div>
   </div>
 
-  <!-- Paper body with chart and body copy -->
-  <div style="position:absolute; left:160px; right:960px; top:680px; bottom:280px;
-              display:flex; gap:120px; align-items:flex-start; color:#1A1A1A;">
-
-    <!-- Left: chart -->
-    <div style="flex: 1.1; min-width:0;">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:28px;
-                  letter-spacing:0.06em; text-transform:uppercase; color:#1A1A1A; margin-bottom:48px;">
-        Respondents · n=29
-      </div>
-      <div style="display:flex; align-items:flex-end; gap:48px; height:880px;
-                  border-bottom:2px solid #000; padding:0 8px;">
-        <div style="flex:1; height:36%;  background:#1A1A1A;"></div>
-        <div style="flex:1; height:10%;  background:#1A1A1A;"></div>
-        <div style="flex:1; height:30%;  background:#1A1A1A;"></div>
-        <div style="flex:1; height:100%; background:var(--lime);"></div>
-      </div>
-      <div style="display:flex; gap:48px; padding:32px 8px 0;
-                  font-family:'IBM Plex Mono',monospace; font-size:36px;
-                  letter-spacing:0.04em; text-transform:uppercase;">
-        <div style="flex:1; text-align:center;">A · 20%</div>
-        <div style="flex:1; text-align:center;">B · 6%</div>
-        <div style="flex:1; text-align:center;">C · 17%</div>
-        <div style="flex:1; text-align:center; font-weight:500;">D · 57%</div>
-      </div>
-    </div>
-
-    <!-- Right: body copy -->
-    <div style="flex: 0.9; min-width:0;">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:40px;
-                  line-height:1.45; color:#1A1A1A;">
-        Los directores convergen en una sola
-        respuesta: el error mayor es transformar
-        cultura sin asumir el costo político
-        de hacerlo.
-      </div>
-      <div style="height:64px;"></div>
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:36px;
-                  line-height:1.5; color:#1A1A1A;">
-        Comunicar valores sin tocar incentivos,
-        decisiones o poder produce ruido, no
-        transformación.
-      </div>
-    </div>
-
+  <!-- Chart -- absolute geometry in whole grid steps. -->
+  <div style="position:absolute; left:160px; top:640px;
+              font-family:'IBM Plex Mono',monospace; font-size:28px;
+              letter-spacing:0.06em; text-transform:uppercase; color:#1A1A1A;">
+    Respondents · n=29
+  </div>
+  <div style="position:absolute; left:160px; top:720px; width:1200px; height:880px;
+              display:flex; align-items:flex-end; gap:80px;
+              border-bottom:4px solid #000;">
+    <div style="width:240px; height:320px; background:#1A1A1A;"></div>
+    <div style="width:240px; height:80px;  background:#1A1A1A;"></div>
+    <div style="width:240px; height:240px; background:#1A1A1A;"></div>
+    <div style="width:240px; height:880px; background:var(--lime);"></div>
+  </div>
+  <div style="position:absolute; left:160px; top:1640px; width:1200px;
+              display:flex; gap:80px;
+              font-family:'IBM Plex Mono',monospace; font-size:36px;
+              letter-spacing:0.04em; text-transform:uppercase; color:#1A1A1A;">
+    <div style="width:240px; text-align:center;">A · 20%</div>
+    <div style="width:240px; text-align:center;">B · 6%</div>
+    <div style="width:240px; text-align:center;">C · 17%</div>
+    <div style="width:240px; text-align:center; font-weight:500;">D · 57%</div>
   </div>
 
-  <!-- TOPIC ICON -- the lime is already spent on the chart bar, so this
-       icon MUST be negro, not verde1. One lime element per slide. -->
-  <img class="topic-icon" src="../assets/icons/alxgdo/negro/07.png" alt=""
-       style="--icon-size:520px;">
+  <!-- Body copy, right of the chart. Starts on the same grid line as the plot. -->
+  <div style="position:absolute; left:1600px; right:960px; top:720px; color:#1A1A1A;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:40px;
+                line-height:1.45; color:#1A1A1A;">
+      Los directores convergen en una sola
+      respuesta: el error mayor es transformar
+      cultura sin asumir el costo político
+      de hacerlo.
+    </div>
+    <div style="height:64px;"></div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:36px;
+                line-height:1.5; color:#1A1A1A;">
+      Comunicar valores sin tocar incentivos,
+      decisiones o poder produce ruido, no
+      transformación.
+    </div>
+  </div>
+
+  <!-- NO TOPIC ICON: the chart is the visual. A slide with a chart, table
+       or diagram never carries an icon (see .topic-icon in _slide.css).
+       Text-only Content keeps the icon slot. -->
 
   <!-- Bottom attribution -->
   <div class="bottom-row">

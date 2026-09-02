@@ -34,7 +34,7 @@ La marca prohíbe sombra y radio: la jerarquía se construye **solo con espacio,
 - **Un punto focal por pantalla = el único elemento lime** (acción primaria / item activo / un dato).
 - **Separación por espacio y hairline** (border 1px Mist o gris del sistema), no por cards con sombra. Agrupa por proximidad; grid de 8pt.
 - **3 niveles de texto** por peso y color, no por tamaño solo. Diseña legible en gris primero.
-- **Tipografía v3:** título N27 (`.agcs-display` / `font-title`) · subtítulo IBM Plex Sans (`font-subtitle`) · texto IBM Plex Mono (`font-body`, ~14-16px). Mono-dominante.
+- **Tipografía v5:** título N27 (`.agcs-display` / `font-title`) · subtítulo **Crimson Pro Bold Italic** (`.agcs-subtitle` / `font-subtitle`; v3 lo tenía en IBM Plex Sans, retirado el 2026-09-02) · texto IBM Plex Mono (`font-body`, ~14-16px). Mono-dominante.
 - **Header de página (patrón fijo):** eyebrow mono `<Chevron /> SECCIÓN · contexto` (`.agcs-label`) + título display.
 
 ## 3. Dashboards / dataviz (Recharts)
