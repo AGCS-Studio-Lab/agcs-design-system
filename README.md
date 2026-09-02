@@ -206,8 +206,9 @@ The AGCS mark is a three-rectangle construction: a full-height column on the lef
 ```
 assets/agcs_mark_white.svg   -- on Obsidian
 assets/agcs_mark_black.svg   -- on Paper
-assets/agcs_mark_lime.svg    -- when the mark is the slide's one lime element
 ```
+
+**The mark is only ever white or black.** White on Obsidian, black on Paper. Never lime, never on a lime ground, never on any other color (Max, 2026-09-02). The lime version that shipped in earlier versions was removed.
 
 It appears **at size on the logo slide and nowhere else**. Covers do not carry the mark; they carry a topic icon (see *Iconography*).
 
