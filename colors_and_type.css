@@ -18,7 +18,7 @@
    TYPE -- v5 (ruling 2026-09-02):
      - Titulo     > N27 (Regular 400, Medium 500, Bold 700) --
        display + titles. Loaded LOCALLY from /fonts via @font-face.
-     - Sub titulo > Crimson Pro BOLD ITALIC (700) -- the subtitle under a
+     - Sub titulo > Crimson Pro SEMIBOLD ITALIC (600) -- the subtitle under a
        title, the cover deck line, the divider's one-line conclusion.
        This replaces IBM Plex Sans (v3), which is no longer a role.
      - Texto      > IBM Plex Mono -- body, data, labels, footers, stamps.
@@ -91,7 +91,7 @@
 
 /* ---------- IBM Plex Sans -- RETIRED as a role (v5) ------------------------ */
 /* v3 gave subtitles to IBM Plex Sans. v5 (2026-09-02) moves the subtitle to
-   Crimson Pro Bold Italic, so Plex Sans has no role left in the system and
+   Crimson Pro SemiBold Italic, so Plex Sans has no role left in the system and
    is NOT loaded. The files stay in /fonts for archival fidelity only. Do not
    re-introduce a sans subtitle without Max ruling on it. */
 
@@ -99,21 +99,24 @@
 /* ---------- Local @font-face -- Crimson Pro (subtitle + quote) ------------ */
 /* Two italics and nothing else:
      700 italic -> the SUBTITLE (v5). Every subtitle, deck line and divider
-                   conclusion in the system is Crimson Pro Bold Italic.
+                   conclusion in the system is Crimson Pro SemiBold Italic.
      400 italic -> the pull QUOTE (quote layout only).
    Zero CDN: both load from /fonts. The upright Crimson Pro weights are
    parked in /fonts/_reserve/ and are not part of the system. */
+/* El subtitulo es Crimson Pro SEMIBOLD Italic (600), y el @font-face lo
+   declara como 600 porque es lo que el archivo es. v5 lo declaraba como 700
+   sirviendo el archivo de 600: el navegador lo daba por bold, no aplicaba
+   bold sintetico, y todos los subtitulos salian mas ligeros de lo que decia
+   la regla. Una face que miente sobre su peso rompe el sistema en silencio.
+   Si algun dia entra CrimsonPro-BoldItalic.ttf a /fonts, se agrega como una
+   face 700 aparte y se sube el peso en .agcs-h2 / .subtitle / .deck-line. */
 @font-face {
   font-family: "Crimson Pro";
-  font-weight: 700;
+  font-weight: 600;
   font-style: italic;
   font-display: swap;
-  /* The canonical file is CrimsonPro-BoldItalic.ttf. Until it lands in
-     /fonts, the chain falls through to SemiBold Italic (600) -- the closest
-     weight on disk -- so the subtitle never silently drops to Regular. */
-  src: local("Crimson Pro Bold Italic"),
-       local("CrimsonPro-BoldItalic"),
-       url("fonts/CrimsonPro-BoldItalic.ttf") format("truetype"),
+  src: local("Crimson Pro SemiBold Italic"),
+       local("CrimsonPro-SemiBoldItalic"),
        url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
 }
 @font-face {
@@ -159,7 +162,7 @@
   /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
      band borders, journey-map cell borders); the grid needs to sit lighter
      than those without dragging them along, so it gets its own value. */
-  --grid-line:      #F2F2F2;
+  --grid-line:      rgba(0, 0, 0, 0.045);
   --accent:         var(--lime);
 }
 
@@ -178,15 +181,15 @@
   --font-display: "N27", system-ui, sans-serif;
   --font-heading: "N27", system-ui, sans-serif;
 
-  /* Sub titulo -- Crimson Pro Bold Italic (v5). Always paired with
-     font-style: italic and weight 700; see .agcs-h2 / .agcs-subtitle. */
+  /* Sub titulo -- Crimson Pro SemiBold Italic. Always paired with
+     font-style: italic and weight 600; see .agcs-h2 / .agcs-subtitle. */
   --font-subtitle: "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Body, data, labels, footers, stamps -- IBM Plex Mono Regular.
      This is the technical signature of the brand. */
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* Quotes ONLY -- Crimson Pro Italic 400 (the subtitle is the 700). */
+  /* Quotes ONLY -- Crimson Pro Italic 400 (the subtitle is the 600). */
   --font-quote: "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Weights -- N27 ships Regular, Medium, Bold. Light / Black exist in
@@ -210,7 +213,7 @@
                             (descenders intentionally touch caps below)
      --t-section   200px  -- section divider title
      --t-h1        120px  -- content slide title
-     --t-h2         72px  -- subtitle (Crimson Pro Bold Italic)
+     --t-h2         72px  -- subtitle (Crimson Pro SemiBold Italic)
      --t-body       40px  -- mono body
      --t-label      28px  -- mono label / stamp / footer
    ============================================================ */
@@ -281,12 +284,13 @@
 
 .agcs-h2,
 .agcs-subtitle {
-  /* v5: the subtitle is Crimson Pro BOLD ITALIC. Not Plex Sans (v3), not
-     N27 Medium (v2). The title names the piece in N27; the subtitle states
-     the conclusion in a bold serif italic -- that contrast is the system. */
+  /* The subtitle is Crimson Pro SemiBold Italic 600 -- the weight that
+     actually ships in /fonts. Not Plex Sans (v3), not N27 Medium (v2).
+     The title names the piece in N27; the subtitle states the conclusion in
+     a serif italic -- that contrast is the system. */
   font-family: var(--font-subtitle);
   font-style:  italic;
-  font-weight: var(--weight-bold);
+  font-weight: 600;
   font-size:   var(--t-h2);
   line-height: var(--lh-heading);
   color: inherit;
@@ -361,23 +365,27 @@
   /* ---- Construction grid -- single source of truth --------------------- */
   /* v5: the grid is the brand's signature and everything on a grid slide
      SNAPS to it -- header hairlines, chart baselines and bar heights, table
-     panels. It appears on every layout except the four "silence" slides
-     (Insight, Quote, End, Logo), which are flat by rule. See
+     panels. v5.1 (2026-09-02): it appears on the DIVIDER and on slides
+     that carry a chart, table or diagram -- and nowhere else. Text-only
+     content slides and the five silence slides are flat. See
      slides/_slide.css for the class contract. Defined once here so
      `.agcs-construction-grid` and slides/_slide.css cannot drift apart. */
-  --grid-step: 80px;           /* @ 4K -- divides both canvas dimensions   */
-  /* NOT --rule-hair. Slides are always displayed scaled (3840 -> viewport),
-     so a 1px line at 4K renders at 0.2-0.5px and disappears -- which is why
-     the grid read as "missing" even though it was there. 4px survives the
-     scale down to 1920 (2px) and stays legible in preview cards. Mist is
-     light enough that it never competes with content. */
-  --grid-line-w: 4px;
+  --grid-step: 40px;           /* @ 4K -- divides both canvas dimensions   */
+  /* v5.1 (2026-09-02, ruling de Max sobre decks entregados): el cuadro pasa
+     de 80 a 40 y la linea de 4px a 2px con alpha. 40 divide a 80, asi que
+     todo lo que ya estaba ajustado al paso viejo sigue cayendo en linea:
+     hairlines en 640/480 y barras en pasos enteros no se tocan.
+     La linea es rgba, no un hex claro. Un #F2F2F2 opaco es casi invisible
+     sobre Paper pero duro sobre Obsidian; con alpha el grid pesa igual en
+     los dos fondos. 2px sobrevive la reduccion de 3840 a la pantalla; por
+     debajo de 1.5px la linea se pierde al proyectar. */
+  --grid-line-w: 2px;
   --grid-image:
     linear-gradient(to right,  var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w)),
     linear-gradient(to bottom, var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w));
-  /* On Obsidian the same grid is drawn in a near-black so it reads as
-     texture from the back of the room without competing with white type. */
-  --grid-line-dark: #1F1F1F;
+  /* Sobre Obsidian, el mismo grid en blanco con alpha: textura desde el
+     fondo de la sala, sin competir con la tipografia blanca. */
+  --grid-line-dark: rgba(255, 255, 255, 0.06);
   --grid-image-dark:
     linear-gradient(to right,  var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w)),
     linear-gradient(to bottom, var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w));

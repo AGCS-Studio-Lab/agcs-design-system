@@ -27,30 +27,37 @@ html, body {
   background-color: var(--paper);
 }
 
-/* ---- Construction grid: the signature, and everything snaps to it (v5) ---
-   The grid is on every layout except the five SILENCE slides:
+/* ---- Construction grid: an accent, not a wallpaper (v5.1, 2026-09-02) ----
+   The grid goes on the DIVIDER and on any slide that carries a CHART, a
+   TABLE or a DIAGRAM -- nowhere else. It is the ground against which a
+   quantity is read, so it belongs where there is a quantity to read.
 
-     has-grid  >  Divider · Content (with or without chart) · System ·
-                  Build · Journey map · Next steps
-     reg-lab   >  every slide in the Lab register, no exceptions
-     flat      >  Cover · Insight · Quote · End · Logo -- one voice on the
-                  page, the whitespace is the argument
+     has-grid  >  Divider · Content WITH a chart · System · Build ·
+                  Journey map · Next steps (the pipeline is a diagram)
+     flat      >  Cover · Insight · Quote · End · Logo (the silence slides)
+                  AND text-only Content -- the majority of a real deck
+
+   v5 said "every layout except the five silence slides", which in a real
+   deck of mostly content slides means every slide, and that is exactly what
+   came back from Claude Design. The register no longer changes this either:
+   `reg-lab` used to force the grid onto every Lab slide, silence included.
+   It no longer does. A Lab slide gets the grid from `has-grid`, on the same
+   terms as a Studio one.
 
    The grid is only honest if things land on its lines, so on a grid slide:
      - header hairlines sit on a grid line (--band-* are 640 / 480px)
      - chart baselines sit on a grid line and bar heights are WHOLE steps
-       of 80px (see slides/03-content.html)
+       of 80px -- two grid cells at the 40px step (see slides/03-content.html)
      - dense tables sit on a SOLID Paper panel; the grid runs around them,
        not under them (see .jm below)
      - boxes (diagram nodes, step cards) carry a SOLID ground fill
    A grid nothing aligns to is decoration. A grid everything aligns to is
    the system. */
-.agcs-canvas.has-grid,
-.agcs-canvas.reg-lab {
+.agcs-canvas.has-grid {
   background-image: var(--grid-image);
   background-size:  var(--grid-step) var(--grid-step);
 }
-/* Escape hatch for a Lab slide that must be flat. Needs a reason. */
+/* Escape hatch for a grid slide that must be flat. Needs a reason. */
 .agcs-canvas.no-grid { background-image: none; }
 
 /* Body sets a CSS var --scale via JS in slide HTML. */
@@ -65,8 +72,7 @@ html, body {
   background-color: var(--obsidian);
   color: var(--fg-on-dark);
 }
-.agcs-canvas.agcs-on-dark.has-grid,
-.agcs-canvas.agcs-on-dark.reg-lab { background-image: var(--grid-image-dark); }
+.agcs-canvas.agcs-on-dark.has-grid { background-image: var(--grid-image-dark); }
 .agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
    Obsidian. The ground owns their color too. */
@@ -104,9 +110,9 @@ html, body {
    same Paper ground.
 
      Studio  > page number top-right. The client-facing deck.
-               Grid on every layout but the five silence slides.
+               Grid on the divider and on chart / table / diagram slides.
      Lab     > `>> LAB - v[N]` stamp top-right, heavier mono in
-               headings, construction grid on EVERY slide.
+               headings. Same grid rule as Studio -- no extra grid.
 
    v5 (2026-09-02): the Obsidian header band that v2-v4 gave the
    Studio register is GONE. It never appeared in a delivered AGCS
@@ -140,9 +146,9 @@ html, body {
 .band .band-title { color: var(--fg-on-light); }
 
 /* ---- Studio / Lab ------------------------------------------------------ */
-/* No band to paint. The register is carried by the top-right slot
+/* No band to paint. The register is carried by the top-right slot alone
    (`.only-studio` page number vs `.only-lab` stamp, see the bottom of this
-   file) and, for Lab, by the grid on the silence slides too (rule above). */
+   file). Lab no longer adds a grid of its own -- see the grid rule above. */
 
 
 /* Slides with no band (cover, quote, end, system) put .top-row straight on
@@ -179,17 +185,19 @@ html, body {
   color: var(--fg-muted-dark);
 }
 
-/* SUBTITLE -- Crimson Pro BOLD ITALIC (v5). One class, three homes:
+/* SUBTITLE -- Crimson Pro SEMIBOLD ITALIC 600. One class, three homes:
      .deck-line  under a cover or sign-off title
      .subtitle   under a divider or content title
-   Same face, same weight. The title names in N27; the subtitle states the
-   conclusion in a bold serif italic. Never Plex Sans, never mono, never
-   Regular weight -- Regular italic is reserved for the pull quote. */
+   Same face, same weight -- 600 is the weight that ships in /fonts, and el
+   @font-face lo declara como 600 para no pedir un bold que no existe.
+   The title names in N27; the subtitle states the conclusion in a serif
+   italic. Never Plex Sans, never mono, never Regular weight -- Regular
+   italic is reserved for the pull quote. */
 .deck-line,
 .subtitle {
   font-family: var(--font-subtitle);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 52px;
   line-height: 1.3;
 }
