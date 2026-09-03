@@ -33,9 +33,19 @@ html, body {
    quantity is read, so it belongs where there is a quantity to read.
 
      has-grid  >  Divider · Content WITH a chart · System · Build ·
-                  Journey map · Next steps (the pipeline is a diagram)
+                  Next steps (the pipeline is a diagram) · any slide
+                  with a dense TABLE (see .jm below)
      flat      >  Cover · Insight · Quote · End · Logo (the silence slides)
                   AND text-only Content -- the majority of a real deck
+
+   The ONE documented exception is the JOURNEY MATRIX in journey-lab/.
+   It is a table, so the rule above would give it the grid -- but the
+   matrix is already a grid (a 280px rail plus five stage columns
+   against four lanes), and a 40px construction grid behind it is a
+   second grid on a different module that will never align. Two grids
+   that do not align read as sloppy, which is the same principle this
+   rule is built on, applied one level up. A dense table that is NOT a
+   journey takes the grid like any other data slide.
 
    v5 said "every layout except the five silence slides", which in a real
    deck of mostly content slides means every slide, and that is exactly what
@@ -266,11 +276,19 @@ html, body {
 
 
 /* ============================================================
-   JOURNEY MAP -- the dense operating table
+   DENSE TABLE -- the operating table
    ============================================================
-   6 columns: one row-label rail plus five journey stages. Rows are
-   separated by hairlines, never by fills; the only fill allowed is
-   ONE lime cell marking the moment that needs action.
+   A row-label rail plus five columns. Rows are separated by
+   hairlines, never by fills; the only fill allowed is ONE lime cell
+   marking the value that needs action.
+
+   This used to be the journey-map slide's table and is named `.jm`
+   for that reason. The journey map itself moved to `journey-lab/`,
+   where the matrix is its own grid and carries no construction grid
+   (the documented exception to the grid rule). `.jm` stays as the
+   general dense-table component: a table slide that is NOT a journey
+   takes the grid like any other data slide, and this panel is what
+   keeps the grid running around the table instead of under it.
    ============================================================ */
 .jm {
   display: grid;

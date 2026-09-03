@@ -1,0 +1,934 @@
+/* ============================================================
+   AGCS · JOURNEY LAB · composition module
+   ============================================================
+   The AGCS customer-journey method, as CSS. One file replaces the
+   five overlapping modules the CXbD project accumulated:
+
+     _recap.css (456L)  map + readout + overview
+     _tobe.css   (41L)  TO-BE deltas on top of the map
+     _d3res.css (572L)  the .tb2-* validated layer  (part 2 only)
+     _d2res.css (486L)  the .jt-* JTBD matrix       (.jt-* only)
+     _dvfr.css  (118L)  the DVFR build skeleton
+
+   Those three map layers described THE SAME MATRIX with two rounds
+   of patches on top. Here the matrix is defined once (§A) and the
+   TO-BE (§B) and validated TO-BE (§C) are deltas on it.
+
+   Load AFTER ../slides/_slide.css, which owns the 3840x2160 canvas,
+   the chrome rows, the registers and the construction grid.
+
+   THE LIME RULE, per composition. Exactly one lime element per
+   slide; zero is a defect, two is worse:
+
+     Map (AS-IS / TO-BE / TO-BE v2)  .cell.feeling.lime  the MoT cell
+     Readout                         .ro-mot             the whole panel
+     Overview                        .c-mot .chip
+     JTBD                            .jt-chip
+     DVFR                            .dv-cell.whatif     its border-top
+
+   The corollary is the part that gets forgotten: on a TO-BE v2 map the
+   `AJUSTE ·` items are NOT lime, because the lime is already spent on
+   the Moment of Truth. A bold mono prefix distinguishes them instead.
+   ============================================================ */
+
+@import url("../slides/_slide.css");
+
+:root {
+  /* Stage-header fill. The one grey in this module with no DS token:
+     #F2F2F2 (slides/_slide.css .jm-head) is the nearest neighbour but
+     is a different value, so promoting it would silently restyle the
+     journey-map slide. Left local and named until the DS decides. */
+  --jl-head-fill: #F4F4F4;
+}
+
+/* =================================================================
+   A · THE MAP — persona stamp / persona panel / journey matrix
+   Canonical source: cjw-d2-recap-02..08, cloned verbatim from the
+   STEP 6/6 of the build exercise. The recap shows the group exactly
+   what it saw while building. Do not "improve" the composition: the
+   whole point is that all four groups are comparable cell by cell.
+   ================================================================= */
+
+/* --- 1 · Persona stamp --------------------------------------------------
+   The AS-IS · GROUP · PRODUCT · ARCHETYPE label is the DOMINANT element,
+   not an eyebrow. It replicates the Lucid board label the group worked
+   under. The descriptive phrase is secondary. */
+.persona-stamp {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 230px;
+}
+.persona-stamp .title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 60px;
+  line-height: 1.06;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
+.persona-stamp .subhead {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: 42px;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  color: var(--fg-muted-light);
+  margin-top: 22px;
+}
+.persona-stamp .note {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted-light);
+  margin-top: 14px;
+}
+
+/* --- 2 · Persona panel (Scenario + Expectations) ------------------------ */
+.persona-panel {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 500px;
+  height: 200px;
+  display: grid;
+  grid-template-columns: 1340px 1fr;
+  column-gap: var(--gap-md);
+  padding: 24px 0;
+  border-top: var(--rule-hair) solid var(--carbon);
+  border-bottom: var(--rule-hair) solid var(--carbon);
+}
+.persona-panel .col {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  column-gap: 32px;
+  align-items: start;
+}
+.persona-panel .lbl {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  padding-top: 8px;
+}
+.persona-panel .scenario {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--carbon);
+}
+.persona-panel ul.exp {
+  margin: 0; padding: 0; list-style: none;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--carbon);
+}
+.persona-panel ul.exp li {
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 8px;
+}
+.persona-panel ul.exp li::before {
+  content: "\00b7";
+  position: absolute;
+  left: 0;
+  color: var(--fg-muted-light);
+}
+
+/* --- 3 · The journey matrix (5 stages x 4 lanes) ------------------------
+   Solid Paper ground: this is the densest table in the system, and the
+   DS rule for a grid slide is that dense tables sit ON a solid panel so
+   the construction grid runs AROUND them. Two misaligned grids read as
+   sloppy. Put the matrix top on a grid line (752 is not one; the stamp
+   geometry above fixes it, so the panel is what keeps it honest). */
+.journey {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 752px; bottom: 196px;
+  display: grid;
+  grid-template-columns: 280px repeat(5, 1fr);
+  grid-template-rows: 60px repeat(4, 1fr);
+  border-top: var(--rule-hair) solid var(--carbon);
+  border-bottom: var(--rule-hair) solid var(--carbon);
+  background: var(--paper);
+}
+.stage-head {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 26px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  padding: 14px 22px;
+  border-left: var(--rule-hair) solid var(--carbon);
+  border-bottom: var(--rule-hair) solid var(--carbon);
+  background: var(--jl-head-fill);
+  display: flex;
+  align-items: center;
+}
+.stage-head .num {
+  color: var(--fg-muted-light);
+  font-weight: var(--weight-regular);
+  margin-right: 12px;
+}
+.corner {
+  border-bottom: var(--rule-hair) solid var(--carbon);
+  background: var(--jl-head-fill);
+  padding: 14px 24px;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  display: flex;
+  align-items: center;
+}
+.lane-lbl {
+  border-bottom: var(--rule-hair) solid var(--mist);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.lane-lbl .name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 44px;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--carbon);
+  margin-top: 12px;
+}
+.cell {
+  border-left: var(--rule-hair) solid var(--mist);
+  border-bottom: var(--rule-hair) solid var(--mist);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--carbon);
+  overflow: hidden;
+}
+/* Items are .item > .dash + .t, never <ul>: the export walker needs the
+   dash as its own run so the bullet survives as text, not as a marker. */
+.cell .item { margin-bottom: 7px; display: flex; gap: 8px; }
+.cell .item:last-child { margin-bottom: 0; }
+.cell .item .dash { color: var(--fg-muted-light); flex: 0 0 auto; }
+.cell .item .t { flex: 1 1 auto; }
+
+/* Lane separators are Carbon; cell-to-cell borders stay Mist. The last
+   lane carries no bottom border -- .journey already has one. */
+.row-actions       .cell, .row-actions       .lane-lbl,
+.row-pains         .cell, .row-pains         .lane-lbl,
+.row-feelings      .cell, .row-feelings      .lane-lbl { border-bottom-color: var(--carbon); }
+.row-opportunities .cell, .row-opportunities .lane-lbl { border-bottom: 0; }
+
+/* --- 4 · The FEELINGS lane — the one lane that is not text -------------
+   A face of three SVG primitives over a verbatim quote. THE CURVATURE OF
+   THE MOUTH IS THE DATA. Do not substitute an emoji or a library icon:
+   an emoji is somebody else's drawing of an emotion, and the whole lane
+   exists to carry the group's own reading of it. */
+.cell.feeling {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 14px;
+  padding-top: 22px;
+}
+.face { width: 64px; height: 64px; flex: 0 0 auto; }
+.face circle.head { fill: none; stroke: var(--carbon); stroke-width: 4; }
+.face .eye        { fill: var(--carbon); }
+.face .mouth      { fill: none; stroke: var(--carbon); stroke-width: 4; stroke-linecap: round; }
+.cell.feeling .quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--carbon);
+  letter-spacing: -0.005em;
+  width: 100%;
+  text-wrap: pretty;
+}
+
+/* THE MOMENT OF TRUTH — the single lime element on a map slide.
+   Borders go to pure Obsidian, not Carbon: the cell has to read as cut
+   out of the matrix, not tinted inside it. */
+.cell.feeling.lime {
+  background: var(--lime);
+  border-left-color: var(--obsidian);
+  border-bottom-color: var(--obsidian);
+  padding: 22px;
+  gap: 12px;
+}
+.cell.feeling.lime .face circle.head,
+.cell.feeling.lime .face .mouth { stroke: var(--obsidian); }
+.cell.feeling.lime .face .eye   { fill: var(--obsidian); }
+.cell.feeling.lime .quote { color: var(--obsidian); font-size: 28px; line-height: 1.28; }
+.cell.feeling.lime .insight-tag {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--obsidian);
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: var(--rule-hair) solid var(--obsidian);
+  width: 100%;
+  align-self: stretch;
+}
+
+/* --- 5 · Optional scope note under the matrix --------------------------- */
+.lane3-caption {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide);
+  bottom: 150px;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  line-height: 1.4;
+}
+.lane3-caption .chev { letter-spacing: -0.04em; margin-right: 4px; color: var(--carbon); }
+
+
+/* =================================================================
+   B · TO-BE MAP (Day 2) — deltas on §A
+   The composition is IDENTICAL on purpose. The group sees its own map
+   repaired in the same format, cell by cell; that comparability is the
+   argument. Only three things change, and two of them are content:
+     1. lanes    ACTIONS · SOLUTIONS · FEELINGS · MOVES
+     2. panel    reads SCENARIO (TO-BE) / EXPECTATIONS (TO-BE)
+     3. lime     marks the REDESIGNED Moment of Truth, same stage
+   Row classes .row-solutions / .row-moves mirror .row-pains /
+   .row-opportunities so the same separator logic applies.
+   ================================================================= */
+.row-solutions .cell, .row-solutions .lane-lbl { border-bottom-color: var(--carbon); }
+.row-moves     .cell, .row-moves     .lane-lbl { border-bottom: 0; }
+
+
+/* =================================================================
+   C · TO-BE v2 VALIDATED (Day 3) — the .tb2-map layer on §B
+   .tb2-map goes on .agcs-canvas itself, not on an inner wrapper.
+   It adds four things and tightens the stamp to make room for them.
+   ================================================================= */
+.tb2-map .persona-stamp { top: 196px; }
+.tb2-map .persona-stamp .title { font-size: 50px; line-height: 1.04; }
+.tb2-map .persona-stamp .subhead { margin-top: 18px; }
+
+/* Carbon chip above the title. Carbon, not lime -- see the lime rule. */
+.tb2-map .vchip {
+  display: inline-block;
+  background: var(--carbon);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 23px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 11px 18px;
+  margin-bottom: 22px;
+}
+
+.tb2-map .journey { top: 712px; bottom: 366px; }
+.tb2-map .lane3-caption { display: none; }
+
+/* AJUSTE · items in the SOLUTIONS lane. Same mono, same size, same
+   colour as their siblings -- the BOLD PREFIX distinguishes them, not
+   colour. The lime is already spent on the Moment of Truth. */
+.cell .item .ajt { font-weight: var(--weight-bold); color: var(--obsidian); }
+
+/* Optional scope note; the map that carries one needs extra headroom. */
+.tb-note {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide);
+  bottom: 330px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  line-height: 1.4;
+}
+.tb-note b { color: var(--carbon); font-weight: var(--weight-bold); }
+.tb2-map.has-note .journey { bottom: 410px; }
+
+/* The Obsidian band of committed BUILDS. */
+.tb-builds {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide);
+  bottom: 150px; height: 158px;
+  background: var(--obsidian);
+  display: grid;
+  grid-template-columns: 392px 1fr 1fr 1fr;
+}
+.tb-builds .tbl-lbl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 40px;
+  border-right: var(--rule-hair) solid #333333;
+}
+.tb-builds .tbl-lbl .l1 {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  font-size: 25px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--paper);
+  line-height: 1.32;
+}
+.tb-builds .tbl-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 36px;
+  border-left: var(--rule-hair) solid #333333;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 24px;
+  line-height: 1.28;
+  color: var(--paper);
+  text-wrap: pretty;
+}
+.tb-builds .tbl-card .n {
+  flex: 0 0 auto;
+  font-weight: var(--weight-medium);
+  color: var(--fg-muted-dark);
+}
+
+
+/* =================================================================
+   D · GROUP READOUT — one skeleton, four groups, content-only changes
+   The conclusion is the headline, at 116px. Everything else supports it.
+   ================================================================= */
+.ro-kicker {
+  position: absolute;
+  left: var(--pad-slide); top: 290px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 32px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+}
+.ro-headline {
+  position: absolute;
+  left: var(--pad-slide); right: 200px; top: 400px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 116px;
+  line-height: 1.0;
+  letter-spacing: -0.018em;
+  color: var(--carbon);
+}
+.ro-body {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 760px; bottom: 200px;
+  display: grid;
+  grid-template-columns: 1fr 1340px;
+  column-gap: 100px;
+}
+.ro-blocks { display: flex; flex-direction: column; }
+.ro-blk {
+  padding-top: 30px;
+  border-top: var(--rule-hair) solid var(--carbon);
+}
+.ro-blk + .ro-blk { margin-top: 44px; }
+.ro-blk .b-lbl {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+}
+.ro-blk .b-body {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 32px;
+  line-height: 1.5;
+  color: var(--carbon);
+  margin-top: 18px;
+}
+/* Job-story connectors inside a block body: weight, not italics. */
+.ro-blk .b-body em {
+  font-style: normal;
+  font-weight: var(--weight-medium);
+  color: var(--obsidian);
+}
+.ro-blk .b-verbatim {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 38px;
+  line-height: 1.32;
+  color: var(--carbon);
+  letter-spacing: -0.005em;
+  margin-top: 18px;
+}
+.ro-blk .b-verbatim + .b-verbatim { margin-top: 14px; }
+.ro-blk .b-note {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  margin-top: 16px;
+}
+
+/* The Moment of Truth panel — the single lime element on a readout. */
+.ro-mot {
+  background: var(--lime);
+  color: var(--obsidian);
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+}
+.ro-mot .m-lbl {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 28px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--obsidian);
+  border-bottom: var(--rule-hair) solid var(--obsidian);
+  padding-bottom: 30px;
+}
+.ro-mot .m-quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 66px;
+  line-height: 1.16;
+  color: var(--obsidian);
+  letter-spacing: -0.01em;
+  margin: auto 0;
+  text-wrap: pretty;
+}
+.ro-mot .m-note {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--obsidian);
+  border-top: var(--rule-hair) solid var(--obsidian);
+  padding-top: 30px;
+}
+
+
+/* =================================================================
+   E · OVERVIEW — four group columns, one per group
+   The only composition in the set that COMPARES groups. Four equal
+   columns, each ending in its own Moment of Truth.
+   ================================================================= */
+.ov-kicker {
+  position: absolute;
+  left: var(--pad-slide); top: 290px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 32px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+}
+.ov-headline {
+  position: absolute;
+  left: var(--pad-slide); top: 384px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 124px;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--carbon);
+}
+.ov-sub {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 664px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 34px;
+  line-height: 1.45;
+  color: var(--fg-muted-light);
+}
+.ov-cols {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 760px; bottom: 210px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 56px;
+}
+.ov-col {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--carbon);
+  padding-top: 30px;
+}
+/* min-height so all four labels align regardless of line count. */
+.ov-col .c-lbl {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  line-height: 1.35;
+  min-height: 96px;
+}
+.ov-col .c-stages {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ov-col .c-stages .st {
+  display: flex;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 28px;
+  line-height: 1.25;
+  color: var(--carbon);
+}
+.ov-col .c-stages .st .n { color: var(--fg-muted-light); flex: 0 0 auto; }
+.ov-col .c-mot {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: var(--rule-hair) solid var(--mist);
+}
+/* The single lime element on an overview: four small chips read as one
+   mark because they are the same mark repeated, not four accents. */
+.ov-col .c-mot .chip {
+  display: inline-block;
+  background: var(--lime);
+  color: var(--obsidian);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+}
+.ov-col .c-mot .mot-line {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 32px;
+  line-height: 1.24;
+  color: var(--carbon);
+  margin-top: 18px;
+  letter-spacing: -0.005em;
+}
+.ov-col .c-mot .mot-stage {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 20px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  margin-top: 12px;
+}
+
+
+/* =================================================================
+   F · JTBD — forces matrix + job story
+   Left: Christensen's four forces as a 2x2 of hairlines, no fills.
+   Right: the job story in its three parts. The chip is the lime.
+   ================================================================= */
+.jt-board {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 470px; bottom: 168px;
+  display: grid;
+  grid-template-columns: 1fr 1320px;
+  border-top: var(--rule-hair) solid var(--carbon);
+}
+.jt-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.force {
+  padding: 30px 56px 24px 0;
+  border-bottom: var(--rule-hair) solid var(--mist);
+}
+.force:nth-child(1), .force:nth-child(3) {
+  padding-right: 56px;
+  border-right: var(--rule-hair) solid var(--mist);
+}
+.force:nth-child(2), .force:nth-child(4) { padding-left: 56px; }
+.force:nth-child(3), .force:nth-child(4) { border-bottom: 0; }
+.force .f-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 24px; }
+.force .f-lbl {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 30px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
+.force .f-sub {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 21px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted-dark);
+}
+.force ul {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.force ul li {
+  display: flex;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 27px;
+  line-height: 1.32;
+  color: var(--carbon);
+}
+.force ul li .d { color: #BABABA; flex: 0 0 auto; }
+.force ul li .t { flex: 1 1 auto; text-wrap: pretty; }
+
+.jt-job {
+  border-left: 2px solid var(--carbon);
+  padding: 34px 0 0 64px;
+  display: flex;
+  flex-direction: column;
+}
+.jt-chip {
+  align-self: flex-start;
+  display: inline-block;
+  background: var(--lime);
+  color: var(--obsidian);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 11px 18px;
+}
+.jt-story { margin-top: 44px; display: flex; flex-direction: column; gap: 30px; }
+.jt-seg .k {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+  margin-bottom: 12px;
+}
+.jt-seg .v {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 42px;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+  color: var(--carbon);
+  text-wrap: pretty;
+}
+.jt-note {
+  margin-top: auto;
+  padding-top: 26px;
+  border-top: var(--rule-hair) solid var(--mist);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 24px;
+  line-height: 1.42;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted-light);
+}
+.jt-note b { color: var(--carbon); font-weight: var(--weight-medium); }
+
+/* Inline lime highlight. A BACKGROUND, not a border-bottom -- the PPTX
+   walker maps it to a native OOXML highlight run. Where a slide uses
+   .lime-mark it IS that slide's single lime element. */
+.lime-mark {
+  background: var(--lime);
+  color: var(--obsidian);
+  padding: 0 0.08em;
+}
+
+
+/* =================================================================
+   G · DVFR — Desirability / Feasibility / Viability / Responsibility
+   Four identical STEP slides, one per dimension. The lime is the
+   WHAT IF block's top rule -- nothing else on the slide is lime.
+   ================================================================= */
+.dv-step {
+  position: absolute; left: var(--pad-slide); top: 290px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 56px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
+.dv-step .muted { color: var(--fg-muted-dark); }
+.dv-q {
+  position: absolute; left: var(--pad-slide); right: 200px; top: 410px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 92px;
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+  color: var(--carbon);
+}
+.dv-grid {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); top: 800px; bottom: 330px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 120px;
+  row-gap: 64px;
+  align-content: start;
+}
+.dv-cell { border-top: var(--rule-hair) solid var(--carbon); padding-top: 30px; }
+.dv-cell.whatif { border-top: 10px solid var(--lime); padding-top: 36px; }
+.dv-lbl {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 30px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted-light);
+}
+.dv-cell.whatif .dv-lbl { color: var(--carbon); }
+.dv-body {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 36px;
+  line-height: 1.4;
+  color: var(--carbon);
+  margin-top: 24px;
+}
+.dv-list { margin: 24px 0 0; padding: 0; list-style: none; }
+.dv-list li {
+  display: flex;
+  gap: 22px;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 33px;
+  line-height: 1.3;
+  color: var(--carbon);
+}
+.dv-list li .mk { color: var(--fg-muted-dark); flex: 0 0 auto; }
+.dv-whatif-q {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 42px;
+  line-height: 1.32;
+  color: var(--carbon);
+  margin-top: 24px;
+}
+.dv-whatif-note {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 30px;
+  line-height: 1.4;
+  color: var(--fg-muted-light);
+  margin-top: 20px;
+}
+.dv-rate { display: flex; gap: 22px; margin-top: 28px; }
+/* A <div>, never a <span>: a bordered box inside a span loses its box
+   in the PPTX export and comes out as highlighted text. */
+.dv-chip {
+  border: var(--rule-hair) solid var(--carbon);
+  padding: 16px 32px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 32px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  line-height: 1;
+}
+.dv-rate-note {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 28px;
+  color: var(--fg-muted-light);
+  margin-top: 24px;
+}
+.dv-foot {
+  position: absolute;
+  left: var(--pad-slide); right: var(--pad-slide); bottom: 228px;
+  border-top: var(--rule-hair) solid var(--mist);
+  padding-top: 28px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  font-size: 30px;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted-light);
+}
+.dv-limechip {
+  display: inline-block;
+  background: var(--lime);
+  color: var(--obsidian);
+  border: 2px solid var(--obsidian);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 34px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 22px 36px;
+  line-height: 1;
+}
+
+/* The four-circle Venn (framing slide). Real divs with border-radius:50%
+   -- the export walker reads radius >= ~45% and emits a native ellipse.
+   Do not convert to SVG without a reason. */
+.venn { position: absolute; }
+.venn .vc { position: absolute; width: 800px; height: 800px; border-radius: 50%; }
+.venn .vc-fill { background: var(--mist); }
+.venn .vc-ring { border: 3px solid var(--carbon); background: transparent; }
+.venn .vlabel { position: absolute; width: 380px; font-family: var(--font-mono); color: var(--carbon); }
+.venn .vlabel .vl-h {
+  font-weight: var(--weight-medium);
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.venn .vlabel .vl-q {
+  font-weight: var(--weight-regular);
+  font-size: 28px;
+  line-height: 1.3;
+  margin-top: 10px;
+}
+.venn .vhere {
+  position: absolute;
+  width: 196px; height: 196px;
+  background: var(--lime);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: 52px;
+  letter-spacing: -0.01em;
+  color: var(--obsidian);
+}
+.venn .vnote {
+  position: absolute;
+  text-align: center;
+  width: 560px;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
