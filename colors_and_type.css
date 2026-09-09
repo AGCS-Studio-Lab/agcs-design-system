@@ -162,7 +162,7 @@
   /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
      band borders, journey-map cell borders); the grid needs to sit lighter
      than those without dragging them along, so it gets its own value. */
-  --grid-line:      rgba(0, 0, 0, 0.045);
+  --grid-line:      rgba(0, 0, 0, 0.09);
   --accent:         var(--lime);
 }
 
@@ -379,16 +379,31 @@
      sobre Paper pero duro sobre Obsidian; con alpha el grid pesa igual en
      los dos fondos. 2px sobrevive la reduccion de 3840 a la pantalla; por
      debajo de 1.5px la linea se pierde al proyectar. */
-  --grid-line-w: 2px;
+  /* v5.2 (2026-09-08): la linea pasa de 2px/0.045 a 3px/0.09 y los gradientes
+     se escriben con valores literales, sin var() anidada. Las dos razones son
+     de export, y las dos estaban rompiendo entregables:
+
+     1. GEOMETRIA. El canvas mide 3840 y se ve escalado por _fit.js. A 1280 el
+        factor es 0.333, asi que una linea de 2px se dibuja de 0.67px y el
+        navegador la resuelve bajando el alpha: 0.045 x 0.67 da un gris de
+        0.03 sobre Paper, que no existe. La nota de v5.1 decia que "2px
+        sobrevive la reduccion de 3840 a la pantalla" y era falsa. 3px a 0.09
+        cae en ~1px efectivo a 1280 y ~1.5px a 1920: se ve en los dos.
+
+     2. IMPORTADOR. El renderer estatico que convierte HTML a Express declara
+        que var(--...) "may not resolve". El grid entero colgaba de tres var()
+        anidadas (--grid-image -> --grid-line -> --grid-line-w), de modo que
+        al exportar no quedaba background-image ninguno y el fondo salia liso.
+        Los literales de abajo son la fuente de verdad; los tokens quedan como
+        alias para autoria, nunca como unica definicion. */
+  --grid-line-w: 3px;
   --grid-image:
-    linear-gradient(to right,  var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w)),
-    linear-gradient(to bottom, var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w));
-  /* Sobre Obsidian, el mismo grid en blanco con alpha: textura desde el
-     fondo de la sala, sin competir con la tipografia blanca. */
-  --grid-line-dark: rgba(255, 255, 255, 0.06);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  --grid-line-dark: rgba(255, 255, 255, 0.11);
   --grid-image-dark:
-    linear-gradient(to right,  var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w)),
-    linear-gradient(to bottom, var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w));
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
 }
 
 /* Construction grid -- the ground of the construction layouts (v5).
@@ -396,11 +411,15 @@
    slides/_slide.css), full-bleed on Paper and on Obsidian. Use this class for
    a grid on any other surface -- a handbook page, a card, a product panel. */
 .agcs-construction-grid {
-  background-image: var(--grid-image);
-  background-size:  var(--grid-step) var(--grid-step);
+  background-image:
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  background-size: 40px 40px;
 }
 .agcs-on-dark.agcs-construction-grid {
-  background-image: var(--grid-image-dark);
+  background-image:
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
 }
 
 

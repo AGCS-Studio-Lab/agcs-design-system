@@ -63,9 +63,19 @@ html, body {
      - boxes (diagram nodes, step cards) carry a SOLID ground fill
    A grid nothing aligns to is decoration. A grid everything aligns to is
    the system. */
+/* v5.2 (2026-09-08): literales, no var(). El importador de HTML a Express
+   declara que var(--...) puede no resolverse, y el grid entero colgaba de
+   tres var() anidadas: al exportar no quedaba background-image y la slide
+   salia lisa. Grosor y alpha subieron a 3px / 0.09 porque el canvas de 3840
+   se ve escalado a 1280 y la linea de 2px al 4.5% se perdia. Si cambias
+   estos valores, cambialos tambien en colors_and_type.css -- son la misma
+   regla escrita dos veces, y esa duplicacion es deliberada: el punto de uso
+   no puede depender de una variable para dibujar la firma de la marca. */
 .agcs-canvas.has-grid {
-  background-image: var(--grid-image);
-  background-size:  var(--grid-step) var(--grid-step);
+  background-image:
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  background-size: 40px 40px;
 }
 /* Escape hatch for a grid slide that must be flat. Needs a reason. */
 .agcs-canvas.no-grid { background-image: none; }
@@ -82,7 +92,11 @@ html, body {
   background-color: var(--obsidian);
   color: var(--fg-on-dark);
 }
-.agcs-canvas.agcs-on-dark.has-grid { background-image: var(--grid-image-dark); }
+.agcs-canvas.agcs-on-dark.has-grid {
+  background-image:
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+}
 .agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
    Obsidian. The ground owns their color too. */
