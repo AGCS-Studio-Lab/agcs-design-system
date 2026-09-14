@@ -119,6 +119,36 @@
        local("CrimsonPro-SemiBoldItalic"),
        url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
 }
+/* La MISMA cara, declarada con el nombre legacy del archivo (v5.3,
+   2026-09-14). No es una segunda fuente y no es un alias de conveniencia:
+   CrimsonPro-SemiBoldItalic.ttf se llama de dos maneras a la vez, y las dos
+   son suyas. En los typographic names (nameID 16/17) es "Crimson Pro" +
+   "SemiBold Italic"; en los legacy RIBBI (nameID 1/2), que es el par de
+   cuatro estilos que heredamos de los ochenta, es familia "Crimson Pro
+   SemiBold" + estilo "Italic".
+
+   La segunda es la que importa fuera del navegador. PowerPoint busca por el
+   nombre legacy y el formato PPTX no tiene pesos -- solo el booleano bold --
+   asi que un subtitulo de 600 exporta como typeface="Crimson Pro" con
+   b="1" i="1". Y en la familia legacy "Crimson Pro" hay Regular, Italic y
+   Bold pero NO Bold Italic: PowerPoint no encuentra la cara y sintetiza un
+   falso bold sobre la italica de 400. Verificado en los .pptx entregados el
+   2026-09-13 (11 runs asi en el informe de Cinepolis).
+
+   Pedida como familia "Crimson Pro SemiBold" a peso 400, la cara resuelve
+   sola: el navegador toma este @font-face y el convertidor escribe
+   typeface="Crimson Pro SemiBold" sin bold, que es exactamente el archivo.
+   El 400 de aqui no miente sobre el peso -- es el miembro Regular de una
+   familia que ya se llama SemiBold. */
+@font-face {
+  font-family: "Crimson Pro SemiBold";
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: local("Crimson Pro SemiBold Italic"),
+       local("CrimsonPro-SemiBoldItalic"),
+       url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
+}
 @font-face {
   font-family: "Crimson Pro";
   font-weight: 400;
@@ -162,7 +192,7 @@
   /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
      band borders, journey-map cell borders); the grid needs to sit lighter
      than those without dragging them along, so it gets its own value. */
-  --grid-line:      rgba(0, 0, 0, 0.045);
+  --grid-line:      rgba(0, 0, 0, 0.09);
   --accent:         var(--lime);
 }
 
@@ -181,9 +211,12 @@
   --font-display: "N27", system-ui, sans-serif;
   --font-heading: "N27", system-ui, sans-serif;
 
-  /* Sub titulo -- Crimson Pro SemiBold Italic. Always paired with
-     font-style: italic and weight 600; see .agcs-h2 / .agcs-subtitle. */
-  --font-subtitle: "Crimson Pro", Georgia, "Times New Roman", serif;
+  /* Sub titulo -- Crimson Pro SemiBold Italic. Se pide por el nombre legacy
+     de la cara y a peso 400, no como "Crimson Pro" 600: ver la nota del
+     @font-face de arriba. La familia va PRIMERO en la pila porque el
+     convertidor a PPTX se queda con la primera. Siempre con
+     font-style: italic; ver .agcs-h2 / .agcs-subtitle. */
+  --font-subtitle: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Body, data, labels, footers, stamps -- IBM Plex Mono Regular.
      This is the technical signature of the brand. */
@@ -284,13 +317,23 @@
 
 .agcs-h2,
 .agcs-subtitle {
-  /* The subtitle is Crimson Pro SemiBold Italic 600 -- the weight that
-     actually ships in /fonts. Not Plex Sans (v3), not N27 Medium (v2).
-     The title names the piece in N27; the subtitle states the conclusion in
-     a serif italic -- that contrast is the system. */
-  font-family: var(--font-subtitle);
+  /* The subtitle is Crimson Pro SemiBold Italic. Not Plex Sans (v3), not
+     N27 Medium (v2). The title names the piece in N27; the subtitle states
+     the conclusion in a serif italic -- that contrast is the system.
+
+     El peso dice 400 y la cara sigue siendo la SemiBold Italic: la familia
+     que se pide ya es "Crimson Pro SemiBold" y 400 es su miembro Regular
+     (v5.3). Escribir 600 aqui volveria a producir un bold sintetico en
+     PowerPoint -- ver la nota del @font-face. No lo subas a 600.
+
+     La pila va literal, no por var(--font-subtitle), por la misma razon por
+     la que los gradientes del grid van literales: el renderer estatico
+     declara que las custom properties pueden no resolverse, y la cara del
+     subtitulo es justo lo que se rompe cuando algo no resuelve. El token
+     queda como alias de autoria, nunca como unica definicion. */
+  font-family: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
   font-style:  italic;
-  font-weight: 600;
+  font-weight: 400;
   font-size:   var(--t-h2);
   line-height: var(--lh-heading);
   color: inherit;
@@ -379,16 +422,31 @@
      sobre Paper pero duro sobre Obsidian; con alpha el grid pesa igual en
      los dos fondos. 2px sobrevive la reduccion de 3840 a la pantalla; por
      debajo de 1.5px la linea se pierde al proyectar. */
-  --grid-line-w: 2px;
+  /* v5.2 (2026-09-08): la linea pasa de 2px/0.045 a 3px/0.09 y los gradientes
+     se escriben con valores literales, sin var() anidada. Las dos razones son
+     de export, y las dos estaban rompiendo entregables:
+
+     1. GEOMETRIA. El canvas mide 3840 y se ve escalado por _fit.js. A 1280 el
+        factor es 0.333, asi que una linea de 2px se dibuja de 0.67px y el
+        navegador la resuelve bajando el alpha: 0.045 x 0.67 da un gris de
+        0.03 sobre Paper, que no existe. La nota de v5.1 decia que "2px
+        sobrevive la reduccion de 3840 a la pantalla" y era falsa. 3px a 0.09
+        cae en ~1px efectivo a 1280 y ~1.5px a 1920: se ve en los dos.
+
+     2. IMPORTADOR. El renderer estatico que convierte HTML a Express declara
+        que var(--...) "may not resolve". El grid entero colgaba de tres var()
+        anidadas (--grid-image -> --grid-line -> --grid-line-w), de modo que
+        al exportar no quedaba background-image ninguno y el fondo salia liso.
+        Los literales de abajo son la fuente de verdad; los tokens quedan como
+        alias para autoria, nunca como unica definicion. */
+  --grid-line-w: 3px;
   --grid-image:
-    linear-gradient(to right,  var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w)),
-    linear-gradient(to bottom, var(--grid-line) var(--grid-line-w), transparent var(--grid-line-w));
-  /* Sobre Obsidian, el mismo grid en blanco con alpha: textura desde el
-     fondo de la sala, sin competir con la tipografia blanca. */
-  --grid-line-dark: rgba(255, 255, 255, 0.06);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  --grid-line-dark: rgba(255, 255, 255, 0.11);
   --grid-image-dark:
-    linear-gradient(to right,  var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w)),
-    linear-gradient(to bottom, var(--grid-line-dark) var(--grid-line-w), transparent var(--grid-line-w));
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
 }
 
 /* Construction grid -- the ground of the construction layouts (v5).
@@ -396,11 +454,15 @@
    slides/_slide.css), full-bleed on Paper and on Obsidian. Use this class for
    a grid on any other surface -- a handbook page, a card, a product panel. */
 .agcs-construction-grid {
-  background-image: var(--grid-image);
-  background-size:  var(--grid-step) var(--grid-step);
+  background-image:
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  background-size: 40px 40px;
 }
 .agcs-on-dark.agcs-construction-grid {
-  background-image: var(--grid-image-dark);
+  background-image:
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
 }
 
 

@@ -63,9 +63,19 @@ html, body {
      - boxes (diagram nodes, step cards) carry a SOLID ground fill
    A grid nothing aligns to is decoration. A grid everything aligns to is
    the system. */
+/* v5.2 (2026-09-08): literales, no var(). El importador de HTML a Express
+   declara que var(--...) puede no resolverse, y el grid entero colgaba de
+   tres var() anidadas: al exportar no quedaba background-image y la slide
+   salia lisa. Grosor y alpha subieron a 3px / 0.09 porque el canvas de 3840
+   se ve escalado a 1280 y la linea de 2px al 4.5% se perdia. Si cambias
+   estos valores, cambialos tambien en colors_and_type.css -- son la misma
+   regla escrita dos veces, y esa duplicacion es deliberada: el punto de uso
+   no puede depender de una variable para dibujar la firma de la marca. */
 .agcs-canvas.has-grid {
-  background-image: var(--grid-image);
-  background-size:  var(--grid-step) var(--grid-step);
+  background-image:
+    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+  background-size: 40px 40px;
 }
 /* Escape hatch for a grid slide that must be flat. Needs a reason. */
 .agcs-canvas.no-grid { background-image: none; }
@@ -82,7 +92,11 @@ html, body {
   background-color: var(--obsidian);
   color: var(--fg-on-dark);
 }
-.agcs-canvas.agcs-on-dark.has-grid { background-image: var(--grid-image-dark); }
+.agcs-canvas.agcs-on-dark.has-grid {
+  background-image:
+    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+}
 .agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
    Obsidian. The ground owns their color too. */
@@ -195,19 +209,26 @@ html, body {
   color: var(--fg-muted-dark);
 }
 
-/* SUBTITLE -- Crimson Pro SEMIBOLD ITALIC 600. One class, three homes:
+/* SUBTITLE -- Crimson Pro SEMIBOLD ITALIC. One class, three homes:
      .deck-line  under a cover or sign-off title
      .subtitle   under a divider or content title
-   Same face, same weight -- 600 is the weight that ships in /fonts, and el
-   @font-face lo declara como 600 para no pedir un bold que no existe.
-   The title names in N27; the subtitle states the conclusion in a serif
-   italic. Never Plex Sans, never mono, never Regular weight -- Regular
-   italic is reserved for the pull quote. */
+   Same face en las dos. The title names in N27; the subtitle states the
+   conclusion in a serif italic. Never Plex Sans, never mono, never la
+   Regular de Crimson Pro -- esa italica de 400 esta reservada al pull quote.
+
+   La cara se pide por el nombre legacy del archivo, familia
+   "Crimson Pro SemiBold" a peso 400 (v5.3, 2026-09-14). Es la misma
+   SemiBold Italic de siempre: 400 es el miembro Regular de esa familia.
+   Escribir 600 la rompe en PowerPoint, que no tiene pesos y colapsa el 600
+   a bold sobre una familia sin Bold Italic. La nota larga vive en
+   colors_and_type.css, junto al @font-face. La pila va literal aqui tambien,
+   por la misma regla que los gradientes del grid: el punto de uso no depende
+   de una variable. */
 .deck-line,
 .subtitle {
-  font-family: var(--font-subtitle);
+  font-family: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
   font-style: italic;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 52px;
   line-height: 1.3;
 }
