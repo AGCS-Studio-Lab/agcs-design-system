@@ -14,6 +14,8 @@ The Lab is a *register*, not a sub-brand. It does not have its own color, type, 
 
 > **v5.2 rulings (2026-09-08), from what came back in downloaded deliverables:** the grid line goes to **3px at `rgba(0,0,0,.09)` / `rgba(255,255,255,.11)`** and every gradient is **written literally, never through `var()`**. Both changes are export defects, not preferences: the canvas is 3840 and is always seen scaled, so v5.1's 2px at 4.5% became a 0.67px line at ~3% alpha at 1280 and was simply absent; and the static renderer behind HTML-to-Express and PDF export declares that custom properties may not resolve, so a grid built from three nested `var()` exported as a blank ground. Fonts are the same class of defect: `@font-face` declared `local()` first and then a **relative** path to `/fonts`, so any renderer without N27 and Crimson Pro installed -- which is every export machine -- fell through to Georgia and **synthesised** the 600 italic, which is why subtitles stopped being Crimson Pro SemiBold Italic in downloaded files. **Nothing leaves this repo as authored HTML any more:** `tools/build-export.py` produces the self-contained file, with the CSS inlined, the fonts embedded as base64 with `local()` removed, the assets embedded, the scripts dropped and the `hz:` / `data-canvas-*` metadata written. See `writing.md` for the voice and report standard that governs what goes *inside* these layouts.
 
+> **v5.3 rulings (2026-09-14), from the two `.pptx` downloaded on 2026-09-13:** the PPTX route breaks the same two things for reasons the v5.2 fix does not reach, because the converter behind it (**PptxGenJS** -- it signs `docProps/app.xml`) does not rasterize and does not read the canvas background: it maps DOM elements to native PowerPoint shapes. **The grid does export** -- ~150 rectangles per slide, 40px step, verified in the XML -- but at the v5.1 values it is invisible: 2px with `<a:alpha val="4000">` on a slide that measures 3840px = **40 inches**, shown by PowerPoint at a third of that, is a 0.67px line at ~3% alpha. The v5.2 values (3px, 9% / 11%) are what make it survive; `var()` never enters this route. **The subtitle breaks on the font's own name.** PPTX has no weights -- only a bold boolean -- so a 600 subtitle exports as `typeface="Crimson Pro"` with `b="1" i="1"`, and the legacy RIBBI family "Crimson Pro" holds Regular, Italic and Bold but **no Bold Italic**: PowerPoint finds no face and synthesises a fake bold over the 400 italic. The file answers to two names at once (`CrimsonPro-SemiBoldItalic.ttf` is "Crimson Pro" + "SemiBold Italic" in the typographic names, **"Crimson Pro SemiBold" + "Italic" in the legacy ones**), and the legacy pair is the one PowerPoint searches. So the subtitle is now asked for **as family `"Crimson Pro SemiBold"` at weight 400** -- same face, no bold, nothing to synthesise. **Two consequences:** never raise that 400 back to 600, and `python3 tools/fix-pptx.py` repairs any `.pptx` that came out of a source still on the old values (today: Claude Design). And one thing neither fixes: **the PPTX embeds no fonts at all**, so on a machine without N27, Crimson Pro and Plex Mono installed everything substitutes regardless -- for external delivery the PDF is the honest format.
+
 ---
 
 ## Source materials
@@ -44,6 +46,8 @@ These were provided by the client and underpin every decision in this system. Or
 | `fonts/` | Local font files for **N27** (display, three weights + reserved variants in `_reserve/`) and **IBM Plex Mono** (body, Regular + Medium). See *Fonts* below. |
 | `preview/` | Small HTML cards that populate the Design System tab. One concept per card. |
 | `slides/` | The seven canonical slide layouts as 4K HTML files. |
+| `tools/build-export.py` | Builds the self-contained export HTML. Nothing leaves this repo as authored HTML. |
+| `tools/fix-pptx.py` | Repairs a `.pptx` exported from a source still on the old grid and subtitle values. See the v5.3 ruling. |
 | `uploads/` | Originals from the client -- do not edit, only copy out of. |
 
 ---
@@ -131,7 +135,7 @@ Core five + the v3 functional palette. Anything else is off-brand.
 | Role | Family | Weight | Where |
 |---|---|---|---|
 | Titulo / display | **N27** | Bold (700), Medium (500) | Slide titles, insight headlines, cover, section dividers |
-| **Sub titulo** | **Crimson Pro** | **SemiBold Italic (600)** | Every subtitle: the deck line under a cover or sign-off title (`.deck-line`), the one-line conclusion under a divider or content title (`.subtitle`, `.agcs-h2`). v5 -- replaces IBM Plex Sans (v3), which is retired. |
+| **Sub titulo** | **Crimson Pro SemiBold** (`font-weight: 400`, italic -- see v5.3 above) | **SemiBold Italic** | Every subtitle: the deck line under a cover or sign-off title (`.deck-line`), the one-line conclusion under a divider or content title (`.subtitle`, `.agcs-h2`). v5 -- replaces IBM Plex Sans (v3), which is retired. |
 | Texto / data / labels / footers / stamps | **IBM Plex Mono** | Regular (400) | Everywhere else -- this is the *technical signature* of the brand |
 | Pull quote | **Crimson Pro** | Italic (400) | The quote layout only. The only place the Regular italic appears. |
 
@@ -286,12 +290,27 @@ v1 served Plex Mono from Google Fonts. v2 bundles it locally for the same reason
 ### Crimson Pro (v2: localized · v5: the italic promoted to the subtitle)
 
 ```
-fonts/CrimsonPro-BoldItalic.ttf      (weight 700 italic -- THE SUBTITLE, v5)   <- pending: see below
-fonts/CrimsonPro-SemiBoldItalic.ttf  (weight 600 italic -- interim fallback in the 700 slot)
+fonts/CrimsonPro-SemiBoldItalic.ttf  (THE SUBTITLE -- declared twice, see below)
 fonts/CrimsonPro-Italic.ttf          (weight 400 italic -- pull quote only)
 ```
 
-v1 served Crimson Pro from Google Fonts. v2 bundles it locally so the system has zero external dependencies. v5 promoted the italic to the subtitle role, at **SemiBold Italic 600** -- the weight that is actually on disk. v5.0 briefly declared that face as `font-weight: 700` while serving the 600 file: the browser took the declaration at its word, applied no synthetic bolding, and every subtitle in every generated deck came out lighter than the rule claimed. A face that lies about its weight breaks the system in silence, so the declaration now matches the file. If the static Bold Italic from the Google Fonts Crimson Pro package is ever dropped into `fonts/CrimsonPro-BoldItalic.ttf`, add it as a separate 700 face **and** raise the weight in `.agcs-h2` / `.subtitle` / `.deck-line` in the same commit -- never one without the other. The family is SIL OFL-licensed -- bundling and redistribution is explicitly permitted. The upright weights (Regular, Light, ExtraLight, Medium, SemiBold, Bold) aren't used by the system; they're parked in `fonts/_reserve/`. **IBM Plex Sans** is no longer loaded: its subtitle role ended with v5, the files stay in `fonts/` for archival fidelity only.
+One file, two `@font-face` blocks, because the file has two names and both are
+its own. In the typographic names (nameID 16/17) it is **"Crimson Pro" +
+"SemiBold Italic"**; in the legacy RIBBI names (nameID 1/2) -- the four-style
+pairing inherited from the eighties -- it is family **"Crimson Pro SemiBold"**
++ style **"Italic"**. The first block declares the typographic pair at weight
+600 and documents the file. The second declares the legacy pair at weight 400,
+and **that is the one the system uses**: `--font-subtitle` puts
+`"Crimson Pro SemiBold"` first in the stack and `.agcs-h2` / `.subtitle` /
+`.deck-line` set `font-weight: 400`. PowerPoint searches by the legacy name
+and PPTX has no weights, so a 600 subtitle exports as `"Crimson Pro"` with
+bold on, into a family that has no Bold Italic -- and comes back as a
+synthetic bold over the 400 italic. Asked for by the legacy name at 400, the
+right face resolves everywhere and nothing is synthesised. The 400 is not a
+lie about the weight: it is the Regular member of a family already called
+SemiBold. **Do not raise it back to 600.**
+
+v1 served Crimson Pro from Google Fonts. v2 bundles it locally so the system has zero external dependencies. v5 promoted the italic to the subtitle role, at **SemiBold Italic** -- the one semibold italic that is actually on disk. v5.0 briefly declared that face as `font-weight: 700` while serving the 600 file: the browser took the declaration at its word, applied no synthetic bolding, and every subtitle in every generated deck came out lighter than the rule claimed. A face that lies about its weight breaks the system in silence, so the declaration now matches the file. There is no `CrimsonPro-BoldItalic.ttf` in `fonts/` and the subtitle does not need one: v5.3 stopped routing the subtitle through bold at all. If a real Bold Italic ever enters the system it comes in as its own face under its own legacy name, and the subtitle stays where it is. The family is SIL OFL-licensed -- bundling and redistribution is explicitly permitted. The upright weights (Regular, Light, ExtraLight, Medium, SemiBold, Bold) aren't used by the system; they're parked in `fonts/_reserve/`. **IBM Plex Sans** is no longer loaded: its subtitle role ended with v5, the files stay in `fonts/` for archival fidelity only.
 
 ### Fallback behavior
 

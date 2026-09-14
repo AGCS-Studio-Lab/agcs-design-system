@@ -209,19 +209,26 @@ html, body {
   color: var(--fg-muted-dark);
 }
 
-/* SUBTITLE -- Crimson Pro SEMIBOLD ITALIC 600. One class, three homes:
+/* SUBTITLE -- Crimson Pro SEMIBOLD ITALIC. One class, three homes:
      .deck-line  under a cover or sign-off title
      .subtitle   under a divider or content title
-   Same face, same weight -- 600 is the weight that ships in /fonts, and el
-   @font-face lo declara como 600 para no pedir un bold que no existe.
-   The title names in N27; the subtitle states the conclusion in a serif
-   italic. Never Plex Sans, never mono, never Regular weight -- Regular
-   italic is reserved for the pull quote. */
+   Same face en las dos. The title names in N27; the subtitle states the
+   conclusion in a serif italic. Never Plex Sans, never mono, never la
+   Regular de Crimson Pro -- esa italica de 400 esta reservada al pull quote.
+
+   La cara se pide por el nombre legacy del archivo, familia
+   "Crimson Pro SemiBold" a peso 400 (v5.3, 2026-09-14). Es la misma
+   SemiBold Italic de siempre: 400 es el miembro Regular de esa familia.
+   Escribir 600 la rompe en PowerPoint, que no tiene pesos y colapsa el 600
+   a bold sobre una familia sin Bold Italic. La nota larga vive en
+   colors_and_type.css, junto al @font-face. La pila va literal aqui tambien,
+   por la misma regla que los gradientes del grid: el punto de uso no depende
+   de una variable. */
 .deck-line,
 .subtitle {
-  font-family: var(--font-subtitle);
+  font-family: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
   font-style: italic;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 52px;
   line-height: 1.3;
 }

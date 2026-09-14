@@ -245,6 +245,11 @@ recordando.
 - [ ] Verificar que se pide algo con fecha.
 - [ ] Generar los adjuntos con `tools/build-export.py`, abrir el PNG y confirmar
       que el grid se ve y que el subtítulo salió en Crimson Pro SemiBold Italic.
+- [ ] Si el entregable es `.pptx`, pasarlo por `tools/fix-pptx.py` y abrirlo en
+      PowerPoint antes de mandarlo. Dos cosas se revisan a ojo: que el grid se
+      vea en las slides que lo llevan y que el subtítulo no sea un bold falso.
+      Si va a alguien de fuera, manda el PDF: el `.pptx` no lleva las
+      tipografías embebidas y en otra máquina se sustituyen.
 
 ---
 

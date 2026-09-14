@@ -119,6 +119,36 @@
        local("CrimsonPro-SemiBoldItalic"),
        url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
 }
+/* La MISMA cara, declarada con el nombre legacy del archivo (v5.3,
+   2026-09-14). No es una segunda fuente y no es un alias de conveniencia:
+   CrimsonPro-SemiBoldItalic.ttf se llama de dos maneras a la vez, y las dos
+   son suyas. En los typographic names (nameID 16/17) es "Crimson Pro" +
+   "SemiBold Italic"; en los legacy RIBBI (nameID 1/2), que es el par de
+   cuatro estilos que heredamos de los ochenta, es familia "Crimson Pro
+   SemiBold" + estilo "Italic".
+
+   La segunda es la que importa fuera del navegador. PowerPoint busca por el
+   nombre legacy y el formato PPTX no tiene pesos -- solo el booleano bold --
+   asi que un subtitulo de 600 exporta como typeface="Crimson Pro" con
+   b="1" i="1". Y en la familia legacy "Crimson Pro" hay Regular, Italic y
+   Bold pero NO Bold Italic: PowerPoint no encuentra la cara y sintetiza un
+   falso bold sobre la italica de 400. Verificado en los .pptx entregados el
+   2026-09-13 (11 runs asi en el informe de Cinepolis).
+
+   Pedida como familia "Crimson Pro SemiBold" a peso 400, la cara resuelve
+   sola: el navegador toma este @font-face y el convertidor escribe
+   typeface="Crimson Pro SemiBold" sin bold, que es exactamente el archivo.
+   El 400 de aqui no miente sobre el peso -- es el miembro Regular de una
+   familia que ya se llama SemiBold. */
+@font-face {
+  font-family: "Crimson Pro SemiBold";
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: local("Crimson Pro SemiBold Italic"),
+       local("CrimsonPro-SemiBoldItalic"),
+       url("fonts/CrimsonPro-SemiBoldItalic.ttf") format("truetype");
+}
 @font-face {
   font-family: "Crimson Pro";
   font-weight: 400;
@@ -181,9 +211,12 @@
   --font-display: "N27", system-ui, sans-serif;
   --font-heading: "N27", system-ui, sans-serif;
 
-  /* Sub titulo -- Crimson Pro SemiBold Italic. Always paired with
-     font-style: italic and weight 600; see .agcs-h2 / .agcs-subtitle. */
-  --font-subtitle: "Crimson Pro", Georgia, "Times New Roman", serif;
+  /* Sub titulo -- Crimson Pro SemiBold Italic. Se pide por el nombre legacy
+     de la cara y a peso 400, no como "Crimson Pro" 600: ver la nota del
+     @font-face de arriba. La familia va PRIMERO en la pila porque el
+     convertidor a PPTX se queda con la primera. Siempre con
+     font-style: italic; ver .agcs-h2 / .agcs-subtitle. */
+  --font-subtitle: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
 
   /* Body, data, labels, footers, stamps -- IBM Plex Mono Regular.
      This is the technical signature of the brand. */
@@ -284,13 +317,23 @@
 
 .agcs-h2,
 .agcs-subtitle {
-  /* The subtitle is Crimson Pro SemiBold Italic 600 -- the weight that
-     actually ships in /fonts. Not Plex Sans (v3), not N27 Medium (v2).
-     The title names the piece in N27; the subtitle states the conclusion in
-     a serif italic -- that contrast is the system. */
-  font-family: var(--font-subtitle);
+  /* The subtitle is Crimson Pro SemiBold Italic. Not Plex Sans (v3), not
+     N27 Medium (v2). The title names the piece in N27; the subtitle states
+     the conclusion in a serif italic -- that contrast is the system.
+
+     El peso dice 400 y la cara sigue siendo la SemiBold Italic: la familia
+     que se pide ya es "Crimson Pro SemiBold" y 400 es su miembro Regular
+     (v5.3). Escribir 600 aqui volveria a producir un bold sintetico en
+     PowerPoint -- ver la nota del @font-face. No lo subas a 600.
+
+     La pila va literal, no por var(--font-subtitle), por la misma razon por
+     la que los gradientes del grid van literales: el renderer estatico
+     declara que las custom properties pueden no resolverse, y la cara del
+     subtitulo es justo lo que se rompe cuando algo no resuelve. El token
+     queda como alias de autoria, nunca como unica definicion. */
+  font-family: "Crimson Pro SemiBold", "Crimson Pro", Georgia, "Times New Roman", serif;
   font-style:  italic;
-  font-weight: 600;
+  font-weight: 400;
   font-size:   var(--t-h2);
   line-height: var(--lh-heading);
   color: inherit;
