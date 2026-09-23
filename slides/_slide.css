@@ -374,11 +374,12 @@ html, body {
      icon IS the slide's single lime element (SKILL.md rule 2).
 
    WHICH icon (v5, 2026-09-02): pick from assets/icons/INDEX.md by
-   what the slide argues. The cover icon is the deck's subject and
-   is chosen fresh for every deck -- there is no default cover icon,
-   and `12` (flask) / the document-and-arrow glyph are NOT it unless
-   the deck is literally about experiments or deliverables. Inside
-   one deck no icon repeats across cover, dividers and content.
+   what the slide argues. A LAB deck always opens with the lab icon,
+   the flask `alxgdo/01` (assets/agcs_lab_icon_*.png, v5.4). Any other
+   cover icon is the deck's subject and is chosen fresh for every deck;
+   `12` (flask with an X) and the document-and-arrow glyph are never
+   the lab icon. Inside one deck no icon repeats across cover,
+   dividers and content.
    ============================================================ */
 .topic-icon {
   position: absolute;
