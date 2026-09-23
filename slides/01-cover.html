@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 01 — Cover" subtitle="Obsidian, flat (no grid) · lime chip · N27 title · Crimson SemiBold Italic deck line · topic icon chosen per deck, never this one by default" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 01 — Cover" subtitle="Obsidian, flat (no grid) · lime chip · N27 title · Crimson SemiBold Italic deck line · icon aligned to the title block · a lab deck always takes the lab icon (flask)" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -17,21 +17,40 @@
     <div><span class="chev">&gt;&gt;</span>&nbsp; LAB · CxbD</div>
   </div>
 
-  <!-- Left stack: chip > title > SUBTITLE (Crimson Pro SemiBold Italic) > mono metadata -->
-  <div style="position:absolute; left:160px; top:540px; right:1600px;">
+  <!-- Lockup stack: the ROW holds chip > title > SUBTITLE and the topic
+       icon, and aligns the icon's center to that block's center (v5.4,
+       Max 2026-09-22). The mono metadata flows below, outside the row, so
+       it never moves the icon. See .lockup-row in _slide.css. -->
+  <div class="lockup-stack" style="top:540px;">
 
-    <div class="chip-lime">Results</div>
+    <div class="lockup-row">
+      <div class="lockup">
+        <div class="chip-lime">Results</div>
 
-    <div style="font-family:'N27',system-ui,sans-serif; font-weight:700;
-                font-size:280px; line-height:0.98; letter-spacing:-0.015em;
-                margin-top:56px; color:#fff;">
-      Customer<br>Journey.
-    </div>
+        <div style="font-family:'N27',system-ui,sans-serif; font-weight:700;
+                    font-size:280px; line-height:0.98; letter-spacing:-0.015em;
+                    margin-top:56px; color:#fff;">
+          Customer<br>Journey Lab.
+        </div>
 
-    <!-- The subtitle. Crimson Pro SEMIBOLD ITALIC, always -- not Regular, not
-         Plex Sans. It states the deck's conclusion in one line. -->
-    <div class="deck-line" style="margin-top:64px; color:#fff;">
-      Cómo lo vive el cliente hoy &mdash; y cómo lo va a vivir.
+        <!-- The subtitle. Crimson Pro SEMIBOLD ITALIC, always -- not Regular,
+             not Plex Sans. It states the deck's conclusion in one line. -->
+        <div class="deck-line" style="margin-top:64px; color:#fff;">
+          Cómo lo vive el cliente hoy &mdash; y cómo lo va a vivir.
+        </div>
+      </div>
+
+      <!-- TOPIC ICON -- the cover carries a topic icon, NOT the logo, in
+           verde1 because the Obsidian ground has no other lime on it.
+
+           THIS IS A LAB DECK, so the icon is the LAB ICON: the flask,
+           `alxgdo/01`, copied to assets/agcs_lab_icon_lime.png. A lab deck
+           always opens with it -- it is the one cover icon that does not
+           rotate (Max, 2026-09-22). Any other deck picks its cover icon from
+           assets/icons/INDEX.md by subject: a culture deck the spiral
+           (`alxgdo/22`), a foresight deck the telescope (`alxgdo/18`), a
+           decision deck the fork (`alxgdo/17`). -->
+      <img class="topic-icon is-hero" src="../assets/agcs_lab_icon_lime.png" alt="">
     </div>
 
     <div style="font-family:'IBM Plex Mono',monospace; font-size:36px;
@@ -47,24 +66,6 @@
     </div>
 
   </div>
-
-  <!-- TOPIC ICON -- the cover carries a topic icon, NOT the logo. It is the
-       oversized `is-hero` treatment, in verde1 because the Obsidian ground
-       has no other lime on it.
-
-       CHOOSE IT PER DECK. This one is `icons-grid/14` because the example
-       deck is a Customer Journey. A culture deck takes `alxgdo/22` (spiral),
-       a foresight deck `alxgdo/18` (telescope), a lab program `alxgdo/01`
-       (flask), a decision deck `alxgdo/17` (fork). The full list with
-       meanings is assets/icons/INDEX.md.
-
-       ON PURPOSE: every template in this system pulls its example icon from
-       a DIFFERENT set (cover from `icons-grid/`, divider from `alxgdo/`).
-       There is no icon that can be copied out of the templates and passed
-       off as "the AGCS icon" -- if two decks in a row share a cover icon,
-       or an icon repeats inside one deck, that is a defect. -->
-  <img class="topic-icon is-hero" src="../assets/icons/icons-grid/color-01/14.png" alt=""
-       style="--icon-size:1700px; right:120px;">
 
   <!-- Bottom attribution -->
   <div class="bottom-row">

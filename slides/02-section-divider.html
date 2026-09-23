@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="Paper + grid · hairline on a grid line · N27 title · Crimson SemiBold Italic subtitle" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 02 — Section Divider" subtitle="Paper + grid · hairline on a grid line · N27 title · Crimson SemiBold Italic subtitle · icon aligned to the title block" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -25,26 +25,30 @@
     <div class="band-label">SECTION 02</div>
   </div>
 
-  <!-- Paper body with section title -->
-  <div style="position:absolute; left:160px; right:160px; top:780px; color:#000;">
-    <div style="font-family:'N27',system-ui,sans-serif; font-weight:700;
-                font-size:200px; line-height:1.02; letter-spacing:-0.01em; color:#000;">
-      Synthesis
+  <!-- Lockup row: title + subtitle on the left, topic icon on the right,
+       the icon's center on the block's center (v5.4). The gap keeps the icon
+       off the title; 640px is the divider size -- never bigger, a divider
+       icon of 1300px sat on the title in the 2026-09-21 deck. -->
+  <div class="lockup-row" style="top:780px;">
+    <div class="lockup" style="color:#000;">
+      <div style="font-family:'N27',system-ui,sans-serif; font-weight:700;
+                  font-size:200px; line-height:1.02; letter-spacing:-0.01em; color:#000;">
+        Synthesis
+      </div>
+      <!-- The subtitle: Crimson Pro SEMIBOLD ITALIC. States the section's
+           conclusion. Not mono, not Plex Sans. -->
+      <div class="subtitle" style="color:#1A1A1A; margin-top:64px; max-width:2400px;">
+        Tres patrones operativos. Uno requiere acción este trimestre.
+      </div>
     </div>
-    <!-- The subtitle: Crimson Pro SEMIBOLD ITALIC. States the section's
-         conclusion. Not mono, not Plex Sans. -->
-    <div class="subtitle" style="color:#1A1A1A; margin-top:64px; max-width:2400px;">
-      Tres patrones operativos. Uno requiere acción este trimestre.
-    </div>
-  </div>
 
-  <!-- TOPIC ICON -- system owns the slot, the deck owns the choice.
-       Slide 02 has no other lime element, so verde1 is allowed here and
-       becomes this slide's single lime element -- every slide needs one.
-       `alxgdo/06` (converging arrows) because the section is Synthesis, and
-       from a different set than the cover on purpose. Pick from
-       assets/icons/INDEX.md; never the same icon as the cover. -->
-  <img class="topic-icon" src="../assets/icons/alxgdo/verde1/06.png" alt="">
+    <!-- TOPIC ICON -- system owns the slot, the deck owns the choice.
+         Slide 02 has no other lime element, so verde1 is allowed here and
+         becomes this slide's single lime element -- every slide needs one.
+         `alxgdo/06` (converging arrows) because the section is Synthesis.
+         Pick from assets/icons/INDEX.md; never the same icon as the cover. -->
+    <img class="topic-icon" src="../assets/icons/alxgdo/verde1/06.png" alt="">
+  </div>
 
   <!-- Bottom attribution -->
   <div class="bottom-row">

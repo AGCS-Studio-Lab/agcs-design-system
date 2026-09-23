@@ -1,7 +1,9 @@
 # AGCS icon catalogue -- pick by meaning, never by habit
 
 Every icon on a slide is chosen from this list according to **what the slide argues**.
-The cover icon is the deck's subject and is chosen fresh for every deck. Inside one
+**A lab deck always opens with the lab icon, `alxgdo/01` (the flask), shipped as
+`assets/agcs_lab_icon_{lime,white,black}.png`.** Every other cover icon is the deck's
+subject and is chosen fresh for every deck. Inside one
 deck no icon repeats across cover, dividers and content slides.
 
 Colorway follows the ground: `negro` / `color-04` on Paper, `blanco` / `color-03` on
@@ -19,7 +21,7 @@ Paths: `assets/icons/alxgdo/<colorway>/NN.png` · `assets/icons/icons-grid/<colo
 | Culture, identity, how the organization thinks | `alxgdo/22` spiral · `new-icons/01` brain |
 | Foresight, vision, strategy horizon | `alxgdo/18` telescope · `icons-grid/03` |
 | Discovery, research, assessment | `alxgdo/16` binoculars · `alxgdo/02` eye · `icons-grid/01` / `02` |
-| Lab program, experiments, validation | `alxgdo/01` flask · `icons-grid/12` |
+| **Lab -- any lab deck, always** | **`alxgdo/01` flask = `assets/agcs_lab_icon_*.png`**. Not `icons-grid/12`, not `alxgdo/12`, not the document-and-arrow |
 | Decision, scenarios, pivot | `alxgdo/17` fork · `alxgdo/06` convergence |
 | Growth, scale, market | `alxgdo/07` growth curve · `new-icons/04` sprout · `alxgdo/11` globe |
 | Operating model, system, governance | `alxgdo/04` gear · `new-icons/03` gauge · `new-icons/10` / `11` tools |
@@ -31,7 +33,7 @@ Paths: `assets/icons/alxgdo/<colorway>/NN.png` · `assets/icons/icons-grid/<colo
 | Deliverable, handbook, brief | `alxgdo/08` document · `icons-grid/08` document with arrow |
 | Iteration, cycles, cadence | `alxgdo/34` loop arrow · `new-icons/02` linked rings |
 
-Two consecutive decks with the same cover icon is a defect, even if both fit.
+Two consecutive decks with the same cover icon is a defect, even if both fit -- except lab decks, which all open with the flask.
 
 ## `alxgdo/` -- the main set, 34 icons
 
@@ -86,7 +88,7 @@ slide already argues *method* (Lab register, system slides).
 | 05 | Two overlapping shapes | `alxgdo/05` |
 | 06 | Speech bubble | `alxgdo/03` |
 | 07 | Crosshair | `alxgdo/15` |
-| 08 | Document with arrow (the `agcs_lab_icon_*.svg` glyph) | -- deliverable in motion |
+| 08 | Document with arrow (the `agcs_doc_arrow_*.svg` glyph, named `agcs_lab_icon_*.svg` until v5.4) | -- deliverable in motion |
 | 09 | Lightning bolt | `alxgdo/14` |
 | 10 | Square root formula | `alxgdo/13` |
 | 11 | Flag on the route | `alxgdo/25` |

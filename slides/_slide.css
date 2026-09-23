@@ -374,11 +374,12 @@ html, body {
      icon IS the slide's single lime element (SKILL.md rule 2).
 
    WHICH icon (v5, 2026-09-02): pick from assets/icons/INDEX.md by
-   what the slide argues. The cover icon is the deck's subject and
-   is chosen fresh for every deck -- there is no default cover icon,
-   and `12` (flask) / the document-and-arrow glyph are NOT it unless
-   the deck is literally about experiments or deliverables. Inside
-   one deck no icon repeats across cover, dividers and content.
+   what the slide argues. A LAB deck always opens with the lab icon,
+   the flask `alxgdo/01` (assets/agcs_lab_icon_*.png, v5.4). Any other
+   cover icon is the deck's subject and is chosen fresh for every deck;
+   `12` (flask with an X) and the document-and-arrow glyph are never
+   the lab icon. Inside one deck no icon repeats across cover,
+   dividers and content.
    ============================================================ */
 .topic-icon {
   position: absolute;
@@ -388,12 +389,55 @@ html, body {
   height: auto;
   display: block;
 }
-/* Cover treatment -- centered on the right edge, oversized. */
-.topic-icon.is-hero {
-  top: 50%;
-  bottom: auto;
-  transform: translateY(-50%);
-  --icon-size: 1500px;
+/* Cover treatment -- oversized. */
+.topic-icon.is-hero { --icon-size: 1400px; }
+
+/* ---- Lockup row: el icono se alinea al bloque de titulo (v5.4) ----------
+   Cover y divider: el centro del icono cae en el centro del bloque
+   chip + titulo + subtitulo (Max, 2026-09-22). No en el centro del canvas:
+   el titulo no esta en el centro del canvas, y un icono centrado en la slide
+   se lee caido respecto al titulo -- asi salio el deck del 21-sep.
+
+   Lo hace el layout, no una coordenada: .lockup-row es un flex con
+   align-items:center, asi que el icono sigue al bloque aunque el titulo
+   pase a dos lineas o el subtitulo desaparezca. El icono tiene margen
+   vertical negativo de la mitad de su tamano, de modo que no empuja la
+   fila: la fila mide lo que mide el bloque de texto, y el icono sobresale
+   por igual arriba y abajo. Sin transform -- el convertidor a PPTX lee la
+   caja calculada y aqui no hay nada que pueda leer mal. El gap impide que
+   el icono se monte sobre el titulo, que fue el otro defecto del 21-sep.
+
+     <div class="lockup-row" style="top:540px">
+       <div class="lockup"> chip · titulo · subtitulo </div>
+       <img class="topic-icon" src="...">
+     </div>
+     ...metadata mono, fuera de la fila, debajo... */
+.lockup-row {
+  position: absolute;
+  left:  var(--pad-slide, 160px);
+  right: var(--pad-slide, 160px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 200px;
+}
+/* Cover: la fila va dentro de una pila para que la metadata mono fluya
+   debajo del bloque de titulo sin entrar en el calculo del centro. */
+.lockup-stack {
+  position: absolute;
+  left:  var(--pad-slide, 160px);
+  right: var(--pad-slide, 160px);
+}
+.lockup-stack > .lockup-row { position: relative; left: auto; right: auto; }
+.lockup-row > .lockup { flex: 1 1 auto; min-width: 0; }
+.lockup-row > .topic-icon {
+  position: static;
+  flex: none;
+  width:  var(--icon-size, 640px);
+  height: var(--icon-size, 640px);
+  object-fit: contain;
+  margin-top:    calc(var(--icon-size, 640px) / -2);
+  margin-bottom: calc(var(--icon-size, 640px) / -2);
 }
 
 
