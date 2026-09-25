@@ -41,7 +41,7 @@ html, body {
    The ONE documented exception is the JOURNEY MATRIX in journey-lab/.
    It is a table, so the rule above would give it the grid -- but the
    matrix is already a grid (a 280px rail plus five stage columns
-   against four lanes), and a 40px construction grid behind it is a
+   against four lanes), and a 48px construction grid behind it is a
    second grid on a different module that will never align. Two grids
    that do not align read as sloppy, which is the same principle this
    rule is built on, applied one level up. A dense table that is NOT a
@@ -55,9 +55,10 @@ html, body {
    terms as a Studio one.
 
    The grid is only honest if things land on its lines, so on a grid slide:
-     - header hairlines sit on a grid line (--band-* are 640 / 480px)
-     - chart baselines sit on a grid line and bar heights are WHOLE steps
-       of 80px -- two grid cells at the 40px step (see slides/03-content.html)
+     - header hairlines sit on a grid line (--band-* are 624 / 480px)
+     - chart baselines sit on a grid line and bar heights are WHOLE cells
+       of 48px (v5.6; see slides/03-content.html)
+     - the edge padding is 144px, three cells, so left edges sit on a line
      - dense tables sit on a SOLID Paper panel; the grid runs around them,
        not under them (see .jm below)
      - boxes (diagram nodes, step cards) carry a SOLID ground fill
@@ -75,7 +76,7 @@ html, body {
   background-image:
     linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
-  background-size: 40px 40px;
+  background-size: 48px 48px;   /* v5.6: 48px = 16px at 1280, the agcs-ui grid */
 }
 /* Escape hatch for a grid slide that must be flat. Needs a reason. */
 .agcs-canvas.no-grid { background-image: none; }
@@ -107,12 +108,12 @@ html, body {
 .slide-edge {
   position: absolute;
   inset: 0;
-  padding: 100px 160px;
+  padding: 100px 144px;
   box-sizing: border-box;
 }
 .top-row, .bottom-row {
   position: absolute;
-  left: 160px; right: 160px;
+  left: 144px; right: 144px;
   display: flex; justify-content: space-between; align-items: center;
   font-family: var(--font-mono);
   font-size: 36px;
@@ -160,7 +161,7 @@ html, body {
 /* Label sitting at the foot of the region (e.g. "SECTION 02"). */
 .band-label {
   position: absolute;
-  left: 160px; bottom: 140px;
+  left: 144px; bottom: 140px;
   font-size: 36px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -318,7 +319,7 @@ html, body {
   font-family: var(--font-mono);
   /* Solid Paper panel: the table is already a grid, so it sits ON the
      construction grid as one block instead of fighting it line by line.
-     Place its top edge on a grid line (a multiple of 80px). */
+     Place its top edge on a grid line (a multiple of 48px). */
   background: var(--paper);
 }
 .jm-head {
@@ -414,8 +415,8 @@ html, body {
      ...metadata mono, fuera de la fila, debajo... */
 .lockup-row {
   position: absolute;
-  left:  var(--pad-slide, 160px);
-  right: var(--pad-slide, 160px);
+  left:  var(--pad-slide, 144px);
+  right: var(--pad-slide, 144px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -425,8 +426,8 @@ html, body {
    debajo del bloque de titulo sin entrar en el calculo del centro. */
 .lockup-stack {
   position: absolute;
-  left:  var(--pad-slide, 160px);
-  right: var(--pad-slide, 160px);
+  left:  var(--pad-slide, 144px);
+  right: var(--pad-slide, 144px);
 }
 .lockup-stack > .lockup-row { position: relative; left: auto; right: auto; }
 .lockup-row > .lockup { flex: 1 1 auto; min-width: 0; }
