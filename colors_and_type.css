@@ -195,7 +195,7 @@
   /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
      band borders, journey-map cell borders); the grid needs to sit lighter
      than those without dragging them along, so it gets its own value. */
-  --grid-line:      rgba(0, 0, 0, 0.09);
+  --grid-line:      rgba(0, 0, 0, 0.06);
   --accent:         var(--lime);
 }
 
@@ -448,16 +448,19 @@
      16px, que es el paso de agcs-ui, y los 3px de linea son 1px, la linea
      de agcs-ui. 48 divide a 3840 (80 celdas) y a 2160 (45). Lo que tenia que
      caer en linea se movio con el paso: margen 160 -> 144 (3 celdas),
-     divider 640 -> 624 (13), barras en celdas enteras de 48. La linea y la
-     transparencia no cambian. */
+     divider 640 -> 624 (13), barras en celdas enteras de 48.
+     Mismo dia, segundo ruling de Max: el grid va mas claro. Negro al 6%
+     sobre Paper (antes 9%) y blanco al 8% sobre Obsidian (antes 11%). A
+     1280 la linea de 3px se ve de 1px y sigue visible (~1.14:1). Bajo 6%
+     conviene probar en proyector: los proyectores lavan los grises. */
   --grid-line-w: 3px;
   --grid-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
-  --grid-line-dark: rgba(255, 255, 255, 0.11);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
+  --grid-line-dark: rgba(255, 255, 255, 0.08);
   --grid-image-dark:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 
 /* Construction grid -- the ground of the construction layouts (v5).
@@ -466,14 +469,14 @@
    a grid on any other surface -- a handbook page, a card, a product panel. */
 .agcs-construction-grid {
   background-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
   background-size: 48px 48px;
 }
 .agcs-on-dark.agcs-construction-grid {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 
 

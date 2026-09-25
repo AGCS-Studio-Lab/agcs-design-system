@@ -70,12 +70,14 @@ html, body {
    salia lisa. Grosor y alpha subieron a 3px / 0.09 porque el canvas de 3840
    se ve escalado a 1280 y la linea de 2px al 4.5% se perdia. Si cambias
    estos valores, cambialos tambien en colors_and_type.css -- son la misma
-   regla escrita dos veces, y esa duplicacion es deliberada: el punto de uso
+   regla escrita dos veces (v5.6, 2026-09-25: el alpha bajo a 0.06 sobre
+   Paper y 0.08 sobre Obsidian, a pedido de Max; el grosor sigue en 3px).
+   Esa duplicacion es deliberada: el punto de uso
    no puede depender de una variable para dibujar la firma de la marca. */
 .agcs-canvas.has-grid {
   background-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
   background-size: 48px 48px;   /* v5.6: 48px = 16px at 1280, the agcs-ui grid */
 }
 /* Escape hatch for a grid slide that must be flat. Needs a reason. */
@@ -95,8 +97,8 @@ html, body {
 }
 .agcs-canvas.agcs-on-dark.has-grid {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 .agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
@@ -391,7 +393,7 @@ html, body {
   display: block;
 }
 /* Cover treatment -- oversized. */
-.topic-icon.is-hero { --icon-size: 1400px; }
+.topic-icon.is-hero { --icon-size: 1776px; }   /* v5.6 (Max, 2026-09-25); was 1400 */
 
 /* ---- Lockup row: el icono se alinea al bloque de titulo (v5.4) ----------
    Cover y divider: el centro del icono cae en el centro del bloque
@@ -431,6 +433,11 @@ html, body {
 }
 .lockup-stack > .lockup-row { position: relative; left: auto; right: auto; }
 .lockup-row > .lockup { flex: 1 1 auto; min-width: 0; }
+/* Divider icon: 1056px (v5.6, Max 2026-09-25). v5.4 had 640; the 1300px icon
+   of the 2026-09-21 deck sat on the title because there was no lockup row.
+   The row's gap keeps this one off the title. The cover keeps is-hero. */
+.lockup-row > .topic-icon { --icon-size: 1056px; }
+.lockup-row > .topic-icon.is-hero { --icon-size: 1776px; }
 .lockup-row > .topic-icon {
   position: static;
   flex: none;
