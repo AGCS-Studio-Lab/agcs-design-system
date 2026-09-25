@@ -41,7 +41,7 @@ html, body {
    The ONE documented exception is the JOURNEY MATRIX in journey-lab/.
    It is a table, so the rule above would give it the grid -- but the
    matrix is already a grid (a 280px rail plus five stage columns
-   against four lanes), and a 40px construction grid behind it is a
+   against four lanes), and a 48px construction grid behind it is a
    second grid on a different module that will never align. Two grids
    that do not align read as sloppy, which is the same principle this
    rule is built on, applied one level up. A dense table that is NOT a
@@ -55,9 +55,10 @@ html, body {
    terms as a Studio one.
 
    The grid is only honest if things land on its lines, so on a grid slide:
-     - header hairlines sit on a grid line (--band-* are 640 / 480px)
-     - chart baselines sit on a grid line and bar heights are WHOLE steps
-       of 80px -- two grid cells at the 40px step (see slides/03-content.html)
+     - header hairlines sit on a grid line (--band-* are 624 / 480px)
+     - chart baselines sit on a grid line and bar heights are WHOLE cells
+       of 48px (v5.6; see slides/03-content.html)
+     - the edge padding is 144px, three cells, so left edges sit on a line
      - dense tables sit on a SOLID Paper panel; the grid runs around them,
        not under them (see .jm below)
      - boxes (diagram nodes, step cards) carry a SOLID ground fill
@@ -69,13 +70,15 @@ html, body {
    salia lisa. Grosor y alpha subieron a 3px / 0.09 porque el canvas de 3840
    se ve escalado a 1280 y la linea de 2px al 4.5% se perdia. Si cambias
    estos valores, cambialos tambien en colors_and_type.css -- son la misma
-   regla escrita dos veces, y esa duplicacion es deliberada: el punto de uso
+   regla escrita dos veces (v5.6, 2026-09-25: el alpha bajo a 0.06 sobre
+   Paper y 0.08 sobre Obsidian, a pedido de Max; el grosor sigue en 3px).
+   Esa duplicacion es deliberada: el punto de uso
    no puede depender de una variable para dibujar la firma de la marca. */
 .agcs-canvas.has-grid {
   background-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
-  background-size: 40px 40px;
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
+  background-size: 48px 48px;   /* v5.6: 48px = 16px at 1280, the agcs-ui grid */
 }
 /* Escape hatch for a grid slide that must be flat. Needs a reason. */
 .agcs-canvas.no-grid { background-image: none; }
@@ -94,8 +97,8 @@ html, body {
 }
 .agcs-canvas.agcs-on-dark.has-grid {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 .agcs-canvas.agcs-on-dark.no-grid { background-image: none; }
 /* Same reason: the chrome rows default to Carbon, which is invisible on
@@ -107,12 +110,12 @@ html, body {
 .slide-edge {
   position: absolute;
   inset: 0;
-  padding: 100px 160px;
+  padding: 100px 144px;
   box-sizing: border-box;
 }
 .top-row, .bottom-row {
   position: absolute;
-  left: 160px; right: 160px;
+  left: 144px; right: 144px;
   display: flex; justify-content: space-between; align-items: center;
   font-family: var(--font-mono);
   font-size: 36px;
@@ -160,7 +163,7 @@ html, body {
 /* Label sitting at the foot of the region (e.g. "SECTION 02"). */
 .band-label {
   position: absolute;
-  left: 160px; bottom: 140px;
+  left: 144px; bottom: 140px;
   font-size: 36px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -318,7 +321,7 @@ html, body {
   font-family: var(--font-mono);
   /* Solid Paper panel: the table is already a grid, so it sits ON the
      construction grid as one block instead of fighting it line by line.
-     Place its top edge on a grid line (a multiple of 80px). */
+     Place its top edge on a grid line (a multiple of 48px). */
   background: var(--paper);
 }
 .jm-head {
@@ -368,10 +371,13 @@ html, body {
      assets/icons/ matches this slide's argument. That is editorial
      and cannot live here.
 
-   Colorway is decided by the ground, not by taste:
-     negro/  on Paper      blanco/ on Obsidian
-     verde1/ ONLY when nothing else on the slide is lime -- a lime
-     icon IS the slide's single lime element (SKILL.md rule 2).
+   Colorway (v5.6, Max 2026-09-25): the topic icon is LIME, verde1/.
+     Cover and divider: ALWAYS verde1/, on Paper and on Obsidian.
+     Any Obsidian slide with an icon: verde1/.
+     negro/ ONLY on a text-only Paper slide whose lime is already
+     another element (a lime callout or table cell). blanco/ is not
+     used for topic icons. Until v5.5 this said "colorway follows the
+     ground", and decks shipped with black and white divider icons.
 
    WHICH icon (v5, 2026-09-02): pick from assets/icons/INDEX.md by
    what the slide argues. A LAB deck always opens with the lab icon,
@@ -390,7 +396,7 @@ html, body {
   display: block;
 }
 /* Cover treatment -- oversized. */
-.topic-icon.is-hero { --icon-size: 1400px; }
+.topic-icon.is-hero { --icon-size: 1776px; }   /* v5.6 (Max, 2026-09-25); was 1400 */
 
 /* ---- Lockup row: el icono se alinea al bloque de titulo (v5.4) ----------
    Cover y divider: el centro del icono cae en el centro del bloque
@@ -414,8 +420,8 @@ html, body {
      ...metadata mono, fuera de la fila, debajo... */
 .lockup-row {
   position: absolute;
-  left:  var(--pad-slide, 160px);
-  right: var(--pad-slide, 160px);
+  left:  var(--pad-slide, 144px);
+  right: var(--pad-slide, 144px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -425,11 +431,16 @@ html, body {
    debajo del bloque de titulo sin entrar en el calculo del centro. */
 .lockup-stack {
   position: absolute;
-  left:  var(--pad-slide, 160px);
-  right: var(--pad-slide, 160px);
+  left:  var(--pad-slide, 144px);
+  right: var(--pad-slide, 144px);
 }
 .lockup-stack > .lockup-row { position: relative; left: auto; right: auto; }
 .lockup-row > .lockup { flex: 1 1 auto; min-width: 0; }
+/* Divider icon: 1056px (v5.6, Max 2026-09-25). v5.4 had 640; the 1300px icon
+   of the 2026-09-21 deck sat on the title because there was no lockup row.
+   The row's gap keeps this one off the title. The cover keeps is-hero. */
+.lockup-row > .topic-icon { --icon-size: 1056px; }
+.lockup-row > .topic-icon.is-hero { --icon-size: 1776px; }
 .lockup-row > .topic-icon {
   position: static;
   flex: none;

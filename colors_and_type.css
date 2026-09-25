@@ -195,7 +195,7 @@
   /* Decoupled from --mist on purpose. Mist also feeds --rule (hairlines,
      band borders, journey-map cell borders); the grid needs to sit lighter
      than those without dragging them along, so it gets its own value. */
-  --grid-line:      rgba(0, 0, 0, 0.09);
+  --grid-line:      rgba(0, 0, 0, 0.06);
   --accent:         var(--lime);
 }
 
@@ -391,18 +391,18 @@
   --canvas-h: 2160px;
 
   /* Margin system -- 4K (scale 1:2 for 1920 mocks, 1:4 for 960 thumbs). */
-  --pad-slide: 160px;          /* edge padding */
+  --pad-slide: 144px;          /* edge padding -- 3 grid cells (v5.6; was 160) */
   --pad-band:  120px;          /* inside the header region */
   --gap-md:    80px;
   --gap-sm:    40px;
 
-  /* Header region heights, snapped to the 80px construction grid so the
-     hairline lands ON a grid line (640 = 8 steps, 480 = 6 steps). v5: the
+  /* Header region heights, snapped to the 48px construction grid (v5.6) so
+     the hairline lands ON a grid line (624 = 13 cells, 480 = 10 cells). v5: the
      region is pure geometry -- where the title sits above a hairline. It is
      NEVER a filled block. The Obsidian header band of v2-v4 does not exist
      in any real AGCS deck and was removed on 2026-09-02. */
-  --band-section: 640px;       /* ~30% of 2160 */
-  --band-content: 480px;       /* ~22% of 2160 */
+  --band-section: 624px;       /* ~29% of 2160 -- 13 cells (v5.6; was 640) */
+  --band-content: 480px;       /* ~22% of 2160 -- 10 cells */
 
   /* Rule thicknesses */
   --rule-hair: 1px;            /* construction grid, dividers              */
@@ -416,7 +416,7 @@
      content slides and the five silence slides are flat. See
      slides/_slide.css for the class contract. Defined once here so
      `.agcs-construction-grid` and slides/_slide.css cannot drift apart. */
-  --grid-step: 40px;           /* @ 4K -- divides both canvas dimensions   */
+  --grid-step: 48px;           /* @ 4K -- 80 x 45 cells; 16px at 1280 (v5.6) */
   /* v5.1 (2026-09-02, ruling de Max sobre decks entregados): el cuadro pasa
      de 80 a 40 y la linea de 4px a 2px con alpha. 40 divide a 80, asi que
      todo lo que ya estaba ajustado al paso viejo sigue cayendo en linea:
@@ -442,14 +442,25 @@
         al exportar no quedaba background-image ninguno y el fondo salia liso.
         Los literales de abajo son la fuente de verdad; los tokens quedan como
         alias para autoria, nunca como unica definicion. */
+  /* v5.6 (2026-09-25, Max): el paso pasa de 40 a 48px para que el grid de
+     los decks y el de las apps tengan el mismo formato. Visto en una
+     pantalla de 1280, una slide de 3840 se reduce a un tercio: 48px son
+     16px, que es el paso de agcs-ui, y los 3px de linea son 1px, la linea
+     de agcs-ui. 48 divide a 3840 (80 celdas) y a 2160 (45). Lo que tenia que
+     caer en linea se movio con el paso: margen 160 -> 144 (3 celdas),
+     divider 640 -> 624 (13), barras en celdas enteras de 48.
+     Mismo dia, segundo ruling de Max: el grid va mas claro. Negro al 6%
+     sobre Paper (antes 9%) y blanco al 8% sobre Obsidian (antes 11%). A
+     1280 la linea de 3px se ve de 1px y sigue visible (~1.14:1). Bajo 6%
+     conviene probar en proyector: los proyectores lavan los grises. */
   --grid-line-w: 3px;
   --grid-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
-  --grid-line-dark: rgba(255, 255, 255, 0.11);
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
+  --grid-line-dark: rgba(255, 255, 255, 0.08);
   --grid-image-dark:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 
 /* Construction grid -- the ground of the construction layouts (v5).
@@ -458,14 +469,14 @@
    a grid on any other surface -- a handbook page, a card, a product panel. */
 .agcs-construction-grid {
   background-image:
-    linear-gradient(to right,  rgba(0, 0, 0, 0.09) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 3px, transparent 3px);
-  background-size: 40px 40px;
+    linear-gradient(to right,  rgba(0, 0, 0, 0.06) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 3px, transparent 3px);
+  background-size: 48px 48px;
 }
 .agcs-on-dark.agcs-construction-grid {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.11) 3px, transparent 3px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 3px, transparent 3px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.08) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 3px, transparent 3px);
 }
 
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="Paper + grid (the chart earns it) · bars in whole 80px steps · 1 lime bar · no icon · mono body" viewport="1280x720" -->
+<!-- @dsCard group="Slides" name="Slide 03 — Content with Chart" subtitle="Paper + grid (the chart earns it) · bars in whole 48px cells · 1 lime bar · no icon · mono body" viewport="1280x720" -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -12,10 +12,12 @@
      title sits in the header region above a hairline at 480px -- a grid
      line. No filled band.
 
-     THE CHART SNAPS TO THE GRID. A grid behind bars is only honest when the
-     bars land on its lines, so: baseline on y=1600 (20 steps), plot height
-     880 (11 steps), bar heights rounded to WHOLE steps -- 4 · 1 · 3 · 11 --
-     bars 240 wide on an 80 gap. Do this for every chart on a grid slide. -->
+     THE CHART SNAPS TO THE GRID (48px, v5.6). A grid behind bars is only
+     honest when the bars land on its lines, so: plot from y=720 (15 cells)
+     to the baseline at y=1584 (33 cells), 864 tall (18 cells), bar heights
+     rounded to WHOLE cells -- 6 · 2 · 5 · 18 -- bars 240 wide (5 cells) on a
+     96 gap (2 cells), starting at x=144 (3 cells). Do this for every chart
+     on a grid slide. -->
 <div class="agcs-canvas reg-studio has-grid" data-screen-label="03 Content">
 
   <!-- Header region: geometry + hairline only. Never a fill. -->
@@ -28,7 +30,7 @@
       </div>
     </div>
     <div class="band-title"
-         style="position:absolute; left:160px; right:160px; bottom:120px;
+         style="position:absolute; left:144px; right:144px; bottom:120px;
                 font-family:'N27',system-ui,sans-serif; font-weight:700;
                 font-size:96px; line-height:1.08; max-width:2800px;">
       El mayor error: no asumir costos<br>reales de poder, riesgo o trade-offs.
@@ -36,21 +38,21 @@
   </div>
 
   <!-- Chart -- absolute geometry in whole grid steps. -->
-  <div style="position:absolute; left:160px; top:640px;
+  <div style="position:absolute; left:144px; top:624px;
               font-family:'IBM Plex Mono',monospace; font-size:28px;
               letter-spacing:0.06em; text-transform:uppercase; color:#1A1A1A;">
     Respondents · n=29
   </div>
-  <div style="position:absolute; left:160px; top:720px; width:1200px; height:880px;
-              display:flex; align-items:flex-end; gap:80px;
+  <div style="position:absolute; left:144px; top:720px; width:1248px; height:864px;
+              display:flex; align-items:flex-end; gap:96px;
               border-bottom:4px solid #000;">
-    <div style="width:240px; height:320px; background:#1A1A1A;"></div>
-    <div style="width:240px; height:80px;  background:#1A1A1A;"></div>
+    <div style="width:240px; height:288px; background:#1A1A1A;"></div>
+    <div style="width:240px; height:96px;  background:#1A1A1A;"></div>
     <div style="width:240px; height:240px; background:#1A1A1A;"></div>
-    <div style="width:240px; height:880px; background:var(--lime);"></div>
+    <div style="width:240px; height:864px; background:var(--lime);"></div>
   </div>
-  <div style="position:absolute; left:160px; top:1640px; width:1200px;
-              display:flex; gap:80px;
+  <div style="position:absolute; left:144px; top:1632px; width:1248px;
+              display:flex; gap:96px;
               font-family:'IBM Plex Mono',monospace; font-size:36px;
               letter-spacing:0.04em; text-transform:uppercase; color:#1A1A1A;">
     <div style="width:240px; text-align:center;">A · 20%</div>
@@ -60,7 +62,7 @@
   </div>
 
   <!-- Body copy, right of the chart. Starts on the same grid line as the plot. -->
-  <div style="position:absolute; left:1600px; right:960px; top:720px; color:#1A1A1A;">
+  <div style="position:absolute; left:1584px; right:960px; top:720px; color:#1A1A1A;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:40px;
                 line-height:1.45; color:#1A1A1A;">
       Los directores convergen en una sola

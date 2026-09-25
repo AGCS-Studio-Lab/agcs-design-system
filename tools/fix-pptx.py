@@ -50,15 +50,15 @@ USO
 import argparse, io, pathlib, re, sys, zipfile
 import xml.etree.ElementTree as ET
 
-# El grid se reconstruye en un layout, a los valores de v5.2: paso 40px,
-# linea 3px, negro al 9% sobre Paper, blanco al 11% sobre Obsidian. Todo en
+# El grid se reconstruye en un layout: paso 48px (v5.6, el mismo formato
+# que agcs-ui: 16px vistos a 1280), linea 3px (v5.2), negro al 9% sobre Paper, blanco al 11% sobre Obsidian. Todo en
 # pixeles del canvas de 3840 y escalado al ancho real del .pptx, para que
 # un deck de 13.33in reciba el mismo grid que uno de 40in.
 CANVAS_PX   = 3840
-STEP_PX     = 40
+STEP_PX     = 48
 LINE_PX     = 3
-ALPHA_LIGHT = 9000      # negro al 9% sobre Paper      (v5.2)
-ALPHA_DARK  = 11000     # blanco al 11% sobre Obsidian (v5.2)
+ALPHA_LIGHT = 6000      # negro al 6% sobre Paper      (v5.6; era 9%)
+ALPHA_DARK  = 8000      # blanco al 8% sobre Obsidian  (v5.6; era 11%)
 ALPHA_MAX   = 12000     # por encima de 12% ya no es una linea de grid
 LAYOUT_NAME = {"light": "AGCS · Grid Paper", "dark": "AGCS · Grid Obsidian"}
 
