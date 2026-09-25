@@ -1,4 +1,6 @@
-# AGCS | Studio + Lab -- Design System
+# AGCS · Decks y documentos
+
+The AGCS | Studio + Lab brand design system: decks, handbooks and documents. In Claude Design: **AGCS · Decks y documentos**. Product apps use its sibling, [AGCS · Apps](https://github.com/AGCS-Studio-Lab/agcs-ui) (repo `agcs-ui`).
 
 > **>> Stay Forward.**
 
@@ -14,6 +16,8 @@ The Lab is a *register*, not a sub-brand. It does not have its own color, type, 
 
 > **v5.2 rulings (2026-09-08), from what came back in downloaded deliverables:** the grid line goes to **3px at `rgba(0,0,0,.09)` / `rgba(255,255,255,.11)`** and every gradient is **written literally, never through `var()`**. Both changes are export defects, not preferences: the canvas is 3840 and is always seen scaled, so v5.1's 2px at 4.5% became a 0.67px line at ~3% alpha at 1280 and was simply absent; and the static renderer behind HTML-to-Express and PDF export declares that custom properties may not resolve, so a grid built from three nested `var()` exported as a blank ground. Fonts are the same class of defect: `@font-face` declared `local()` first and then a **relative** path to `/fonts`, so any renderer without N27 and Crimson Pro installed -- which is every export machine -- fell through to Georgia and **synthesised** the 600 italic, which is why subtitles stopped being Crimson Pro SemiBold Italic in downloaded files. **Nothing leaves this repo as authored HTML any more:** `tools/build-export.py` produces the self-contained file, with the CSS inlined, the fonts embedded as base64 with `local()` removed, the assets embedded, the scripts dropped and the `hz:` / `data-canvas-*` metadata written. See `writing.md` for the voice and report standard that governs what goes *inside* these layouts.
 
+> **v5.5 (2026-09-24): product apps move to their own repo.** Everything a screen needs and a deck does not now lives in [AGCS-Studio-Lab/agcs-ui](https://github.com/AGCS-Studio-Lab/agcs-ui): the vendored `ui/` primitives, the UX rules, and the app tokens for color and grid. This repo keeps the brand and still governs it. agcs-ui adds three scoped exceptions, validated for apps and never used in a deck: seven series colors for charts that compare series, amber `#FFB800` in place of Warn `#FFFF00` (the Warn yellow and the Lime are almost indistinguishable, 6.9 in OKLab), and a red fill `#E31A22` behind white text. `ui/README.md` and `ux-rules.md` stay here as pointers.
+>
 > **v5.4 rulings (2026-09-22), from the Banco G&T decks downloaded on 2026-09-21:** **(1) The grid lives in the slide layout.** The PPTX converter delivers the CSS grid inconsistently -- as ~150 loose rectangles per slide, or as one slide-sized gradient rectangle with no grid in it (`Slide_deck_about_AGCS_system_MALO.pptx`), or as a raster -- and even the good case leaves 150 shapes that get selected and dragged on every edit. `tools/fix-pptx.py` now removes the grid from each slide in whatever form it arrived and rebuilds it once, as grouped native rectangles at the v5.2 values, in two layouts: `AGCS · Grid Paper` and `AGCS · Grid Obsidian`. In PowerPoint it is background: drawn under everything, not selectable, vector, and it travels with the slide. Verified by exporting the repaired MALO file from PowerPoint to PDF. **(2) A lab deck always opens with the lab icon, the flask `alxgdo/01`** (`assets/agcs_lab_icon_{lime,white,black}.png`), exempt from the rule against repeating cover icons. The old `agcs_lab_icon_*.svg` held the document-and-arrow glyph -- anyone asked for "the lab icon" found the wrong one by name -- and are renamed `agcs_doc_arrow_*.svg`. **(3) On the cover and the divider the icon's center sits on the title block's center**, not the canvas's. `.lockup-row` does it in layout (flex, no transform), with a gap that keeps the icon off the title. Before, the cover icon sat on the canvas center below a title that sits high, and a 1300px divider icon sat on the divider title.
 >
 > **v5.3 rulings (2026-09-14), from the two `.pptx` downloaded on 2026-09-13:** the PPTX route breaks the same two things for reasons the v5.2 fix does not reach, because the converter behind it (**PptxGenJS** -- it signs `docProps/app.xml`) does not rasterize and does not read the canvas background: it maps DOM elements to native PowerPoint shapes. **The grid does export** -- ~150 rectangles per slide, 40px step, verified in the XML -- but at the v5.1 values it is invisible: 2px with `<a:alpha val="4000">` on a slide that measures 3840px = **40 inches**, shown by PowerPoint at a third of that, is a 0.67px line at ~3% alpha. The v5.2 values (3px, 9% / 11%) are what make it survive; `var()` never enters this route. **The subtitle breaks on the font's own name.** PPTX has no weights -- only a bold boolean -- so a 600 subtitle exports as `typeface="Crimson Pro"` with `b="1" i="1"`, and the legacy RIBBI family "Crimson Pro" holds Regular, Italic and Bold but **no Bold Italic**: PowerPoint finds no face and synthesises a fake bold over the 400 italic. The file answers to two names at once (`CrimsonPro-SemiBoldItalic.ttf` is "Crimson Pro" + "SemiBold Italic" in the typographic names, **"Crimson Pro SemiBold" + "Italic" in the legacy ones**), and the legacy pair is the one PowerPoint searches. So the subtitle is now asked for **as family `"Crimson Pro SemiBold"` at weight 400** -- same face, no bold, nothing to synthesise. **Two consequences:** never raise that 400 back to 600, and `python3 tools/fix-pptx.py` repairs any `.pptx` that came out of a source still on the old values (today: Claude Design). And one thing neither fixes: **the PPTX embeds no fonts at all**, so on a machine without N27, Crimson Pro and Plex Mono installed everything substitutes regardless -- for external delivery the PDF is the honest format.
@@ -32,7 +36,7 @@ These were provided by the client and underpin every decision in this system. Or
 | `uploads/Documento Sistema AGCS.pdf` | Internal infra doc -- references two product repos: `vicho-btw/agcs-dris-system` (DRIs system) and `vicho-btw/futurebydesign` (ARGUS). Hosted on Supabase + Render. Codebases were *not* attached to this project. |
 | `uploads/Culture by Design - Executive Pre-Assessment V3.pdf` | A 19-page real Studio deliverable for **Cinépolis**. The canonical reference for layout, voice, and rhythm. Quotes Schein + Christensen on the closing pages. |
 
-> **Caveat -- codebases not attached.** The DRIs system and ARGUS repos are referenced in the source doc but were not imported. This system therefore covers the **slide / handbook visual identity** comprehensively but does **not** include UI kits for those two products. If you want kits for them, re-attach the repos via the Import menu and I'll build them against the real components.
+> **Caveat -- codebases not attached.** The DRIs system and ARGUS repos are referenced in the source doc but were not imported. This system therefore covers the **slide / handbook visual identity**. The UI layer for the product apps lives in [AGCS-Studio-Lab/agcs-ui](https://github.com/AGCS-Studio-Lab/agcs-ui) since v5.5.
 
 ---
 
@@ -52,6 +56,7 @@ These were provided by the client and underpin every decision in this system. Or
 | `tools/build-export.py` | Builds the self-contained export HTML. Nothing leaves this repo as authored HTML. |
 | `tools/fix-pptx.py` | Mandatory on every `.pptx`: moves the grid off the slides into a native grid layout, whatever form it arrived in, and fixes the subtitle face. See the v5.3 and v5.4 rulings. |
 | `uploads/` | Originals from the client -- do not edit, only copy out of. |
+| `ui/README.md`, `ux-rules.md` | Pointers. The product-UI layer moved to [agcs-ui](https://github.com/AGCS-Studio-Lab/agcs-ui) in v5.5. |
 
 ---
 
@@ -112,7 +117,7 @@ No emoji. No unicode dingbats. No decorative rules. The chevron `>>` is the only
 
 ### Color
 
-Core five + the v3 functional palette. Anything else is off-brand.
+Core five + the v3 functional palette. Anything else is off-brand in decks and documents; product apps add the scoped exceptions listed in agcs-ui (v5.5).
 
 | Token | Hex | Use |
 |---|---|---|
@@ -128,10 +133,10 @@ Core five + the v3 functional palette. Anything else is off-brand.
 | Token | Hex | Role |
 |---|---|---|
 | Data | `#00A1F1` | Data visualization, system indicators, information layers |
-| Warn | `#FFFF00` | Warnings, pending actions, attention-required states |
+| Warn | `#FFFF00` | Warnings, pending actions, attention-required states. In product apps, amber `#FFB800` (agcs-ui, v5.5). |
 | Risk | `#ED1C24` | Risks, blockers, critical alerts, delays |
 
-**Any other blue, green, amber, red, purple, or gradient of any kind remains off-brand.** Decorative blues still place AGCS in the McKinsey / BCG / Deloitte cluster the brand deliberately rejects -- the Data blue exists only as a bound functional value, never as a brand or decoration color.
+**Any other blue, green, amber, red, purple, or gradient of any kind remains off-brand** in decks and documents. Product apps are the one scoped exception: the series palette, the amber and the red fill defined and tested in agcs-ui, used only in apps. Decorative blues still place AGCS in the McKinsey / BCG / Deloitte cluster the brand deliberately rejects -- the Data blue exists only as a bound functional value, never as a brand or decoration color.
 
 ### Typography  &mdash;  v5 (Titulo > N27 · Sub titulo > Crimson Pro SemiBold Italic · Texto > IBM Plex Mono)
 
@@ -227,7 +232,7 @@ The mark is **not a wordmark**. The textual brand mark is the chevron `>>` typed
 
 ### The AGCS icon library (`assets/icons/`) -- v3
 
-The brand now ships its **own proprietary icon library**: hand-drawn line icons constructed on the brand grid, matching the geometry of the brand icon. This supersedes the earlier "no icons ever / Lucide as flagged substitution" rule: **third-party icon sets (Lucide, Heroicons, Material, SF Symbols) are now forbidden outright** -- if an icon is needed, it comes from this library or it doesn't exist yet.
+The brand now ships its **own proprietary icon library**: hand-drawn line icons constructed on the brand grid, matching the geometry of the brand icon. This supersedes the earlier "no icons ever / Lucide as flagged substitution" rule: **third-party icon sets (Lucide, Heroicons, Material, SF Symbols) are forbidden in decks and documents** -- if an icon is needed there, it comes from this library or it doesn't exist yet. Product apps need functional icons the library does not draw (close, filter, search, navigation); there, per Max's ruling of 2026-09-09, Lucide at 1.5px in ink covers what has no library equivalent, and the library keeps the concepts. The rule lives in agcs-ui.
 
 | Path | Contents |
 |---|---|
