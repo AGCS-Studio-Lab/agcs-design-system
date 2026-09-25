@@ -1,4 +1,6 @@
-# AGCS | Studio + Lab -- Design System
+# AGCS · Decks y documentos
+
+The AGCS | Studio + Lab brand design system: decks, handbooks and documents. In Claude Design: **AGCS · Decks y documentos**. Product apps use its sibling, [AGCS · Apps](https://github.com/AGCS-Studio-Lab/agcs-ui) (repo `agcs-ui`).
 
 > **>> Stay Forward.**
 

@@ -1,6 +1,6 @@
 ---
 name: agcs-design
-description: Use this skill to generate well-branded interfaces and assets for AGCS | Studio + Lab, either for production or throwaway prototypes/mocks/etc. Contains essential design guidelines, colors, type, fonts, assets, and slide layouts for prototyping.
+description: Use this skill to generate well-branded decks, handbooks, documents and throwaway prototypes for AGCS | Studio + Lab (AGCS · Decks y documentos). Contains the brand rules, colors, type, fonts, icon library, voice and slide layouts. For product app UI (dashboards, agcs-management-system, agcs-dris-system), use the agcs-ui skill (AGCS · Apps) instead.
 user-invocable: true
 ---
 
