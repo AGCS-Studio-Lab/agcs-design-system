@@ -230,7 +230,7 @@ The mark is **not a wordmark**. The textual brand mark is the chevron `>>` typed
 
 ### The AGCS icon library (`assets/icons/`) -- v3
 
-The brand now ships its **own proprietary icon library**: hand-drawn line icons constructed on the brand grid, matching the geometry of the brand icon. This supersedes the earlier "no icons ever / Lucide as flagged substitution" rule: **third-party icon sets (Lucide, Heroicons, Material, SF Symbols) are now forbidden outright** -- if an icon is needed, it comes from this library or it doesn't exist yet.
+The brand now ships its **own proprietary icon library**: hand-drawn line icons constructed on the brand grid, matching the geometry of the brand icon. This supersedes the earlier "no icons ever / Lucide as flagged substitution" rule: **third-party icon sets (Lucide, Heroicons, Material, SF Symbols) are forbidden in decks and documents** -- if an icon is needed there, it comes from this library or it doesn't exist yet. Product apps need functional icons the library does not draw (close, filter, search, navigation); there, per Max's ruling of 2026-09-09, Lucide at 1.5px in ink covers what has no library equivalent, and the library keeps the concepts. The rule lives in agcs-ui.
 
 | Path | Contents |
 |---|---|
