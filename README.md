@@ -249,7 +249,7 @@ The brand now ships its **own proprietary icon library**: hand-drawn line icons 
 - **Pick from the catalogue.** `assets/icons/INDEX.md` lists all 61 icons by number with their subject and the arguments they can stand for. Every icon on a slide is chosen there, by meaning.
 - **The cover icon is chosen per deck and never repeats.** It is the deck's subject. Journey → eye-with-arrow (`alxgdo/19`); culture → spiral (`22`); foresight → telescope (`18`); lab program → flask (`01`); decision → fork (`17`); growth → curve (`07`) or sprout (`new-icons/04`). There is **no house cover icon** -- neither `alxgdo/12` nor the document-and-arrow glyph. Two consecutive decks with the same cover icon is a defect.
 - **No repeats inside a deck.** Cover, dividers and content slides each carry a different icon; rotate through the three sets.
-- **Colorway follows ground:** `negro` on Paper, `blanco` on Obsidian. That is the default and covers ~all uses.
+- **Colorway: the topic icon is lime** (v5.6, Max 2026-09-25). Cover and divider icons are **always `verde1`** / `color-01` (a lab deck uses `agcs_lab_icon_lime.png`), on Paper and on Obsidian, and so is any topic icon on an Obsidian slide -- never `negro` or `blanco` there. `negro` only on a text-only Paper slide whose lime is already another element (a lime callout or table cell). `blanco` is not used for topic icons on slides. Until v5.5 this line said "colorway follows ground", and decks came out with black and white divider icons.
 - **`verde1` is Lime.** A `verde1` icon **counts as the slide's single Lime element** -- it competes with the brand icon, the lime chart bar, and the lime callout. One of the four, never two.
 - **`verde2` and `verde3` are legacy colorways** from the original delivery. They are *not* in the five-color palette -- keep them for archival fidelity, do **not** use them in new work.
 - **Icons are evidence, not decoration.** The deck remains typographic-first. An icon earns its place the way a number does -- as signage for a concept. Never a row of icons as visual filler, never bullets-with-icons.
@@ -372,7 +372,7 @@ The construction grid goes on the divider and on slides carrying a chart, table 
 <!-- The cover icon: a verde1 library icon chosen for the deck (see assets/icons/INDEX.md) -->
 <img class="topic-icon is-hero" src="assets/icons/alxgdo/verde1/18.png" alt="">
 
-<!-- A library icon: colorway follows ground -->
+<!-- A library icon on a text-only Paper slide whose lime is already a callout: negro. Cover, divider and any Obsidian slide: verde1. -->
 <img src="assets/icons/alxgdo/negro/17.png" alt="" style="height:64px">
 
 <!-- A quote slide -->

@@ -371,10 +371,13 @@ html, body {
      assets/icons/ matches this slide's argument. That is editorial
      and cannot live here.
 
-   Colorway is decided by the ground, not by taste:
-     negro/  on Paper      blanco/ on Obsidian
-     verde1/ ONLY when nothing else on the slide is lime -- a lime
-     icon IS the slide's single lime element (SKILL.md rule 2).
+   Colorway (v5.6, Max 2026-09-25): the topic icon is LIME, verde1/.
+     Cover and divider: ALWAYS verde1/, on Paper and on Obsidian.
+     Any Obsidian slide with an icon: verde1/.
+     negro/ ONLY on a text-only Paper slide whose lime is already
+     another element (a lime callout or table cell). blanco/ is not
+     used for topic icons. Until v5.5 this said "colorway follows the
+     ground", and decks shipped with black and white divider icons.
 
    WHICH icon (v5, 2026-09-02): pick from assets/icons/INDEX.md by
    what the slide argues. A LAB deck always opens with the lab icon,

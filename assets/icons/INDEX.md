@@ -6,9 +6,12 @@ Every icon on a slide is chosen from this list according to **what the slide arg
 subject and is chosen fresh for every deck. Inside one
 deck no icon repeats across cover, dividers and content slides.
 
-Colorway follows the ground: `negro` / `color-04` on Paper, `blanco` / `color-03` on
-Obsidian, `verde1` / `color-01` only when nothing else on the slide is lime (the lime
-icon *is* the slide's single lime element). `verde2`, `verde3`, `color-02` are legacy.
+Colorway (v5.6, Max 2026-09-25): the topic icon is lime -- `verde1` / `color-01`.
+Always on the cover and on every divider, on Paper or Obsidian, and on any Obsidian
+slide; there the icon *is* the slide's single lime element. `negro` / `color-04` only
+on a text-only Paper slide whose lime is already another element (a lime callout or
+table cell). `blanco` / `color-03` is not used for topic icons on slides. `verde2`,
+`verde3`, `color-02` are legacy.
 
 Paths: `assets/icons/alxgdo/<colorway>/NN.png` · `assets/icons/icons-grid/<color-0N>/NN.png`
 · `assets/icons/new-icons/<color-0N>/NN.png`. All PNG 2251px, transparent.
