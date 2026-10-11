@@ -56,8 +56,10 @@ etiqueta de sección, revisar si el método ya tiene un nombre para eso.
 ### 2.2 Registro
 
 Formal, y más aún en material de cliente. Sin lenguaje de taller, sin
-coloquialismos. Español de Chile en la conversación interna, español neutro en
-material de cliente.
+coloquialismos. Español latinoamericano neutro en la interfaz, los correos, los
+documentos y Argus. Tú en la interfaz y en Argus; usted o ustedes en correos
+formales a clientes. Sin voseo («tenés», «podés», «avisá») ni regionalismos
+(«acá» → «aquí»).
 
 ### 2.3 Idioma por elemento
 
